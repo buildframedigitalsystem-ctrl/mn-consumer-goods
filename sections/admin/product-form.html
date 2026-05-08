@@ -1,0 +1,82 @@
+<div class="form-page">
+
+    <div class="page-top">
+
+        <div>
+            <h1>Products</h1>
+            <p>Manage store products</p>
+        </div>
+
+    </div>
+
+    <div class="form-card">
+
+        <form id="productForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Product Name</label>
+
+                    <input type="text" id="productName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+
+                    <input type="text" id="category">
+                </div>
+
+                <div class="form-group">
+                    <label>Brand</label>
+
+                    <input type="text" id="brand">
+                </div>
+
+                <div class="form-group">
+                    <label>Retail Price</label>
+
+                    <input type="number" id="retailPrice" step="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label>Stock</label>
+
+                    <input type="number" id="stock">
+                </div>
+
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Save Product
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="productsTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

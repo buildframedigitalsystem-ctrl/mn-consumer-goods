@@ -1,0 +1,164 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+}
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.admin-sidebar {
+    width: 260px;
+    background: #0f172a;
+    color: white;
+    padding: 30px 20px;
+}
+
+.sidebar-top {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.sidebar-logo {
+    width: 90px;
+    margin-bottom: 15px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar-menu li:hover {
+    background: #1e293b;
+}
+
+/* MAIN */
+
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+
+.admin-header {
+    background: white;
+    padding: 25px 40px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* CONTENT */
+
+#adminContent {
+    padding: 40px;
+}
+
+/* =========================
+   BUILDFRAME BRANDING FOOTER
+========================= */
+
+.admin-main {
+    min-height: 100vh;
+}
+
+#adminContent {
+    flex: 1;
+}
+
+.admin-footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 18px 24px;
+
+    background:
+        linear-gradient(rgba(10, 38, 71, 0.96), rgba(10, 38, 71, 0.96)),
+        linear-gradient(to right,
+            rgba(56, 189, 248, 0.12) 1px,
+            transparent 1px),
+        linear-gradient(to bottom,
+            rgba(56, 189, 248, 0.12) 1px,
+            transparent 1px);
+
+    background-size:
+        cover,
+        34px 34px,
+        34px 34px;
+
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-top: 1px solid rgba(56, 189, 248, 0.22);
+}
+
+.admin-footer-inner {
+    width: 100%;
+    max-width: 980px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+
+    text-align: center;
+}
+
+.admin-footer-left,
+.admin-footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-footer-left strong {
+    color: white;
+    font-weight: 800;
+}
+
+.admin-footer-left span {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.admin-footer-right a {
+    color: white;
+    text-decoration: none;
+
+    padding: 7px 13px;
+
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.22);
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.admin-footer-right a:hover {
+    background: #38bdf8;
+    color: #082f49;
+}

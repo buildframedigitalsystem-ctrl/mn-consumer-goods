@@ -1,0 +1,93 @@
+<div class="form-page">
+
+    <div class="page-top">
+        <h1>Orders</h1>
+        <p>Create customer orders with signature</p>
+    </div>
+
+    <div class="form-card">
+
+        <form id="orderForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="text" id="contactNumber">
+                </div>
+
+                <div class="form-group">
+                    <label>Order Type</label>
+                    <select id="orderType">
+                        <option value="RETAIL">Retail</option>
+                        <option value="WHOLESALE">Wholesale</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Amount</label>
+                    <input type="number" id="totalAmount" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Payment Status</label>
+                    <select id="paymentStatus">
+                        <option value="UNPAID">Unpaid</option>
+                        <option value="PARTIAL">Partial</option>
+                        <option value="PAID">Paid</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Order Notes</label>
+                    <input type="text" id="orderNotes">
+                </div>
+
+            </div>
+
+            <div class="signature-box">
+
+                <label>Customer Signature</label>
+
+                <canvas id="signatureCanvas" width="500" height="180"></canvas>
+
+                <button type="button" id="clearSignatureBtn">
+                    Clear Signature
+                </button>
+
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Save Order
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="table-card">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Invoice</th>
+                </tr>
+            </thead>
+
+            <tbody id="ordersTableBody"></tbody>
+        </table>
+
+    </div>
+
+</div>

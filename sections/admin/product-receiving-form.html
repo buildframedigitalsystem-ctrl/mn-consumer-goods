@@ -1,0 +1,71 @@
+<div class="page-header">
+    <h1>Product Receiving</h1>
+    <p>Receive supplier deliveries into inventory</p>
+</div>
+
+<div class="form-card">
+
+    <form id="productReceivingForm">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Purchase Order ID</label>
+                <input type="text" id="purchaseOrderId" required>
+            </div>
+
+            <div class="form-group">
+                <label>Product ID</label>
+                <input type="text" id="productId" required>
+            </div>
+
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" id="productName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Quantity Received</label>
+                <input type="number" id="quantityReceived" required>
+            </div>
+
+            <div class="form-group">
+                <label>Unit Cost</label>
+                <input type="number" id="unitCost" required>
+            </div>
+
+            <div class="form-group">
+                <label>Received Date</label>
+                <input type="date" id="receivedDate" required>
+            </div>
+
+        </div>
+
+        <button type="submit" class="primary-btn">
+            Receive Stocks
+        </button>
+
+    </form>
+
+</div>
+
+<div class="table-card">
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Receiving ID</th>
+                <th>PO ID</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Unit Cost</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody id="receivingTableBody"></tbody>
+
+    </table>
+
+</div>
