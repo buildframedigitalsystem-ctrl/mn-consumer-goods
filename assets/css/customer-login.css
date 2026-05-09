@@ -1,0 +1,190 @@
+/* ===============================
+   RESET
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===============================
+   BODY
+================================ */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    min-height: 100vh;
+}
+
+/* ===============================
+   LOGIN PAGE
+================================ */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* ===============================
+   CARD
+================================ */
+
+.login-card {
+    width: 100%;
+    max-width: 1050px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* ===============================
+   LEFT IMAGE
+================================ */
+
+.login-left {
+    background:
+        linear-gradient(rgba(17, 24, 39, 0.7),
+            rgba(17, 24, 39, 0.7)),
+        url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+.overlay h2 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.overlay p {
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+/* ===============================
+   RIGHT FORM
+================================ */
+
+.login-right {
+    padding: 70px 60px;
+}
+
+.login-right h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.login-right p {
+    color: #6b7280;
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+/* ===============================
+   FORM
+================================ */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #374151;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+
+    background: #111827;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: #2563eb;
+}
+
+/* ===============================
+   SIGNUP LINK
+================================ */
+
+.signup-link {
+    margin-top: 25px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.signup-link a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+    .login-card {
+        grid-template-columns: 1fr;
+    }
+
+    .login-left {
+        min-height: 300px;
+    }
+
+    .login-right {
+        padding: 40px 25px;
+    }
+
+}

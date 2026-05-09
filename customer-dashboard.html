@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&N Customer Dashboard</title>
+
+    <link rel="stylesheet" href="assets/css/customer-dashboard.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-logo">
+            <h2>M&N</h2>
+            <p>Customer Portal</p>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="#" class="active">
+                Dashboard
+            </a>
+
+            <a href="#">
+                My Orders
+            </a>
+
+            <a href="#">
+                Order Tracking
+            </a>
+
+            <a href="#">
+                Order History
+            </a>
+
+            <a href="#">
+                Wholesale Pricing
+            </a>
+
+            <a href="#">
+                Account Settings
+            </a>
+
+            <a href="customer-login.html">
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="dashboard-main">
+
+        <!-- TOPBAR -->
+
+        <header class="dashboard-topbar">
+
+            <div>
+                <h1>Customer Dashboard</h1>
+                <p>Welcome back to M&N Consumer Goods</p>
+            </div>
+
+            <button class="new-order-btn">
+                + Create Order
+            </button>
+
+        </header>
+
+        <!-- STATS -->
+
+        <section class="dashboard-stats">
+
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <h2>24</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending Orders</h3>
+                <h2>5</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Delivered</h3>
+                <h2>18</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Wholesale Tier</h3>
+                <h2>Gold</h2>
+            </div>
+
+        </section>
+
+        <!-- RECENT ORDERS -->
+
+        <section class="recent-orders">
+
+            <div class="section-header">
+                <h2>Recent Orders</h2>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>ORD-1001</td>
+                        <td>May 08, 2026</td>
+                        <td>Delivered</td>
+                        <td>₱12,500</td>
+                    </tr>
+
+                    <tr>
+                        <td>ORD-1002</td>
+                        <td>May 07, 2026</td>
+                        <td>Pending</td>
+                        <td>₱3,250</td>
+                    </tr>
+
+                    <tr>
+                        <td>ORD-1003</td>
+                        <td>May 06, 2026</td>
+                        <td>Out for Delivery</td>
+                        <td>₱8,400</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
