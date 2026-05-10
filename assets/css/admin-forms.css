@@ -258,3 +258,155 @@ table td {
     padding-bottom: 10px;
 
 }
+
+/* ===============================
+   FLOATING METAL SEARCH
+================================ */
+
+.metal-search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 10, 20, 0.65);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 90px;
+}
+
+.metal-search-overlay.show {
+    display: flex;
+}
+
+.metal-search-box {
+    width: min(900px, 92%);
+    max-height: 80vh;
+    overflow-y: auto;
+
+    background:
+        linear-gradient(145deg, #1f2937, #0f172a 45%, #111827);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    border-radius: 22px;
+    padding: 28px;
+
+    color: white;
+    position: relative;
+}
+
+.metal-search-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.metal-search-header h2 {
+    margin: 0;
+    font-size: 34px;
+}
+
+.metal-search-header p {
+    color: #cbd5e1;
+    margin-top: 8px;
+}
+
+.metal-search-controls {
+    display: grid;
+    grid-template-columns: 220px 1fr 120px;
+    gap: 14px;
+    margin-top: 24px;
+}
+
+.metal-search-controls select,
+.metal-search-controls input {
+    width: 100%;
+    padding: 14px 16px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-size: 15px;
+}
+
+.metal-search-controls input::placeholder {
+    color: #94a3b8;
+}
+
+.metal-search-controls button {
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    color: white;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.metal-search-results {
+    margin-top: 24px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 18px;
+    min-height: 90px;
+}
+
+.metal-search-count {
+    font-weight: bold;
+    margin-bottom: 14px;
+    color: #93c5fd;
+}
+
+.metal-result-card {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.metal-result-card h4 {
+    margin: 0 0 10px;
+    color: #bfdbfe;
+}
+
+.metal-result-card pre {
+    white-space: pre-wrap;
+    color: #e5e7eb;
+    font-size: 13px;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+    .metal-search-controls {
+        grid-template-columns: 1fr;
+    }
+}
+
+.invoice-signature img {
+    width: 250px;
+
+    border-bottom:
+        2px solid #0f172a;
+
+    padding-bottom: 10px;
+}

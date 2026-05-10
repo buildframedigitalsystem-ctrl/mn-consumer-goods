@@ -1,0 +1,39 @@
+<div class="module-card">
+
+    <h2>Smart Search Center</h2>
+    <p>
+        Search records from customers, suppliers, products, orders, inventory, and purchase orders.
+    </p>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Search Type</label>
+            <select id="adminSearchType">
+                <option value="searchProducts">Products</option>
+                <option value="searchCustomers">Customers</option>
+                <option value="searchCustomerAccounts">Customer Accounts</option>
+                <option value="searchSuppliers">Suppliers</option>
+                <option value="searchSupplierProducts">Supplier Products</option>
+                <option value="searchOrders">Orders</option>
+                <option value="searchInventory">Inventory</option>
+                <option value="searchPurchaseOrders">Purchase Orders</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Search Keyword</label>
+            <input type="text" id="adminSearchInput" placeholder="Type name, ID, email, product, order...">
+        </div>
+
+    </div>
+
+    <button class="admin-btn" id="adminSearchBtn">
+        Search
+    </button>
+
+    <div id="adminSearchResults" class="search-results-box">
+        <p>No search yet.</p>
+    </div>
+
+</div>

@@ -38,10 +38,53 @@
 
     </div>
 
+
+    <div class="metal-search-overlay" id="metalSearchOverlay">
+
+        <div class="metal-search-box">
+
+            <button class="metal-search-close" id="metalSearchClose">×</button>
+
+            <h2>Smart Find</h2>
+            <p>Search records like customer, supplier, product, order, invoice, or PO.</p>
+
+            <div class="metal-search-controls">
+                <select id="adminSearchType">
+                    <option value="searchProducts">Products</option>
+                    <option value="searchCustomers">Customers</option>
+                    <option value="searchSuppliers">Suppliers</option>
+                    <option value="searchOrders">Orders</option>
+                    <option value="searchInventory">Inventory</option>
+                    <option value="searchPurchaseOrders">Purchase Orders</option>
+                </select>
+
+                <input type="text" id="adminSearchInput" placeholder="Find record...">
+
+                <button id="adminSearchBtn">Find</button>
+            </div>
+
+            <div class="metal-search-actions">
+                <button id="findPrevBtn">Find Prev</button>
+                <button id="findNextBtn">Find Next</button>
+                <button id="criteriaBtn">Criteria</button>
+                <button id="closeSearchBtn">Close</button>
+            </div>
+
+            <div id="adminSearchResults" class="metal-search-results">
+                <p>No search yet.</p>
+            </div>
+
+        </div>
+
+    </div>
+
     <!-- =========================
          JS
     ========================== -->
 
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/admin-search-block.js"></script>
+    <script src="assets/js/orders.js"></script>
     <script src="assets/js/admin-main.js"></script>
 
 </body>

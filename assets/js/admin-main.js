@@ -54,116 +54,56 @@ function bindSidebarMenu() {
 
             if (!page) return;
 
-            /* =========================
-               HOME
-            ========================= */
+            menuItems.forEach(menu => menu.classList.remove("active"));
+            item.classList.add("active");
 
             if (page === "home") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/admin-home.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/admin-home.html");
             }
-
-            /* =========================
-               PRODUCTS
-            ========================= */
 
             if (page === "products") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/product-form.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/product-form.html");
                 initializeProducts();
-
             }
-
-            /* =========================
-               SUPPLIERS
-            ========================= */
 
             if (page === "suppliers") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/supplier-form.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/supplier-form.html");
                 initializeSuppliers();
-
             }
-
-            /* =========================
-               PURCHASE ORDERS
-            ========================= */
 
             if (page === "purchase-orders") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/purchase-order-form.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/purchase-order-form.html");
                 initializePurchaseOrders();
-
             }
+
             if (page === "product-receiving") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/product-receiving-form.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/product-receiving-form.html");
                 initializeProductReceiving();
-
             }
 
             if (page === "inventory") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/inventory-view.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/inventory-view.html");
                 initializeInventory();
-
             }
 
             if (page === "orders") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/order-form.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/order-form.html");
                 initializeOrders();
-
             }
 
             if (page === "customers") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/customer-form.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/customer-form.html");
                 initializeCustomers();
-
             }
 
             if (page === "reports") {
-
-                await loadSection(
-                    "adminContent",
-                    "sections/admin/reports-dashboard.html"
-                );
-
+                await loadSection("adminContent", "sections/admin/reports-dashboard.html");
                 initializeReports();
+            }
 
+            if (page === "search") {
+                await loadSection("adminContent", "sections/admin/admin-search-block.html");
+                initAdminSearchBlock();
             }
 
         });

@@ -54,40 +54,41 @@
 
                 <label>Customer Signature</label>
 
-                <canvas id="signatureCanvas" width="500" height="180"></canvas>
+                <canvas id="signatureCanvas"></canvas>
 
                 <button type="button" id="clearSignatureBtn">
                     Clear Signature
                 </button>
 
             </div>
-
-            <button type="submit" class="primary-btn">
-                Save Order
-            </button>
-
-        </form>
-
     </div>
 
-    <div class="table-card">
+    <button type="submit" class="primary-btn">
+        Save Order
+    </button>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Type</th>
-                    <th>Total</th>
-                    <th>Payment</th>
-                    <th>Status</th>
-                    <th>Invoice</th>
-                </tr>
-            </thead>
+    </form>
 
-            <tbody id="ordersTableBody"></tbody>
-        </table>
+</div>
 
-    </div>
+<div class="table-card">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Type</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>Invoice</th>
+            </tr>
+        </thead>
+
+        <tbody id="ordersTableBody"></tbody>
+    </table>
+
+</div>
 
 </div>

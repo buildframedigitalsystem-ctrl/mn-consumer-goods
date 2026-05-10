@@ -1,12 +1,10 @@
 <div class="form-page">
 
     <div class="page-top">
-
         <div>
             <h1>Products</h1>
             <p>Manage store products</p>
         </div>
-
     </div>
 
     <div class="form-card">
@@ -17,32 +15,50 @@
 
                 <div class="form-group">
                     <label>Product Name</label>
-
                     <input type="text" id="productName" required>
                 </div>
 
                 <div class="form-group">
                     <label>Category</label>
-
-                    <input type="text" id="category">
+                    <input type="text" id="category" placeholder="Retail / Wholesale / Juice">
                 </div>
 
                 <div class="form-group">
                     <label>Brand</label>
-
                     <input type="text" id="brand">
                 </div>
 
                 <div class="form-group">
                     <label>Retail Price</label>
+                    <input type="number" id="retailPrice" min="0" step="0.01" placeholder="0.00">
+                </div>
 
-                    <input type="number" id="retailPrice" step="0.01">
+                <div class="form-group">
+                    <label>Wholesale Price</label>
+                    <input type="number" id="wholesalePrice" min="0" step="0.01" placeholder="0.00">
                 </div>
 
                 <div class="form-group">
                     <label>Stock</label>
+                    <input type="number" id="stock" min="0" step="1" placeholder="0">
+                </div>
 
-                    <input type="number" id="stock">
+                <div class="form-group">
+                    <label>Show on Homepage</label>
+                    <select id="showOnHomepage">
+                        <option value="YES">YES</option>
+                        <option value="NO">NO</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Product Image URL</label>
+                    <input type="text" id="productImage" placeholder="Paste image link">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="description" placeholder="Short product description">
                 </div>
 
             </div>
@@ -58,23 +74,18 @@
     <div class="table-card">
 
         <table>
-
             <thead>
-
                 <tr>
                     <th>Product</th>
                     <th>Category</th>
-                    <th>SKU</th>
-                    <th>Price</th>
-                    <th>Stock</th>
+                    <th>Brand</th>
+                    <th>Retail Price</th>
+                    <th>Wholesale Price</th>
+                    <th>Homepage</th>
                 </tr>
-
             </thead>
 
-            <tbody id="productsTableBody">
-
-            </tbody>
-
+            <tbody id="productsTableBody"></tbody>
         </table>
 
     </div>

@@ -4,240 +4,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>M&N Consumer Goods | Online Store</title>
 
-    <!-- STORE CSS -->
     <link rel="stylesheet" href="assets/css/store.css">
 </head>
 
 <body>
 
-    <!-- ================= HEADER ================= -->
-    <header class="store-header">
-
-        <div class="store-logo">
-
-            <h1>M&N Consumer Goods</h1>
-
-            <p>
-                Retail • Wholesale • Consumer Products
-            </p>
-
+    <div class="top-contact-bar">
+        <div class="top-left">
+            <span>📱 Mobile / WhatsApp / Viber: +639052273431</span>
+            <span>✉️ Email: kokiks@mail.com</span>
+            <span>📘 Facebook: Nico Torrevillas</span>
         </div>
 
-        <nav class="store-nav">
+        <div class="top-right">
+            <span>🚚 Fast Delivery</span>
+            <span>🛡️ Trusted Brands</span>
+            <span>⭐ Quality Products</span>
+        </div>
+    </div>
 
-            <a href="#products">Products</a>
+    <header class="main-store-header">
+        <div class="header-logo-area">
+            <img src="assets/branding/mn-logo.png" alt="M&N Logo" class="main-logo">
 
-            <a href="#retail">Retail</a>
+            <div>
+                <h1>M&N</h1>
+                <p>Retail • Wholesale • Distribution</p>
+                <span>Your Trusted Partner in Consumer Goods</span>
+            </div>
+        </div>
 
-            <a href="#wholesale">Wholesale</a>
+        <div class="header-search">
+            <input type="text" id="headerSearchInput" placeholder="Search products, brands, or categories...">
+            <button type="button" id="headerSearchBtn">🔍</button>
+        </div>
 
-            <a href="#contact">Contact</a>
+        <div class="header-account-cart">
+            <a href="customer-login.html" class="header-account">
+                👤
+                <div>
+                    <strong>Customer</strong>
+                    <span>Login / Register</span>
+                </div>
+            </a>
 
-        </nav>
-
+            <a href="#products" class="header-cart">
+                🛒 Cart
+                <span class="cart-count">0</span>
+            </a>
+        </div>
     </header>
 
-    <!-- ================= HERO SECTION ================= -->
-    <section class="store-hero">
+    <nav class="store-navigation">
+        <a href="#">🏠 Home</a>
+        <a href="#products">📦 Products</a>
+        <a href="#retail">🏪 Retail</a>
+        <a href="#wholesale">📋 Wholesale</a>
+        <a href="supplier-login.html">🤝 Supplier Portal</a>
+        <a href="admin.html">🛠️ Admin Portal</a>
+        <a href="#contact">📞 Contact Us</a>
+    </nav>
 
-        <div class="hero-text">
+    <section class="hero-banner-section">
+        <img src="assets/branding/mn-banner.png" alt="M&N Consumer Goods Wholesale Partner Banner">
+    </section>
 
-            <h2>
-                Your Trusted Consumer Goods Store
-            </h2>
+    <section class="brand-marquee-section">
+        <div class="brand-title">OUR TRUSTED BRANDS</div>
 
-            <p>
-                Browse retail and wholesale products in one clean online store.
-                Product listings, pricing, promos, and categories will later
-                be dynamically managed by the admin system.
-            </p>
+        <div class="brand-marquee">
+            <div class="brand-track">
+                <span>Delfi</span>
+                <span>Goya</span>
+                <span>Knick Knacks</span>
+                <span>Push Pop</span>
+                <span>McVities</span>
+                <span>Fisherman's Friend</span>
+                <span>Van Houten</span>
+                <span>Regent</span>
 
-            <div class="hero-buttons">
+                <span>Delfi</span>
+                <span>Goya</span>
+                <span>Knick Knacks</span>
+                <span>Push Pop</span>
+                <span>McVities</span>
+                <span>Fisherman's Friend</span>
+                <span>Van Houten</span>
+                <span>Regent</span>
+            </div>
+        </div>
+    </section>
 
-                <a href="#products" class="btn-primary">
-                    Shop Products
-                </a>
+    <section class="category-section" id="retail">
+        <div class="section-title-row">
+            <h2>Shop By Category</h2>
+            <a href="#products" class="view-all-link" data-category="all">View All Categories →</a>
+        </div>
 
-                <a href="#wholesale" class="btn-secondary">
-                    Wholesale Inquiry
-                </a>
+        <div class="category-grid">
+            <a href="#products" class="category-card" data-category="Chocolates">
+                <img src="assets/images/category/category-chocolates.png" alt="Chocolates and Confectionery">
+            </a>
 
+            <a href="#products" class="category-card" data-category="Biscuits">
+                <img src="assets/images/category/category-biscuits-wafers.png" alt="Biscuits and Wafers">
+            </a>
+
+            <a href="#products" class="category-card" data-category="Candies">
+                <img src="assets/images/category/category-candies-lollies.png" alt="Candies and Lollies">
+            </a>
+
+            <a href="#products" class="category-card" data-category="Dips">
+                <img src="assets/images/category/category-dips-sauces.png" alt="Dips and Sauces">
+            </a>
+
+            <a href="#products" class="category-card" data-category="Snacks">
+                <img src="assets/images/category/category-snacks-crisps.png" alt="Snacks and Crisps">
+            </a>
+
+            <a href="#products" class="category-card" data-category="Beverages">
+                <img src="assets/images/category/category-beverages-cocoa.png" alt="Beverages and Cocoa">
+            </a>
+        </div>
+    </section>
+
+    <!-- ================= SPECIAL SHOPPING SECTIONS ================= -->
+    <section class="special-shop-section">
+
+        <div class="special-shop-card best-sellers">
+            <h3>🔥 Best Sellers</h3>
+            <p>Top-moving products loved by customers and resellers.</p>
+            <a href="#products" data-category="all">View Best Sellers →</a>
+        </div>
+
+        <div class="special-shop-card new-arrivals">
+            <h3>🆕 New Arrivals</h3>
+            <p>Freshly added items and newly available product lines.</p>
+            <a href="#products" data-category="all">View New Items →</a>
+        </div>
+
+        <div class="special-shop-card promo-bundles">
+            <h3>💥 Promo Bundles</h3>
+            <p>Special bundle offers for retail buyers and small stores.</p>
+            <a href="#products" data-category="all">See Promos →</a>
+        </div>
+
+        <div class="special-shop-card wholesale-packs">
+            <h3>🏪 Wholesale Packs</h3>
+            <p>Bulk order options for resellers, stores, and businesses.</p>
+            <a href="#wholesale">Wholesale Inquiry →</a>
+        </div>
+
+    </section>
+
+    <section class="wholesale-strip" id="wholesale">
+        <div>
+            <h2>Wholesale Solutions For Your Business</h2>
+            <p>Bulk orders, competitive prices, and reliable supply for retailers, resellers, and institutions.</p>
+        </div>
+
+        <div class="wholesale-features">
+            <span>📦 Bulk Orders</span>
+            <span>🏷️ Wholesale Prices</span>
+            <span>🤝 Reseller Support</span>
+            <span>🚚 Fast Delivery</span>
+        </div>
+
+        <a href="https://www.facebook.com/nico.torrevillas" target="_blank">
+            Inquire Now →
+        </a>
+    </section>
+
+    <section class="products-section" id="products">
+        <div class="section-title-row">
+            <div>
+                <h2>Featured Products</h2>
+                <p>Browse retail and wholesale items uploaded by M&N.</p>
             </div>
 
+            <a href="#products" class="view-all-link" data-category="all">View All Products →</a>
         </div>
 
-        <div class="hero-banner">
+        <div class="store-tools">
+            <input type="text" id="storeSearch" placeholder="Search products...">
 
-            <h3>
-                Promo Banner Area
-            </h3>
-
-            <p>
-                Future admin uploads:
-                promos, bundles, announcements,
-                discounts, and campaign banners.
-            </p>
-
-        </div>
-
-    </section>
-
-    <!-- ================= PROMO SECTION ================= -->
-    <section class="promo-section">
-
-        <div class="promo-card">
-
-            <h3>
-                Retail Products
-            </h3>
-
-            <p>
-                Perfect for walk-in buyers,
-                online consumers,
-                and everyday household purchases.
-            </p>
-
-        </div>
-
-        <div class="promo-card">
-
-            <h3>
-                Wholesale Deals
-            </h3>
-
-            <p>
-                Bulk order pricing for stores,
-                resellers,
-                and distribution partners.
-            </p>
-
-        </div>
-
-        <div class="promo-card">
-
-            <h3>
-                Fast Order Inquiry
-            </h3>
-
-            <p>
-                Customers may inquire first before
-                final checkout and delivery confirmation.
-            </p>
-
-        </div>
-
-    </section>
-
-    <!-- ================= STORE TOOLS ================= -->
-    <section class="store-tools">
-
-        <input type="text" id="storeSearch" placeholder="Search products...">
-
-        <select id="categoryFilter">
-
-            <option value="all">
-                All Categories
-            </option>
-
-            <option value="Retail">
-                Retail
-            </option>
-
-            <option value="Wholesale">
-                Wholesale
-            </option>
-
-        </select>
-
-    </section>
-
-    <!-- ================= PRODUCTS SECTION ================= -->
-    <section class="products-section" id="products">
-
-        <div class="section-title">
-
-            <h2>
-                Available Products
-            </h2>
-
-            <p>
-                Showing first 20 products.
-                Click load more to expand listings.
-            </p>
-
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="Chocolates">Chocolates</option>
+                <option value="Biscuits">Biscuits & Wafers</option>
+                <option value="Candies">Candies & Lollies</option>
+                <option value="Dips">Dips & Sauces</option>
+                <option value="Snacks">Snacks & Crisps</option>
+                <option value="Beverages">Beverages & Cocoa</option>
+            </select>
         </div>
 
         <div class="product-grid" id="productGrid">
-
             <!-- PRODUCTS LOAD HERE -->
-
         </div>
 
         <div class="load-more-wrap">
-
-            <button id="loadMoreProducts">
-
-                Load More Products
-
-            </button>
-
+            <button id="loadMoreProducts">Load More Products</button>
         </div>
-
     </section>
 
-    <!-- ================= FOOTER ================= -->
     <footer class="store-footer" id="contact">
-
         <div class="footer-content">
-
-            <!-- CLIENT SIDE -->
             <div class="client-footer-section">
+                <h3>M&N Consumer Goods</h3>
+                <p>Retail • Wholesale • Consumer Goods Distribution</p>
 
-                <h3>
-                    M&N Consumer Goods
-                </h3>
-
-                <p>
-                    Retail • Wholesale • Consumer Goods Distribution
-                </p>
-
-                <div class="footer-links">
-
-                    <a href="#">
-                        Official Facebook Page Coming Soon
-                    </a>
-
-                    <a href="#">
-                        Official Contact Information Coming Soon
-                    </a>
-
-                    <a href="#">
-                        Official Email Coming Soon
-                    </a>
-
+                <div class="footer-contact-list">
+                    <a href="tel:+639052273431">📱 +639052273431</a>
+                    <a href="https://wa.me/639052273431" target="_blank">💬 WhatsApp / Viber</a>
+                    <a href="https://www.facebook.com/nico.torrevillas" target="_blank">📘 Nico Torrevillas</a>
+                    <a href="mailto:kokiks@mail.com">✉️ kokiks@mail.com</a>
                 </div>
-
             </div>
 
-            <!-- DIVIDER -->
             <div class="footer-divider"></div>
 
-            <!-- BUILDFRAME CREDIT -->
             <div class="buildframe-credit">
-
-                <strong>
-                    Powered by BuildFrame Digital System
-                </strong>
-
-                <span>
-                    Website, Funnel & Platform Builder
-                </span>
+                <strong>Powered by BuildFrame Digital System</strong>
+                <span>Website, Funnel & Platform Builder</span>
 
                 <div class="buildframe-links">
-
                     <a href="https://www.facebook.com/profile.php?id=61573627290922" target="_blank">
                         BuildFrame Facebook Page
                     </a>
@@ -253,27 +246,17 @@
                     <a href="https://wa.me/639760110243" target="_blank">
                         WhatsApp Support
                     </a>
-
                 </div>
-
             </div>
-
         </div>
-
     </footer>
 
-    <!-- ================= M&N FLOATING MESSAGE BUBBLE ================= -->
-    <a href="#" class="floating-chat-bubble" target="_blank">
-
-        <img src="assets/logo/mn-logo.png" alt="M&N Logo" class="chat-logo">
-
-        <div class="chat-text">
-            Message M&N
-        </div>
-
+    <a href="https://www.facebook.com/nico.torrevillas" class="floating-chat-bubble" target="_blank">
+        <img src="assets/branding/mn-logo.png" alt="M&N Logo" class="chat-logo">
+        <div class="chat-text">Message M&N</div>
     </a>
 
-    <!-- STORE JS -->
+    <script src="assets/js/api-config.js"></script>
     <script src="assets/js/store.js"></script>
 
 </body>

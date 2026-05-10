@@ -1,0 +1,197 @@
+/* ===============================
+   RESET
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===============================
+   BODY
+================================ */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    min-height: 100vh;
+}
+
+/* ===============================
+   PAGE
+================================ */
+
+.supplier-login-page {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+/* ===============================
+   CARD
+================================ */
+
+.supplier-login-card {
+    width: 100%;
+    max-width: 1050px;
+
+    background: white;
+
+    border-radius: 20px;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* ===============================
+   LEFT
+================================ */
+
+.supplier-login-left {
+    background:
+        linear-gradient(rgba(17, 24, 39, 0.75),
+            rgba(17, 24, 39, 0.75)),
+        url("https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=1200");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    text-align: center;
+    color: white;
+    padding: 40px;
+}
+
+.overlay h2 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.overlay p {
+    line-height: 1.7;
+    font-size: 18px;
+}
+
+/* ===============================
+   RIGHT
+================================ */
+
+.supplier-login-right {
+    padding: 70px 60px;
+}
+
+.supplier-login-right h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.supplier-login-right p {
+    color: #6b7280;
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+/* ===============================
+   FORM
+================================ */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #374151;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    font-size: 15px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+
+.supplier-login-btn {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #111827;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.supplier-login-btn:hover {
+    background: #2563eb;
+}
+
+/* ===============================
+   BACK LINK
+================================ */
+
+.back-link {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.back-link a {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+    .supplier-login-card {
+        grid-template-columns: 1fr;
+    }
+
+    .supplier-login-left {
+        min-height: 300px;
+    }
+
+    .supplier-login-right {
+        padding: 40px 25px;
+    }
+
+}
