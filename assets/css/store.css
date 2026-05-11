@@ -721,3 +721,44 @@ SPECIAL SHOPPING SECTIONS
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =========================================
+   PRODUCT CARD SIZE FIX
+========================================= */
+
+.products-grid,
+#productsGrid,
+#featuredProductsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.product-card {
+    max-width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.product-card img,
+.product-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    display: block;
+    background: #f8fafc;
+}
+
+.product-image {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+}
+
+.product-card .product-body,
+.product-card-content {
+    padding: 18px;
+}

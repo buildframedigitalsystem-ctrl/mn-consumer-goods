@@ -2,124 +2,149 @@
    SUPPLIER SESSION
 ================================= */
 
-const supplierSession = JSON.parse(localStorage.getItem("mnSupplierSession"));
-
-/* =================================
-   DASHBOARD ELEMENTS
-================================= */
-
-const supplierMain = document.querySelector(".dashboard-main");
-const supplierLinks = document.querySelectorAll(".sidebar-menu a[data-page]");
-const supplierLogoutBtn = document.getElementById("supplierLogoutBtn");
-
-/* =================================
-   ACTIVE SIDEBAR
-================================= */
-
-function setActiveSupplier(page) {
-
-    supplierLinks.forEach(link => {
-        link.classList.remove("active");
-    });
-
-    const activeLink = document.querySelector(
-        `.sidebar-menu a[data-page="${page}"]`
+const supplierSession =
+    JSON.parse(
+        localStorage.getItem(
+            "mnSupplierSession"
+        )
     );
 
-    if (activeLink) {
-        activeLink.classList.add("active");
-    }
+if (!supplierSession) {
+
+    alert("Please login first.");
+
+    window.location.href =
+        "supplier-login.html";
+
 }
 
 /* =================================
-   DASHBOARD PAGE
+   ELEMENTS
 ================================= */
 
-function loadSupplierDashboard() {
+const mainContent =
+    document.querySelector(
+        ".dashboard-main"
+    );
 
-    setActiveSupplier("dashboard");
+const menuLinks =
+    document.querySelectorAll(
+        ".sidebar-menu a[data-page]"
+    );
 
-    supplierMain.innerHTML = `
+const logoutBtn =
+    document.getElementById(
+        "supplierLogoutBtn"
+    );
+
+/* =================================
+   HELPERS
+================================= */
+
+function getSupplierName() {
+
+    return supplierSession?.supplierName
+        || "Supplier";
+
+}
+
+function setActive(pageName) {
+
+    menuLinks.forEach(link => {
+
+        link.classList.toggle(
+            "active",
+            link.dataset.page === pageName
+        );
+
+    });
+
+}
+
+/* =================================
+   PAGES
+================================= */
+
+function renderDashboard() {
+
+    mainContent.innerHTML = `
     
         <header class="dashboard-topbar">
 
             <div>
                 <h1>Supplier Dashboard</h1>
+
                 <p>
-                    Welcome to the M&N Supplier Portal
+                    Welcome back,
+                    ${getSupplierName()}
                 </p>
             </div>
-
-            <button class="new-order-btn">
-                View Purchase Orders
-            </button>
 
         </header>
 
         <section class="dashboard-stats">
 
             <div class="stat-card">
-                <h3>Total Purchase Orders</h3>
-                <h2>42</h2>
+                <h3>Total Products</h3>
+                <h2>0</h2>
             </div>
 
             <div class="stat-card">
-                <h3>Pending Deliveries</h3>
-                <h2>8</h2>
+                <h3>Pending P.O.</h3>
+                <h2>0</h2>
             </div>
 
             <div class="stat-card">
-                <h3>Completed Deliveries</h3>
-                <h2>31</h2>
+                <h3>Deliveries</h3>
+                <h2>0</h2>
             </div>
 
             <div class="stat-card">
-                <h3>Supplier Rating</h3>
-                <h2>4.9</h2>
+                <h3>Payables</h3>
+                <h2>₱0.00</h2>
             </div>
 
         </section>
+    
+    `;
+
+}
+
+function renderProducts() {
+
+    mainContent.innerHTML = `
+    
+        <header class="dashboard-topbar">
+
+            <div>
+                <h1>Supplier Products</h1>
+
+                <p>
+                    Products linked to this supplier.
+                </p>
+            </div>
+
+        </header>
 
         <section class="recent-orders">
 
-            <div class="section-header">
-                <h2>Recent Supplier Transactions</h2>
-            </div>
-
-            <table class="admin-table">
+            <table>
 
                 <thead>
                     <tr>
-                        <th>PO Number</th>
-                        <th>Date</th>
+                        <th>Product</th>
+                        <th>SKU</th>
+                        <th>Cost</th>
                         <th>Status</th>
-                        <th>Total</th>
                     </tr>
                 </thead>
 
                 <tbody>
-
                     <tr>
-                        <td>PO-1001</td>
-                        <td>May 08, 2026</td>
-                        <td>Delivered</td>
-                        <td>₱120,000</td>
+                        <td colspan="4">
+                            No supplier products yet.
+                        </td>
                     </tr>
-
-                    <tr>
-                        <td>PO-1002</td>
-                        <td>May 07, 2026</td>
-                        <td>Pending</td>
-                        <td>₱85,000</td>
-                    </tr>
-
-                    <tr>
-                        <td>PO-1003</td>
-                        <td>May 06, 2026</td>
-                        <td>Processing</td>
-                        <td>₱64,500</td>
-                    </tr>
-
                 </tbody>
 
             </table>
@@ -127,34 +152,32 @@ function loadSupplierDashboard() {
         </section>
     
     `;
+
 }
 
-/* =================================
-   PURCHASE ORDERS
-================================= */
+function renderPurchaseOrders() {
 
-function loadPurchaseOrders() {
-
-    setActiveSupplier("purchaseOrders");
-
-    supplierMain.innerHTML = `
-
+    mainContent.innerHTML = `
+    
         <header class="dashboard-topbar">
 
             <div>
                 <h1>Purchase Orders</h1>
-                <p>Manage incoming purchase orders from M&N.</p>
+
+                <p>
+                    Purchase orders from M&N.
+                </p>
             </div>
 
         </header>
 
         <section class="recent-orders">
 
-            <table class="admin-table">
+            <table>
 
                 <thead>
                     <tr>
-                        <th>PO Number</th>
+                        <th>P.O. ID</th>
                         <th>Date</th>
                         <th>Status</th>
                         <th>Total</th>
@@ -162,12 +185,154 @@ function loadPurchaseOrders() {
                 </thead>
 
                 <tbody>
-
                     <tr>
                         <td colspan="4">
                             No purchase orders yet.
                         </td>
                     </tr>
+                </tbody>
+
+            </table>
+
+        </section>
+    
+    `;
+
+}
+
+function renderDeliveries() {
+
+    mainContent.innerHTML = `
+    
+        <header class="dashboard-topbar">
+
+            <div>
+                <h1>Deliveries</h1>
+
+                <p>
+                    Supplier shipment tracking.
+                </p>
+            </div>
+
+        </header>
+
+        <section class="recent-orders">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Delivery ID</th>
+                        <th>Status</th>
+                        <th>Received By</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td colspan="4">
+                            No deliveries yet.
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </section>
+    
+    `;
+
+}
+
+function renderPayables() {
+
+    mainContent.innerHTML = `
+    
+        <header class="dashboard-topbar">
+
+            <div>
+                <h1>Supplier Payables</h1>
+
+                <p>
+                    Outstanding balances and payments.
+                </p>
+            </div>
+
+        </header>
+
+        <section class="dashboard-stats">
+
+            <div class="stat-card">
+                <h3>Total Payable</h3>
+                <h2>₱0.00</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Paid</h3>
+                <h2>₱0.00</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Remaining</h3>
+                <h2>₱0.00</h2>
+            </div>
+
+        </section>
+    
+    `;
+
+}
+
+function renderSettings() {
+
+    mainContent.innerHTML = `
+    
+        <header class="dashboard-topbar">
+
+            <div>
+                <h1>Supplier Settings</h1>
+
+                <p>
+                    Supplier profile information.
+                </p>
+            </div>
+
+        </header>
+
+        <section class="recent-orders">
+
+            <table>
+
+                <tbody>
+
+                    <tr>
+                        <th>Supplier ID</th>
+                        <td>
+                            ${supplierSession.supplierId || "-"}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Supplier Name</th>
+                        <td>
+                            ${supplierSession.supplierName || "-"}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Email</th>
+                        <td>
+                            ${supplierSession.email || "-"}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Mobile</th>
+                        <td>
+                            ${supplierSession.mobile || "-"}
+                        </td>
+                    </tr>
 
                 </tbody>
 
@@ -176,267 +341,77 @@ function loadPurchaseOrders() {
         </section>
     
     `;
+
 }
 
 /* =================================
-   PRODUCT DELIVERIES
+   EVENTS
 ================================= */
 
-function loadProductDeliveries() {
+menuLinks.forEach(link => {
 
-    setActiveSupplier("deliveries");
+    link.addEventListener(
+        "click",
+        function (e) {
 
-    supplierMain.innerHTML = `
+            e.preventDefault();
 
-        <header class="dashboard-topbar">
+            const page =
+                this.dataset.page;
 
-            <div>
-                <h1>Product Deliveries</h1>
-                <p>Track supplier deliveries and shipment schedules.</p>
-            </div>
+            setActive(page);
 
-        </header>
+            if (page === "dashboard")
+                renderDashboard();
 
-        <section class="recent-orders">
+            if (page === "products")
+                renderProducts();
 
-            <table class="admin-table">
+            if (page === "purchaseOrders")
+                renderPurchaseOrders();
 
-                <thead>
-                    <tr>
-                        <th>Delivery ID</th>
-                        <th>Status</th>
-                        <th>Arrival Date</th>
-                    </tr>
-                </thead>
+            if (page === "deliveries")
+                renderDeliveries();
 
-                <tbody>
+            if (page === "payables")
+                renderPayables();
 
-                    <tr>
-                        <td colspan="3">
-                            No delivery records yet.
-                        </td>
-                    </tr>
+            if (page === "settings")
+                renderSettings();
 
-                </tbody>
-
-            </table>
-
-        </section>
-
-    `;
-}
-
-/* =================================
-   PRODUCT RECEIVING
-================================= */
-
-function loadProductReceiving() {
-
-    setActiveSupplier("receiving");
-
-    supplierMain.innerHTML = `
-
-        <header class="dashboard-topbar">
-
-            <div>
-                <h1>Product Receiving</h1>
-                <p>View received inventory and receiving confirmations.</p>
-            </div>
-
-        </header>
-
-        <section class="recent-orders">
-
-            <table class="admin-table">
-
-                <thead>
-                    <tr>
-                        <th>Receiving ID</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td colspan="3">
-                            No receiving records yet.
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-    `;
-}
-
-/* =================================
-   SUPPLIER TRANSACTIONS
-================================= */
-
-function loadSupplierTransactions() {
-
-    setActiveSupplier("transactions");
-
-    supplierMain.innerHTML = `
-
-        <header class="dashboard-topbar">
-
-            <div>
-                <h1>Supplier Transactions</h1>
-                <p>Monitor supplier payment and transaction history.</p>
-            </div>
-
-        </header>
-
-        <section class="recent-orders">
-
-            <table class="admin-table">
-
-                <thead>
-                    <tr>
-                        <th>Transaction ID</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td colspan="3">
-                            No supplier transactions yet.
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-    `;
-}
-
-/* =================================
-   ACCOUNT SETTINGS
-================================= */
-
-function loadSupplierSettings() {
-
-    setActiveSupplier("settings");
-
-    supplierMain.innerHTML = `
-
-        <header class="dashboard-topbar">
-
-            <div>
-                <h1>Account Settings</h1>
-                <p>Manage supplier account information.</p>
-            </div>
-
-        </header>
-
-        <section class="recent-orders">
-
-            <table class="admin-table">
-
-                <tbody>
-
-                    <tr>
-                        <th>Supplier Name</th>
-                        <td>${supplierSession?.supplierName || "-"}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Email</th>
-                        <td>${supplierSession?.email || "-"}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Mobile</th>
-                        <td>${supplierSession?.mobile || "-"}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Status</th>
-                        <td>${supplierSession?.status || "-"}</td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-    `;
-}
-
-/* =================================
-   SIDEBAR EVENTS
-================================= */
-
-supplierLinks.forEach(link => {
-
-    link.addEventListener("click", function (e) {
-
-        e.preventDefault();
-
-        const page = this.dataset.page;
-
-        switch (page) {
-
-            case "dashboard":
-                loadSupplierDashboard();
-                break;
-
-            case "purchaseOrders":
-                loadPurchaseOrders();
-                break;
-
-            case "deliveries":
-                loadProductDeliveries();
-                break;
-
-            case "receiving":
-                loadProductReceiving();
-                break;
-
-            case "transactions":
-                loadSupplierTransactions();
-                break;
-
-            case "settings":
-                loadSupplierSettings();
-                break;
         }
-    });
+    );
+
 });
 
-/* =================================
-   LOGOUT
-================================= */
+if (logoutBtn) {
 
-if (supplierLogoutBtn) {
+    logoutBtn.addEventListener(
+        "click",
+        function (e) {
 
-    supplierLogoutBtn.addEventListener("click", function (e) {
+            e.preventDefault();
 
-        e.preventDefault();
+            localStorage.removeItem(
+                "mnSupplierSession"
+            );
 
-        localStorage.removeItem("mnSupplierSession");
+            alert(
+                "Logged out successfully."
+            );
 
-        alert("Supplier logged out.");
+            window.location.href =
+                "supplier-login.html";
 
-        window.location.href = "supplier-login.html";
-    });
+        }
+    );
+
 }
 
 /* =================================
    INITIAL LOAD
 ================================= */
 
-loadSupplierDashboard();
+setActive("dashboard");
+
+renderDashboard();

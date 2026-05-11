@@ -1,0 +1,40 @@
+<section class="dashboard-section">
+    <h1>Payments & Balance</h1>
+    <p>View your payments, unpaid orders, and outstanding balance.</p>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card">
+            <h3>Total Paid</h3>
+            <p id="customerTotalPaid">₱0.00</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Unpaid Balance</h3>
+            <p id="customerUnpaidBalance">₱0.00</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Pending Payment</h3>
+            <p id="customerPendingPayment">₱0.00</p>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Payment ID</th>
+                    <th>Order ID</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="customerPaymentsTable">
+                <tr>
+                    <td colspan="5">No payment records yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

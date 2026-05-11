@@ -1,0 +1,136 @@
+<section class="kpi-grid">
+
+    <div class="kpi-card">
+        <span>💰</span>
+        <p>Total Sales</p>
+        <h2 id="totalSales">₱0.00</h2>
+    </div>
+
+    <div class="kpi-card">
+        <span>🧾</span>
+        <p>Total Orders</p>
+        <h2 id="totalOrders">0</h2>
+    </div>
+
+    <div class="kpi-card">
+        <span>📦</span>
+        <p>Total Products</p>
+        <h2 id="totalProducts">0</h2>
+    </div>
+
+    <div class="kpi-card">
+        <span>⚠️</span>
+        <p>Low Stock</p>
+        <h2 id="lowStock">0</h2>
+    </div>
+
+    <div class="kpi-card">
+        <span>👥</span>
+        <p>Customers</p>
+        <h2 id="totalCustomers">0</h2>
+    </div>
+
+    <div class="kpi-card">
+        <span>🚚</span>
+        <p>Pending Deliveries</p>
+        <h2 id="pendingDeliveries">0</h2>
+    </div>
+
+</section>
+
+<section class="dashboard-grid">
+
+    <div class="panel">
+        <h3>Sales Summary</h3>
+
+        <div class="chart-box">
+            <canvas id="salesSummaryChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Order Status</h3>
+
+        <div class="chart-box">
+            <canvas id="orderStatusChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Sales Trend</h3>
+
+        <div class="chart-box">
+            <canvas id="salesTrendChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Inventory Status</h3>
+
+        <div class="chart-box">
+            <canvas id="inventoryStatusChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Best Sellers</h3>
+
+        <div class="chart-box">
+            <canvas id="bestSellersChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Customer Types</h3>
+
+        <div class="chart-box">
+            <canvas id="customerTypesChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Delivery Status</h3>
+
+        <div class="chart-box">
+            <canvas id="deliveryStatusChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Payables vs Payments</h3>
+
+        <div class="chart-box">
+            <canvas id="payablesChart"></canvas>
+        </div>
+    </div>
+
+    <div class="panel large">
+
+        <h3>Recent Orders</h3>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody id="recentOrdersTable">
+
+                <tr>
+                    <td colspan="4">
+                        No orders yet
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>

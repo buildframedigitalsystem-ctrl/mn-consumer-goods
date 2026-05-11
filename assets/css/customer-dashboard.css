@@ -377,3 +377,122 @@ table td {
 table tbody tr {
     border-bottom: 1px solid #e5e7eb;
 }
+
+/* ===============================
+   UNIVERSAL DASHBOARD CONTENT
+================================ */
+
+.dashboard-main {
+    padding: 45px 55px;
+    background: #f3f6fb;
+    min-height: 100vh;
+}
+
+.dashboard-section {
+    max-width: 1200px;
+}
+
+.dashboard-section h1 {
+    font-size: 34px;
+    margin: 0 0 8px;
+    color: #0f172a;
+}
+
+.dashboard-section p {
+    color: #475569;
+    margin-bottom: 25px;
+}
+
+/* CARDS */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    margin-top: 25px;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.dashboard-card h3 {
+    margin: 0 0 18px;
+    color: #64748b;
+    font-size: 16px;
+}
+
+.dashboard-card strong {
+    font-size: 30px;
+    color: #0f172a;
+}
+
+/* PANELS */
+
+.dashboard-panel {
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    margin-top: 25px;
+}
+
+.dashboard-panel h2 {
+    margin-top: 0;
+}
+
+/* TABLES */
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.dashboard-table th {
+    color: #475569;
+    font-size: 14px;
+}
+
+/* FORMS */
+
+.dashboard-form {
+    display: grid;
+    gap: 18px;
+    max-width: 520px;
+}
+
+.dashboard-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.dashboard-form input {
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.dashboard-form button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}

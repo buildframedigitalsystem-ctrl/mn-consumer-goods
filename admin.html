@@ -16,6 +16,12 @@
 
 <body>
 
+    <script>
+        if (localStorage.getItem("mnAdminLoggedIn") !== "true") {
+            window.location.href = "admin-login.html";
+        }
+    </script>
+
     <!-- =========================
          ADMIN LAYOUT
     ========================== -->

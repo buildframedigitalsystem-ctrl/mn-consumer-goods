@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+}
+
+.hub-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* LEFT */
+
+.hub-left {
+    width: 35%;
+    background: #111827;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+    text-align: center;
+}
+
+.hub-logo {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+/* RIGHT */
+
+.hub-right {
+    flex: 1;
+    padding: 60px;
+}
+
+.hub-right h2 {
+    margin-bottom: 30px;
+}
+
+.hub-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.hub-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+
+    text-decoration: none;
+    color: #111827;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+    transition: 0.3s;
+}
+
+.hub-card:hover {
+    transform: translateY(-5px);
+}
+
+.hub-card span {
+    font-size: 40px;
+}
+
+.hub-card h3 {
+    margin-top: 15px;
+}
+
+/* COLORS */
+
+.admin-card {
+    border-top: 5px solid #ef4444;
+}
+
+.customer-card {
+    border-top: 5px solid #3b82f6;
+}
+
+.supplier-card {
+    border-top: 5px solid #10b981;
+}
+
+.agent-card {
+    border-top: 5px solid #f59e0b;
+}

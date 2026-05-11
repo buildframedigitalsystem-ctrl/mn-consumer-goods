@@ -1,0 +1,199 @@
+<!-- =========================================
+     INVENTORY KPI GRID
+========================================= -->
+
+<section class="kpi-grid">
+
+    <div class="kpi-card">
+
+        <span>📦</span>
+
+        <p>Total Inventory</p>
+
+        <h2 id="inventoryTotalProducts">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="kpi-card">
+
+        <span>⚠️</span>
+
+        <p>Low Stock</p>
+
+        <h2 id="inventoryLowStock">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="kpi-card">
+
+        <span>❌</span>
+
+        <p>Out of Stock</p>
+
+        <h2 id="inventoryOutStock">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="kpi-card">
+
+        <span>🚚</span>
+
+        <p>Incoming Deliveries</p>
+
+        <h2 id="inventoryIncoming">
+
+            0
+
+        </h2>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     INVENTORY DASHBOARD GRID
+========================================= -->
+
+<section class="dashboard-grid">
+
+    <div class="panel">
+
+        <h3>
+
+            Inventory Status
+
+        </h3>
+
+        <div class="chart-box">
+
+            <canvas id="inventoryStatusChart">
+
+            </canvas>
+
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <h3>
+
+            Inventory Movement
+
+        </h3>
+
+        <div class="chart-box">
+
+            <canvas id="inventoryMovementChart">
+
+            </canvas>
+
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <h3>
+
+            Low Stock Products
+
+        </h3>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Product
+                    </th>
+
+                    <th>
+                        Remaining
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="lowStockTable">
+
+                <tr>
+
+                    <td colspan="3">
+
+                        No low stock products
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="panel">
+
+        <h3>
+
+            Inventory Alerts
+
+        </h3>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Product
+                    </th>
+
+                    <th>
+                        Alert
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="inventoryAlertsTable">
+
+                <tr>
+
+                    <td colspan="2">
+
+                        No inventory alerts
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>

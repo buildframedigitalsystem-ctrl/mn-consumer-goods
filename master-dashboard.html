@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&N Master Dashboard</title>
+
+    <link rel="stylesheet" href="assets/css/master-dashboard.css">
+    <link rel="stylesheet" href="assets/css/pricing-dashboard.css">
+</head>
+
+<body>
+
+    <div class="master-layout">
+
+        <aside class="master-sidebar">
+            <h2>M&N OS</h2>
+
+            <a href="#" class="active" data-page="overview">📊 Overview</a>
+            <a href="#" data-page="orders">🧾 Orders</a>
+            <a href="#" data-page="inventory">📦 Inventory</a>
+            <a href="#" data-page="deliveries">🚚 Deliveries</a>
+            <a href="#" data-page="customers">👥 Customers</a>
+            <a href="#" data-page="suppliers">🏪 Suppliers</a>
+            <a href="#" data-page="agents">🧑‍💼 Agents</a>
+            <a href="#" data-page="pricing">💰 Pricing Engine</a>
+            <a href="#" data-page="reports">📊 Reports</a>
+            <a href="#" data-page="settings">⚙️ Settings</a>
+
+            <div class="sidebar-footer">
+                BuildFrame OS
+            </div>
+        </aside>
+
+        <main class="master-main">
+
+            <header class="master-header">
+                <div>
+                    <h1>Master Dashboard</h1>
+                    <p>M&N Consumer Goods Operating System</p>
+                </div>
+
+                <div class="header-filters">
+                    <select id="dashboardRange">
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+
+                    <button id="dashboardRefreshBtn">Refresh</button>
+                </div>
+            </header>
+
+            <div id="masterDashboardContent"></div>
+
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/master-dashboard.js"></script>
+    <script src="assets/js/pricing-dashboard.js"></script>
+
+</body>
+
+</html>

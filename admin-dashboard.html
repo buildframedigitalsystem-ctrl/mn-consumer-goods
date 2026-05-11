@@ -58,10 +58,21 @@
     <!-- INVOICE MODAL CONTAINER -->
     <div id="invoiceModalContainer"></div>
 
+    <!-- CORE CONFIG -->
     <script src="assets/js/api-config.js"></script>
+
+    <!-- SECURITY / PERMISSION GUARD -->
+    <script src="assets/js/permission.js"></script>
+    <script>
+        requireRole_(["ADMIN"], "admin-login.html");
+        displayLoggedInUser_();
+    </script>
+
+    <!-- ADMIN LAYOUT SYSTEM -->
     <script src="assets/js/admin-main.js"></script>
     <script src="assets/js/admin-dashboard.js"></script>
 
+    <!-- ADMIN MODULES -->
     <script src="assets/js/products.js"></script>
     <script src="assets/js/suppliers.js"></script>
     <script src="assets/js/purchase-orders.js"></script>

@@ -1,0 +1,203 @@
+/* =========================================
+   PRICING DASHBOARD
+========================================= */
+
+.pricing-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pricing-dashboard .dashboard-header {
+    margin-bottom: 10px;
+}
+
+.pricing-dashboard .dashboard-header h1 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.pricing-dashboard .dashboard-header p {
+    color: #d4af37;
+}
+
+/* =========================================
+   PRICING CARDS
+========================================= */
+
+.pricing-dashboard .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.pricing-dashboard .dashboard-card,
+.pricing-preview-card {
+    background: #0b3a28;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 18px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.pricing-dashboard h3 {
+    color: #d4af37;
+    margin-bottom: 6px;
+}
+
+.pricing-dashboard p {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.dashboard-btn {
+    background: #d4af37;
+    color: #061b12;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.dashboard-btn:hover {
+    opacity: 0.9;
+}
+
+.dashboard-btn.primary {
+    margin-top: 10px;
+}
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.dashboard-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 12px;
+}
+
+/* =========================================
+   TABLES
+========================================= */
+
+.pricing-table,
+.pricing-dashboard .admin-table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.pricing-table th,
+.pricing-table td,
+.pricing-dashboard .admin-table th,
+.pricing-dashboard .admin-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+    text-align: left;
+    white-space: nowrap;
+    color: #ffffff;
+}
+
+.pricing-table th,
+.pricing-dashboard .admin-table th {
+    color: #d4af37;
+    font-weight: 800;
+    background: rgba(0, 0, 0, 0.18);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.pricing-table tr:hover,
+.pricing-dashboard .admin-table tr:hover {
+    background: rgba(212, 175, 55, 0.08);
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+    color: #ffffff;
+    opacity: 0.8;
+    padding: 14px;
+    border: 1px dashed rgba(212, 175, 55, 0.35);
+    border-radius: 12px;
+}
+
+/* =========================================
+   PREVIEW FORM
+========================================= */
+
+.pricing-preview-card {
+    margin-top: 6px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    color: #d4af37;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.form-group input {
+    background: #061b12;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* =========================================
+   PREVIEW RESULT
+========================================= */
+
+.pricing-preview-result {
+    background: #061b12;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 14px;
+    max-height: 360px;
+    overflow: auto;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+    .pricing-dashboard .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

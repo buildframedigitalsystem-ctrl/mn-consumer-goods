@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&N Agent Dashboard</title>
+
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/customer-dashboard.css">
+</head>
+
+<body>
+
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-logo">
+            <h2>M&N</h2>
+            <p>Agent / Reseller Portal</p>
+        </div>
+
+        <div class="sidebar-user">
+            <strong data-user-name>Agent User</strong>
+            <span data-user-role>AGENT</span>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="#" class="active" data-page="dashboard">Dashboard</a>
+            <a href="#" data-page="sales">My Sales</a>
+            <a href="#" data-page="commissions">Commissions</a>
+            <a href="#" data-page="deliveries">Assigned Deliveries</a>
+            <a href="#" data-page="customers">My Customers</a>
+            <a href="#" data-page="settings">Account Settings</a>
+            <a href="#" id="agentLogoutBtn">Logout</a>
+        </nav>
+
+    </aside>
+
+    <main class="dashboard-main"></main>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/permission.js"></script>
+
+    <script>
+        requireRole_(["AGENT", "RESELLER"], "agent-login.html");
+        displayLoggedInUser_();
+    </script>
+
+    <script src="assets/js/agent-dashboard.js"></script>
+
+</body>
+
+</html>

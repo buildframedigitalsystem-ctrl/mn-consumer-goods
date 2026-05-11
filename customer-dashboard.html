@@ -36,6 +36,14 @@
         <!-- JS loads dashboard content here -->
     </main>
 
+    <script src="assets/js/api-config.js"></script>
+
+    <script src="assets/js/permission.js"></script>
+
+    <script>
+        requireRole_(["CUSTOMER"], "customer-login.html");
+    </script>
+
     <script src="assets/js/customer-dashboard.js"></script>
 
 </body>

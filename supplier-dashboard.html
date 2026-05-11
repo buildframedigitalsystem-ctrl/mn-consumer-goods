@@ -36,6 +36,17 @@
         <!-- Supplier content loads from JS -->
     </main>
 
+    <!-- CONFIG -->
+    <script src="assets/js/api-config.js"></script>
+
+    <!-- SECURITY -->
+    <script src="assets/js/permission.js"></script>
+
+    <script>
+        requireRole_(["SUPPLIER"], "supplier-login.html");
+    </script>
+
+    <!-- DASHBOARD -->
     <script src="assets/js/supplier-dashboard.js"></script>
 
 </body>
