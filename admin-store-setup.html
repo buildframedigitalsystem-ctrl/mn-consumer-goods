@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Store Setup | M&N</title>
+
+    <link rel="stylesheet" href="assets/css/store.css">
+</head>
+
+<body>
+
+    <section class="store-page-header wholesale-header">
+
+        <div class="store-header-left">
+            <h1>Store Setup</h1>
+            <p>Update business details, homepage content, contact information, and storefront branding.</p>
+
+            <div class="store-page-links">
+                <a href="index.html">View Store</a>
+                <a href="admin-products.html">Products</a>
+                <a href="master-dashboard.html">Dashboard</a>
+                <a href="admin-crm-dashboard.html">Admin CRM</a>
+            </div>
+        </div>
+
+        <div class="store-header-right">
+            <img src="assets/images/branding/mn-logo.png" alt="M&N Logo">
+            <h3>M&N Consumer Goods</h3>
+            <p>Owner Store Setup</p>
+        </div>
+
+    </section>
+
+    <section class="reseller-form-section">
+
+        <form id="storeSetupForm" class="reseller-form">
+
+            <h2>Business & Storefront Details</h2>
+
+            <div class="form-grid">
+
+                <input type="text" id="businessName" placeholder="Business Name">
+                <input type="text" id="tagline" placeholder="Tagline">
+
+                <input type="text" id="mobile" placeholder="Mobile / WhatsApp / Viber">
+                <input type="email" id="email" placeholder="Email Address">
+
+                <input type="text" id="facebookUrl" placeholder="Facebook Page URL">
+                <input type="text" id="address" placeholder="Business Address">
+
+                <input type="text" id="logoUrl" placeholder="Logo Image URL / Path">
+                <input type="text" id="bannerUrl" placeholder="Banner Image URL / Path">
+
+                <input type="text" id="heroTitle" placeholder="Homepage Hero Title">
+                <input type="text" id="heroSubtitle" placeholder="Homepage Hero Subtitle">
+
+            </div>
+
+            <textarea id="aboutStore" placeholder="Short About / Store Description"></textarea>
+
+            <button type="submit" class="checkout-btn">
+                Save Store Setup
+            </button>
+
+        </form>
+
+    </section>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/admin-store-setup.js"></script>
+    <script src="assets/js/universal-search.js"></script>
+
+</body>
+
+</html>

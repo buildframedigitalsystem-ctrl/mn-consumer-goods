@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&N Promos</title>
+
+    <link rel="stylesheet" href="assets/css/store.css">
+</head>
+
+<body>
+
+    <section class="store-page-header promo-header">
+
+        <div class="store-header-left">
+            <h1>Promo Bundles & Discounts</h1>
+            <p>Discover sales, bundle promos, discounts, and featured deals.</p>
+
+            <div class="store-page-links">
+                <a href="index.html">Home</a>
+                <a href="retail.html">Retail</a>
+                <a href="wholesale.html">Wholesale</a>
+            </div>
+        </div>
+
+        <div class="store-header-right">
+            <img src="assets/images/branding/mn-logo.png" alt="M&N Logo">
+
+            <h3>M&N Consumer Goods</h3>
+            <p>Retail • Wholesale • Distribution</p>
+
+            <div class="store-header-contact">
+                <span>📱 +639052273431</span>
+                <span>✉️ kokiks@gmail.com</span>
+                <span>📍 Nico Torrevillas</span>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="store-toolbar">
+        <input type="text" id="storeSearch" placeholder="Search promos...">
+
+        <select id="categoryFilter">
+            <option value="all">All Categories</option>
+        </select>
+    </section>
+
+    <section id="products">
+        <div id="productGrid" class="product-grid"></div>
+    </section>
+
+    <div class="load-more-wrap">
+        <button id="loadMoreProducts">Load More Products</button>
+    </div>
+
+    <!-- =========================================
+     PRODUCT MODAL
+========================================= -->
+
+    <div id="productModal" class="product-modal">
+
+        <div class="product-modal-content">
+
+            <button class="close-modal" onclick="closeProductModal()">
+                ✕
+            </button>
+
+            <div class="modal-image-wrap">
+                <img id="modalProductImage" src="" alt="">
+            </div>
+
+            <div class="modal-details">
+
+                <div id="modalBadges" class="modal-badges"></div>
+
+                <h2 id="modalProductName">
+                    Product Name
+                </h2>
+
+                <p id="modalProductCategory" class="modal-category">
+                    Category
+                </p>
+
+                <div id="modalPriceBox" class="modal-price-box"></div>
+
+                <p id="modalProductDescription" class="modal-description">
+                    Product description here...
+                </p>
+
+                <div class="modal-actions">
+
+                    <a id="modalWhatsAppBtn" href="#" target="_blank" class="modal-btn primary-btn">
+                        💬 WhatsApp Inquiry
+                    </a>
+
+                    <button class="modal-btn secondary-btn" onclick="closeProductModal()">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/store.js"></script>
+    <script src="assets/js/universal-search.js"></script>
+
+</body>
+
+</html>

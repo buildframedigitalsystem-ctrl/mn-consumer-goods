@@ -50,34 +50,44 @@
                 </div>
             </a>
 
-            <a href="#products" class="header-cart">
+            <a href="cart.html" class="header-cart">
                 🛒 Cart
                 <span class="cart-count">0</span>
             </a>
         </div>
     </header>
 
+
     <nav class="store-navigation">
 
-        <a href="#">🏠 Home</a>
+        <div class="nav-left">
+            <a href="index.html">🏠 Home</a>
+            <a href="#products">📦 Products</a>
+            <a href="retail.html">🏪 Retail</a>
+            <a href="wholesale.html">📋 Wholesale</a>
+            <a href="promos.html">💥 Promos</a>
+            <a href="reseller-application.html">🤝 Reseller</a>
 
-        <a href="#products">📦 Products</a>
+            <div class="nav-dropdown">
+                <button type="button" class="dropdown-btn">
+                    More ▾
+                </button>
 
-        <a href="#retail">🏪 Retail</a>
+                <div class="dropdown-content">
+                    <a href="quotation-request.html">🧾 Request Quotation</a>
+                    <a href="delivery-booking.html">🚚 Delivery Booking</a>
+                    <a href="crm-dashboard.html">📊 CRM Dashboard</a>
+                    <a href="supplier-login.html">🤝 Supplier Login</a>
+                    <a href="agent-login.html">🧾 Agent Login</a>
+                    <a href="dashboard-hub.html">🧭 Portals</a>
+                </div>
+            </div>
+        </div>
 
-        <a href="#wholesale">📋 Wholesale</a>
-
-        <a href="customer-login.html">👤 Customer Login</a>
-
-        <a href="supplier-login.html">🤝 Supplier Login</a>
-
-        <a href="agent-login.html">🧾 Agent Login</a>
-
-        <a href="admin-login.html">🛠️ Admin Login</a>
-
-        <a href="dashboard-hub.html">🧭 Portals</a>
-
-        <a href="#contact">📞 Contact Us</a>
+        <div class="nav-right">
+            <a href="admin-login.html" class="nav-admin-link">🛠️ Admin</a>
+            <a href="cart.html" class="nav-cart-link">🛒 Cart <span class="cart-count">0</span></a>
+        </div>
 
     </nav>
 
@@ -150,25 +160,25 @@
         <div class="special-shop-card best-sellers">
             <h3>🔥 Best Sellers</h3>
             <p>Top-moving products loved by customers and resellers.</p>
-            <a href="#products" data-category="all">View Best Sellers →</a>
+            <a href="#products">View Best Sellers →</a>
         </div>
 
         <div class="special-shop-card new-arrivals">
             <h3>🆕 New Arrivals</h3>
             <p>Freshly added items and newly available product lines.</p>
-            <a href="#products" data-category="all">View New Items →</a>
+            <a href="#products">View New Items →</a>
         </div>
 
         <div class="special-shop-card promo-bundles">
             <h3>💥 Promo Bundles</h3>
             <p>Special bundle offers for retail buyers and small stores.</p>
-            <a href="#products" data-category="all">See Promos →</a>
+            <a href="promos.html">See Promos →</a>
         </div>
 
         <div class="special-shop-card wholesale-packs">
             <h3>🏪 Wholesale Packs</h3>
             <p>Bulk order options for resellers, stores, and businesses.</p>
-            <a href="#wholesale">Wholesale Inquiry →</a>
+            <a href="quotation-request.html">Wholesale Inquiry →</a>
         </div>
         <p>
             📍 Store Location:
@@ -190,9 +200,15 @@
             <span>🚚 Fast Delivery</span>
         </div>
 
+        <p class="wholesale-helper-text">
+            For bulk orders, reseller pricing, delivery schedules, or product bundles, send a quotation request and our
+            team will review your needs.
+        </p>
+
         <a href="https://www.facebook.com/nico.torrevillas" target="_blank">
             Inquire Now →
         </a>
+
     </section>
 
     <section class="products-section" id="products">
@@ -276,6 +292,7 @@
 
     <script src="assets/js/api-config.js"></script>
     <script src="assets/js/store.js"></script>
+    <script src="assets/js/universal-search.js"></script>
 
 </body>
 

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Products | M&N</title>
+
+    <link rel="stylesheet" href="assets/css/store.css">
+</head>
+
+<body>
+
+    <!-- =====================================
+         PRODUCT CONTROL PANEL
+    ====================================== -->
+
+    <section class="metal-admin-shell">
+
+        <div class="metal-admin-header">
+
+            <div>
+                <h1>Product Control Panel</h1>
+                <p>
+                    Manage products, pricing, visibility, promos, and store display.
+                </p>
+            </div>
+
+            <div class="metal-admin-actions">
+
+                <a href="index.html">
+                    View Store
+                </a>
+
+                <a href="admin-store-setup.html">
+                    Store Setup
+                </a>
+
+                <a href="master-dashboard.html">
+                    Dashboard
+                </a>
+
+                <button type="button" onclick="openProductFormBlock()">
+                    + Add Product
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- =====================================
+             SEARCH / FILTER BAR
+        ====================================== -->
+
+        <div class="metal-toolbar">
+
+            <input type="text" placeholder="Search products...">
+
+            <select>
+                <option>All Categories</option>
+            </select>
+
+            <select>
+                <option>All Status</option>
+                <option>In Stock</option>
+                <option>Inactive</option>
+                <option>Promo</option>
+            </select>
+
+        </div>
+
+        <!-- =====================================
+             PRODUCT TABLE PLACEHOLDER
+        ====================================== -->
+
+        <div class="metal-table-card">
+
+            <table class="metal-table">
+
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Retail</th>
+                        <th>Wholesale</th>
+                        <th>Promo</th>
+                        <th>Display</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td colspan="6">
+                            Products will appear here after upload.
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- =====================================
+         FLOATING METAL PRODUCT FORM
+    ====================================== -->
+
+    <div id="productFormOverlay" class="metal-form-overlay">
+
+        <div class="metal-form-block">
+
+            <div class="metal-form-header">
+
+                <h2>PRODUCT ENTRY FORM</h2>
+
+                <button type="button" onclick="closeProductFormBlock()">
+                    ✕
+                </button>
+
+            </div>
+
+            <form id="adminProductForm" class="metal-form-body">
+
+                <div class="form-grid">
+
+                    <input type="text" id="productName" placeholder="Product Name" required>
+
+                    <input type="text" id="category" placeholder="Category" required>
+
+                    <input type="text" id="brand" placeholder="Brand">
+
+                    <input type="text" id="defaultSupplierName" placeholder="Supplier Name">
+
+                    <input type="number" id="supplierCost" placeholder="Supplier Cost">
+
+                    <input type="number" id="markupPercent" placeholder="Markup Percent">
+
+                    <input type="number" id="retailPrice" placeholder="Retail Price" required>
+
+                    <input type="number" id="wholesalePrice" placeholder="Wholesale Price">
+
+                    <input type="text" id="productImage" placeholder="Product Image URL / Filename">
+
+                    <input type="text" id="stockStatus" placeholder="Stock Status e.g. In Stock">
+
+                    <input type="number" id="promoPrice" placeholder="Promo Price">
+
+                    <input type="text" id="discountLabel" placeholder="Discount Label e.g. SALE 10%">
+
+                    <input type="text" id="bundleName" placeholder="Bundle Name">
+
+                    <input type="number" id="sortOrder" placeholder="Sort Order">
+
+                </div>
+
+                <textarea id="description" placeholder="Product Description"></textarea>
+
+                <div class="metal-checkbox-grid">
+
+                    <label>
+                        <input type="checkbox" id="showOnHomepage" checked>
+                        Show on Homepage
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="showInRetail" checked>
+                        Show in Retail
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="showInWholesale" checked>
+                        Show in Wholesale
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="isPromo">
+                        Promo Product
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="featured" checked>
+                        Featured Product
+                    </label>
+
+                </div>
+
+                <div class="metal-form-footer">
+
+                    <button type="button" class="metal-cancel-btn" onclick="closeProductFormBlock()">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="metal-save-btn">
+                        Save Product
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/admin-products.js"></script>
+    <script src="assets/js/universal-search.js"></script>
+
+</body>
+
+</html>
