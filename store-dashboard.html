@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        M&N Store Operations App
+    </title>
+
+    <link rel="stylesheet" href="assets/css/dashboard-hub.css">
+
+    <link rel="manifest" href="manifest-store.json">
+
+    <meta name="theme-color" content="#005f2f">
+
+</head>
+
+<body>
+
+    <div class="hub-wrapper">
+
+        <!-- LEFT -->
+
+        <div class="hub-left">
+
+            <img src="assets/images/branding/mn-logo.png" class="hub-logo" alt="M&N Logo">
+
+            <h1>
+                M&N Store Operations
+            </h1>
+
+            <p>
+                Wholesale • Distribution • Reseller System
+            </p>
+
+            <span class="hub-helper-text">
+                Store ordering, invoices,
+                wholesale purchasing,
+                reseller operations,
+                and distribution tools.
+            </span>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="hub-right">
+
+            <h2>
+                Store Operations
+            </h2>
+
+            <div class="hub-cards">
+
+                <!-- ORDERS -->
+
+                <a href="cart.html" class="hub-card customer-card">
+
+                    <span>🛒</span>
+
+                    <h3>
+                        Place Orders
+                    </h3>
+
+                    <p>
+                        Create customer,
+                        retail,
+                        and wholesale orders.
+                    </p>
+
+                </a>
+
+                <!-- WHOLESALE -->
+
+                <a href="wholesale.html" class="hub-card supplier-card">
+
+                    <span>📦</span>
+
+                    <h3>
+                        Wholesale Store
+                    </h3>
+
+                    <p>
+                        Browse bulk pricing,
+                        reseller packs,
+                        and wholesale products.
+                    </p>
+
+                </a>
+
+                <!-- QUOTATION -->
+
+                <a href="quotation-request.html" class="hub-card agent-card">
+
+                    <span>🧾</span>
+
+                    <h3>
+                        Request Quotation
+                    </h3>
+
+                    <p>
+                        Submit quotation requests
+                        for bulk orders
+                        and distribution pricing.
+                    </p>
+
+                </a>
+
+                <!-- DASHBOARD -->
+
+                <a href="customer-dashboard.html" class="hub-card admin-card">
+
+                    <span>📊</span>
+
+                    <h3>
+                        My Dashboard
+                    </h3>
+
+                    <p>
+                        View invoices,
+                        payments,
+                        returns,
+                        balances,
+                        and transactions.
+                    </p>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="assets/js/dashboard-hub.js"></script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+
+            navigator.serviceWorker
+                .register("./service-worker.js")
+
+                .then(() => {
+                    console.log(
+                        "Store Operations App ready"
+                    );
+                });
+
+        }
+    </script>
+
+</body>
+
+</html>

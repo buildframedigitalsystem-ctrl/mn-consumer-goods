@@ -345,3 +345,41 @@ function closeAdminSearchOverlay() {
 document.addEventListener("DOMContentLoaded", () => {
     initializeAdminDashboard();
 });
+
+/* ===============================
+   MOBILE SIDEBAR TOGGLE
+================================ */
+
+function initializeAdminMobileSidebar() {
+    const sidebar = document.getElementById("adminSidebar");
+    const menuBtn = document.getElementById("adminMobileMenuBtn");
+    const backdrop = document.getElementById("adminSidebarBackdrop");
+
+    if (!sidebar || !menuBtn || !backdrop) return;
+
+    menuBtn.addEventListener("click", () => {
+        sidebar.classList.add("open");
+        backdrop.classList.add("show");
+    });
+
+    backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+        backdrop.classList.remove("show");
+    });
+
+    sidebar.addEventListener("click", event => {
+        const clickedMenu =
+            event.target.closest("li, a, button");
+
+        if (!clickedMenu) return;
+
+        if (window.innerWidth <= 768) {
+            sidebar.classList.remove("open");
+            backdrop.classList.remove("show");
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    initializeAdminMobileSidebar();
+});
