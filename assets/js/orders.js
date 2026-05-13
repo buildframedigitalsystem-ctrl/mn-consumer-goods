@@ -114,6 +114,9 @@ async function submitOrderForm(e) {
 
             orderForm.reset();
 
+            cartItems = [];
+            renderCart();
+
             clearSignature();
 
             await loadOrders();

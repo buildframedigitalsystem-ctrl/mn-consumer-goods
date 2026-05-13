@@ -19,8 +19,9 @@ M&N Consumer Goods provides retail and wholesale consumer products through a mod
 
 ## Contact Information
 
-Contact Number: Coming Soon  
-Email Address: Coming Soon  
+📱 Mobile / WhatsApp / Viber: +639052273431  
+✉️ Email: kokiks@mail.com
+📘 Facebook: Nico Torrevillas 
 Facebook Page: Coming Soon
 
 ## Live Website
