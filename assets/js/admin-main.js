@@ -10,7 +10,10 @@
 async function loadSection(id, file) {
     const el = document.getElementById(id);
 
-    if (!el) return false;
+    if (!el) {
+        console.warn(`Container not found: ${id}`);
+        return false;
+    }
 
     try {
         el.innerHTML = `
@@ -19,7 +22,9 @@ async function loadSection(id, file) {
             </div>
         `;
 
-        const res = await fetch(file);
+        const res = await fetch(file, {
+            cache: "no-store"
+        });
 
         if (!res.ok) {
             throw new Error(`Failed to load ${file}`);
@@ -51,6 +56,8 @@ async function loadSection(id, file) {
 ================================ */
 
 async function initializeAdminDashboard() {
+    console.log("Initializing M&N Admin OS...");
+
     await loadSection(
         "adminSidebar",
         "sections/admin/admin-sidebar.html"
@@ -66,6 +73,8 @@ async function initializeAdminDashboard() {
     bindSidebarMenu();
     bindAdminKeyboardShortcuts();
     exposeAdminControlRoutes();
+
+    console.log("M&N Admin OS initialized.");
 }
 
 /* ===============================
@@ -74,11 +83,15 @@ async function initializeAdminDashboard() {
 
 function bindSidebarMenu() {
     const menuItems =
-        document.querySelectorAll(".sidebar-menu li");
+        document.querySelectorAll(".sidebar-menu li, .sidebar-menu a[data-page]");
 
     menuItems.forEach(item => {
-        item.addEventListener("click", async () => {
-            const page = item.dataset.page;
+        item.addEventListener("click", async (event) => {
+            event.preventDefault();
+
+            const page =
+                item.dataset.page ||
+                item.getAttribute("data-page");
 
             if (!page) return;
 
@@ -214,7 +227,7 @@ async function loadAdminPage(page) {
 
 function setActiveSidebarItem(page) {
     const menuItems =
-        document.querySelectorAll(".sidebar-menu li");
+        document.querySelectorAll(".sidebar-menu li, .sidebar-menu a[data-page]");
 
     menuItems.forEach(item => {
         item.classList.toggle(
@@ -236,9 +249,7 @@ function runModuleInitializer(functionName) {
     if (typeof fn === "function") {
         fn();
     } else {
-        console.warn(
-            `${functionName} is not available yet.`
-        );
+        console.warn(`${functionName} is not available yet.`);
     }
 }
 
@@ -250,7 +261,7 @@ function exposeAdminControlRoutes() {
     window.loadAdminPage = loadAdminPage;
 
     window.goToAdminControl = function () {
-        window.location.href = "admin.html";
+        window.location.href = "admin-dashboard.html";
     };
 
     window.goToStorefront = function () {
@@ -268,48 +279,46 @@ function exposeAdminControlRoutes() {
 
 function bindAdminKeyboardShortcuts() {
     document.addEventListener("keydown", function (event) {
-        const key =
-            event.key.toLowerCase();
+        const key = event.key.toLowerCase();
 
         if ((event.ctrlKey || event.metaKey) && key === "f") {
             event.preventDefault();
-
-            openMetalSearch();
+            openAdminSearchOverlay();
         }
 
         if ((event.ctrlKey || event.metaKey) && key === "h") {
             event.preventDefault();
-
             loadAdminPage("home");
         }
 
         if ((event.ctrlKey || event.metaKey) && key === "p") {
             event.preventDefault();
-
             loadAdminPage("products");
         }
 
         if ((event.ctrlKey || event.metaKey) && key === "o") {
             event.preventDefault();
-
             loadAdminPage("orders");
         }
 
         if (event.key === "Escape") {
-            closeMetalSearch();
+            closeAdminSearchOverlay();
         }
     });
 }
 
 /* ===============================
-   METAL SEARCH CONTROL
+   SAFE SEARCH OVERLAY CONTROL
 ================================ */
 
-function openMetalSearch() {
+function openAdminSearchOverlay() {
     const overlay =
         document.getElementById("metalSearchOverlay");
 
-    if (!overlay) return;
+    if (!overlay) {
+        console.warn("Search overlay not found.");
+        return;
+    }
 
     overlay.classList.add("active");
 
@@ -320,7 +329,7 @@ function openMetalSearch() {
     }, 80);
 }
 
-function closeMetalSearch() {
+function closeAdminSearchOverlay() {
     const overlay =
         document.getElementById("metalSearchOverlay");
 

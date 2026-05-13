@@ -1,8 +1,9 @@
-<head>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>M&N Admin Dashboard</title>
 
     <link rel="stylesheet" href="assets/css/base.css">
@@ -10,7 +11,6 @@
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
     <link rel="stylesheet" href="assets/css/admin-forms.css">
 
-    <!-- ADMIN PWA SETUP -->
     <link rel="manifest" href="manifest-admin.json">
     <link rel="icon" href="assets/images/branding/mn-logo.png">
     <link rel="apple-touch-icon" href="assets/images/branding/mn-logo.png">
@@ -19,5 +19,82 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="M&N Admin OS">
-
 </head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <div id="adminSidebar" class="admin-sidebar">
+            <h2>M&N Admin OS</h2>
+            <p>Loading sidebar...</p>
+        </div>
+
+        <div class="admin-main">
+
+            <div id="adminHeader" class="admin-header">
+                <h1>M&N Consumer Goods Admin Dashboard</h1>
+                <p>Retail • Wholesale • Inventory • Distribution</p>
+            </div>
+
+            <div id="adminContent" class="admin-content">
+                <h2>✅ Admin Dashboard Loaded</h2>
+                <p>If this stays visible, the dynamic section loader is not loading the admin sections yet.</p>
+            </div>
+
+            <footer class="admin-footer">
+                <div class="admin-footer-inner">
+                    <div class="admin-footer-left">
+                        <strong>Powered by BuildFrame Digital System</strong>
+                        <span>Website, Funnel & Platform Builder</span>
+                    </div>
+
+                    <div class="admin-footer-right">
+                        <a href="mailto:buildframe.digitalsystem@gmail.com">Email</a>
+                        <a href="https://www.facebook.com/profile.php?id=61573627290922" target="_blank">Facebook</a>
+                        <a href="https://wa.me/639760110243" target="_blank">WhatsApp</a>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <div id="invoiceModalContainer"></div>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/permission.js"></script>
+
+    <!-- TEMPORARILY OFF WHILE TESTING -->
+    <!--
+    <script>
+        requireRole_(["ADMIN"], "admin-login.html");
+        displayLoggedInUser_();
+    </script>
+    -->
+
+    <script src="assets/js/admin-main.js"></script>
+    <script src="assets/js/admin-dashboard.js"></script>
+
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/suppliers.js"></script>
+    <script src="assets/js/purchase-orders.js"></script>
+    <script src="assets/js/product-receiving.js"></script>
+    <script src="assets/js/inventory.js"></script>
+    <script src="assets/js/orders.js"></script>
+    <script src="assets/js/customers.js"></script>
+    <script src="assets/js/reports.js"></script>
+    <script src="assets/js/invoice.js"></script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./service-worker.js")
+                .then(() => console.log("M&N Admin OS service worker registered"))
+                .catch(error => console.error("Service worker error:", error));
+        }
+    </script>
+
+</body>
+
+</html>
