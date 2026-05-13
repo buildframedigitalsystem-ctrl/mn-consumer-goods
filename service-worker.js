@@ -1,4 +1,4 @@
-const CACHE_NAME = "mn-business-ecosystem-v4";
+const CACHE_NAME = "mn-business-ecosystem-v5";
 
 const urlsToCache = [
 
@@ -17,7 +17,9 @@ const urlsToCache = [
        STORE OPERATIONS APP
     ========================================= */
 
+
     "./store-dashboard.html",
+    "./store-order-form.html",
 
     "./cart.html",
     "./customer-login.html",

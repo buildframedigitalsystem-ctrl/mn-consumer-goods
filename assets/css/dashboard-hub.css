@@ -2,19 +2,56 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: #f5f7fb;
+
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.92),
+            rgba(255, 255, 255, 0.92)),
+        linear-gradient(to right,
+            rgba(15, 23, 42, 0.03) 1px,
+            transparent 1px),
+        linear-gradient(to bottom,
+            rgba(15, 23, 42, 0.03) 1px,
+            transparent 1px);
+
+    background-size:
+        cover,
+        28px 28px,
+        28px 28px;
+
+    color: #111827;
 }
+
+/* =========================================
+   HUB WRAPPER
+========================================= */
 
 .hub-wrapper {
     display: flex;
     min-height: 100vh;
 }
 
-/* LEFT */
+/* =========================================
+   LEFT PANEL
+========================================= */
 
 .hub-left {
     width: 35%;
-    background: #111827;
+
+    background:
+        linear-gradient(rgba(7, 21, 47, 0.95),
+            rgba(7, 21, 47, 0.95)),
+        linear-gradient(to right,
+            rgba(56, 189, 248, 0.10) 1px,
+            transparent 1px),
+        linear-gradient(to bottom,
+            rgba(56, 189, 248, 0.10) 1px,
+            transparent 1px);
+
+    background-size:
+        cover,
+        34px 34px,
+        34px 34px;
+
     color: white;
 
     display: flex;
@@ -22,71 +59,226 @@ body {
     justify-content: center;
     align-items: center;
 
-    padding: 40px;
+    padding: 50px;
+
     text-align: center;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.hub-left::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    background:
+        radial-gradient(rgba(56, 189, 248, 0.18),
+            transparent 70%);
+
+    top: -100px;
+    right: -100px;
+
+    border-radius: 50%;
 }
 
 .hub-logo {
-    width: 120px;
-    margin-bottom: 20px;
+    width: 140px;
+
+    margin-bottom: 24px;
+
+    position: relative;
+    z-index: 2;
 }
 
-/* RIGHT */
+.hub-left h1 {
+    font-size: 42px;
+
+    margin-bottom: 14px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.hub-left p {
+    font-size: 18px;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    margin-bottom: 18px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.hub-helper-text {
+    max-width: 420px;
+
+    line-height: 1.8;
+
+    color: rgba(255, 255, 255, 0.68);
+
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================
+   RIGHT PANEL
+========================================= */
 
 .hub-right {
     flex: 1;
-    padding: 60px;
+
+    padding: 70px;
 }
 
 .hub-right h2 {
-    margin-bottom: 30px;
+    font-size: 34px;
+
+    margin-bottom: 35px;
+
+    color: #07152f;
 }
+
+/* =========================================
+   HUB CARDS
+========================================= */
 
 .hub-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+
+    grid-template-columns:
+        repeat(auto-fit,
+            minmax(240px, 1fr));
+
+    gap: 24px;
 }
 
 .hub-card {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
+    background: rgba(255, 255, 255, 0.92);
+
+    backdrop-filter: blur(12px);
+
+    border-radius: 24px;
+
+    padding: 34px;
 
     text-decoration: none;
+
     color: #111827;
 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 12px 32px rgba(15, 23, 42, 0.08);
 
-    transition: 0.3s;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.hub-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    background:
+        radial-gradient(rgba(255, 255, 255, 0.22),
+            transparent 70%);
+
+    top: -50px;
+    right: -50px;
 }
 
 .hub-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, 0.12);
 }
 
 .hub-card span {
-    font-size: 40px;
+    font-size: 46px;
+
+    display: block;
+
+    margin-bottom: 18px;
+
+    position: relative;
+    z-index: 2;
 }
 
 .hub-card h3 {
-    margin-top: 15px;
+    margin: 0 0 14px;
+
+    font-size: 22px;
+
+    position: relative;
+    z-index: 2;
 }
 
-/* COLORS */
+.hub-card p {
+    line-height: 1.7;
+
+    color: #475569;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================
+   CARD COLORS
+========================================= */
 
 .admin-card {
-    border-top: 5px solid #ef4444;
+    border-top: 6px solid #ef4444;
 }
 
 .customer-card {
-    border-top: 5px solid #3b82f6;
+    border-top: 6px solid #3b82f6;
 }
 
 .supplier-card {
-    border-top: 5px solid #10b981;
+    border-top: 6px solid #10b981;
 }
 
 .agent-card {
-    border-top: 5px solid #f59e0b;
+    border-top: 6px solid #f59e0b;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .hub-wrapper {
+        flex-direction: column;
+    }
+
+    .hub-left {
+        width: 100%;
+        padding: 70px 30px;
+    }
+
+    .hub-right {
+        padding: 40px 24px;
+    }
+
+    .hub-left h1 {
+        font-size: 34px;
+    }
+
+    .hub-right h2 {
+        font-size: 28px;
+    }
 }

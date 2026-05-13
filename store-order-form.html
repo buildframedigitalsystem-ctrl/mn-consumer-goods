@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&N Store Order Form</title>
+
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/admin-forms.css">
+    <link rel="manifest" href="manifest-store.json">
+
+    <meta name="theme-color" content="#005f2f">
+</head>
+
+<body>
+
+    <main class="form-page">
+
+        <section class="form-card">
+
+            <h1>Store Order Form</h1>
+            <p>Create retail, wholesale, reseller, and distribution orders with e-signature.</p>
+
+            <form id="orderForm">
+
+                <label>Customer / Store Name</label>
+                <input type="text" id="customerName" required>
+
+                <label>Contact Number</label>
+                <input type="text" id="contactNumber" required>
+
+                <label>Order Type</label>
+                <select id="orderType" required>
+                    <option value="">Select Order Type</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Wholesale">Wholesale</option>
+                    <option value="Reseller">Reseller</option>
+                    <option value="Distribution">Distribution</option>
+                </select>
+
+                <label>Total Amount</label>
+                <input type="number" id="totalAmount" required>
+
+                <label>Payment Status</label>
+                <select id="paymentStatus" required>
+                    <option value="Unpaid">Unpaid</option>
+                    <option value="Partial">Partial</option>
+                    <option value="Paid">Paid</option>
+                </select>
+
+                <label>Order Notes</label>
+                <textarea id="orderNotes" rows="4"></textarea>
+
+                <label>Customer / Receiver Signature</label>
+                <canvas id="signatureCanvas" width="500" height="180"
+                    style="border:1px solid #cbd5e1; width:100%; border-radius:12px;"></canvas>
+
+                <button type="button" id="clearSignatureBtn">
+                    Clear Signature
+                </button>
+
+                <button type="submit" class="primary-btn">
+                    Save Order
+                </button>
+
+            </form>
+
+        </section>
+
+        <section class="form-card">
+
+            <h2>Recent Orders</h2>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Type</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Invoice</th>
+                    </tr>
+                </thead>
+
+                <tbody id="ordersTableBody">
+                    <tr>
+                        <td colspan="7">Loading orders...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+
+    <div id="invoiceModalContainer"></div>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/invoice.js"></script>
+    <script src="assets/js/orders.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            initializeOrders();
+        });
+
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./service-worker.js");
+        }
+    </script>
+
+</body>
+
+</html>
