@@ -1,26 +1,67 @@
 <div class="admin-header">
 
-    <!-- LEFT -->
-    <div>
+    <!-- =====================================
+         LEFT SIDE
+    ====================================== -->
 
-        <h1>
-            M&N Consumer Goods Online Operating System
-        </h1>
+    <div class="admin-header-left">
 
-        <p>
-            Retail • Wholesale • Inventory • Distribution
-        </p>
+        <div class="admin-system-title">
 
-        <p>
-            M&N Consumer Goods
-        </p>
+            <h1>
+                M&N Enterprise Operating System
+            </h1>
+
+            <p>
+                Retail • Wholesale • CRM • Inventory • Procurement • Distribution
+            </p>
+
+        </div>
+
+        <div class="admin-system-status">
+
+            <span class="status-badge online">
+                🟢 System Online
+            </span>
+
+            <span class="status-badge sync">
+                🔄 Live Sync Active
+            </span>
+
+        </div>
 
     </div>
 
-    <!-- RIGHT -->
+    <!-- =====================================
+         RIGHT SIDE
+    ====================================== -->
+
     <div class="admin-user">
 
-        <!-- USER INFO -->
+        <!-- QUICK ACCESS -->
+
+        <div class="admin-quick-actions">
+
+            <button onclick="window.location.href='index.html'">
+                🏠 Store
+            </button>
+
+            <button onclick="loadAdminPage('orders')">
+                🧾 Orders
+            </button>
+
+            <button onclick="loadAdminPage('products')">
+                📦 Products
+            </button>
+
+            <button onclick="openMetalSearch()">
+                🔎 Search
+            </button>
+
+        </div>
+
+        <!-- USER -->
+
         <div class="admin-user-box">
 
             <strong data-user-name>
@@ -28,12 +69,13 @@
             </strong>
 
             <span data-user-role>
-                ADMIN
+                MASTER ADMIN
             </span>
 
         </div>
 
         <!-- LOGOUT -->
+
         <button id="logoutBtn" class="logout-btn">
 
             Logout

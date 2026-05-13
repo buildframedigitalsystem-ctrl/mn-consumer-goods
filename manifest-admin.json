@@ -1,0 +1,23 @@
+{
+    "name": "M&N Admin OS",
+    "short_name": "M&N Admin",
+    "description": "Master admin control center for products, inventory, pricing, orders, reports, and store settings.",
+    "start_url": "./admin-dashboard.html",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0f172a",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "assets/images/branding/mn-logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/branding/mn-logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

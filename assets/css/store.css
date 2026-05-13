@@ -1850,3 +1850,43 @@ body:has(.wholesale-header) #productGrid {
     }
 
 }
+
+.cart-header-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cart-helper-text {
+    margin: 18px 0 12px;
+    color: #475569;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.cart-quotation-link {
+    display: inline-block;
+    text-align: center;
+}
+
+.form-helper-text {
+    margin-bottom: 24px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.reseller-bottom-links {
+    margin-top: 24px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.reseller-bottom-links a {
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+}

@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>M&N Cart</title>
 
     <link rel="stylesheet" href="assets/css/store.css">
@@ -19,20 +18,23 @@
             <div>
                 <h1>🛒 Shopping Cart</h1>
                 <p>
-                    Review your selected products
-                    before checkout.
+                    Review your selected products before checkout.
                 </p>
             </div>
 
-            <a href="index.html" class="continue-shopping-btn">
-                ← Continue Shopping
-            </a>
+            <div class="cart-header-actions">
+                <a href="index.html" class="continue-shopping-btn">
+                    ← Continue Shopping
+                </a>
+
+                <a href="customer-login.html" class="continue-shopping-btn">
+                    👤 Login
+                </a>
+            </div>
 
         </div>
 
         <div class="cart-layout">
-
-            <!-- CART ITEMS -->
 
             <div class="cart-items-section">
 
@@ -46,8 +48,6 @@
 
             </div>
 
-            <!-- CHECKOUT -->
-
             <div class="checkout-section">
 
                 <div class="checkout-card">
@@ -56,23 +56,17 @@
 
                     <div class="summary-row">
                         <span>Items</span>
-                        <strong id="cartItemCount">
-                            0
-                        </strong>
+                        <strong id="cartItemCount">0</strong>
                     </div>
 
                     <div class="summary-row">
                         <span>Subtotal</span>
-                        <strong id="cartSubtotal">
-                            ₱0.00
-                        </strong>
+                        <strong id="cartSubtotal">₱0.00</strong>
                     </div>
 
                     <div class="summary-row total-row">
                         <span>Total</span>
-                        <strong id="cartTotal">
-                            ₱0.00
-                        </strong>
+                        <strong id="cartTotal">₱0.00</strong>
                     </div>
 
                     <hr>
@@ -95,6 +89,14 @@
 
                     </form>
 
+                    <p class="cart-helper-text">
+                        For bulk orders or special pricing, you may also request a quotation.
+                    </p>
+
+                    <a href="quotation-request.html" class="continue-shopping-btn cart-quotation-link">
+                        🧾 Request Quotation
+                    </a>
+
                 </div>
 
             </div>
@@ -105,6 +107,7 @@
 
     <script src="assets/js/api-config.js"></script>
     <script src="assets/js/cart.js"></script>
+    <script src="assets/js/universal-search.js"></script>
 
 </body>
 

@@ -2,67 +2,252 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M&N Master Dashboard</title>
+
+    <title>
+        M&N Executive Command Dashboard
+    </title>
+
+    <!-- CSS -->
 
     <link rel="stylesheet" href="assets/css/master-dashboard.css">
+
     <link rel="stylesheet" href="assets/css/pricing-dashboard.css">
+
 </head>
 
 <body>
 
     <div class="master-layout">
 
-        <aside class="master-sidebar">
-            <h2>M&N OS</h2>
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
 
-            <a href="#" class="active" data-page="overview">📊 Overview</a>
-            <a href="#" data-page="orders">🧾 Orders</a>
-            <a href="#" data-page="inventory">📦 Inventory</a>
-            <a href="#" data-page="deliveries">🚚 Deliveries</a>
-            <a href="#" data-page="customers">👥 Customers</a>
-            <a href="#" data-page="suppliers">🏪 Suppliers</a>
-            <a href="#" data-page="agents">🧑‍💼 Agents</a>
-            <a href="#" data-page="pricing">💰 Pricing Engine</a>
-            <a href="#" data-page="reports">📊 Reports</a>
-            <a href="#" data-page="settings">⚙️ Settings</a>
+        <aside class="master-sidebar">
+
+            <div class="master-sidebar-top">
+
+                <img src="assets/images/branding/mn-logo.png" alt="M&N Logo">
+
+                <div>
+
+                    <h2>M&N OS</h2>
+
+                    <span>
+                        Executive System
+                    </span>
+
+                </div>
+
+            </div>
+
+            <nav class="master-nav">
+
+                <a href="#" class="active" data-page="overview">
+
+                    📊 Executive Overview
+
+                </a>
+
+                <a href="#" data-page="orders">
+
+                    🧾 Orders Analytics
+
+                </a>
+
+                <a href="#" data-page="inventory">
+
+                    📦 Inventory Intelligence
+
+                </a>
+
+                <a href="#" data-page="deliveries">
+
+                    🚚 Delivery Monitoring
+
+                </a>
+
+                <a href="#" data-page="customers">
+
+                    👥 Customer Insights
+
+                </a>
+
+                <a href="#" data-page="suppliers">
+
+                    🏪 Supplier Monitoring
+
+                </a>
+
+                <a href="#" data-page="agents">
+
+                    🧑‍💼 Agent Performance
+
+                </a>
+
+                <a href="#" data-page="pricing">
+
+                    💰 Pricing Engine
+
+                </a>
+
+                <a href="#" data-page="reports">
+
+                    📈 Reports & Analytics
+
+                </a>
+
+                <a href="#" data-page="settings">
+
+                    ⚙️ System Settings
+
+                </a>
+
+            </nav>
 
             <div class="sidebar-footer">
-                BuildFrame OS
+
+                <strong>
+                    BuildFrame OS
+                </strong>
+
+                <span>
+                    Retail • CRM • Distribution • Analytics
+                </span>
+
             </div>
+
         </aside>
+
+        <!-- =====================================
+             MAIN
+        ====================================== -->
 
         <main class="master-main">
 
+            <!-- =====================================
+                 HEADER
+            ====================================== -->
+
             <header class="master-header">
-                <div>
-                    <h1>Master Dashboard</h1>
-                    <p>M&N Consumer Goods Operating System</p>
+
+                <div class="master-header-left">
+
+                    <h1>
+                        Executive Command Dashboard
+                    </h1>
+
+                    <p>
+                        Real-time monitoring for sales,
+                        inventory,
+                        procurement,
+                        CRM,
+                        agents,
+                        and operational analytics.
+                    </p>
+
+                    <div class="master-status-row">
+
+                        <span class="status-pill green">
+                            🟢 Live System
+                        </span>
+
+                        <span class="status-pill blue">
+                            🔄 Auto Sync Enabled
+                        </span>
+
+                        <span class="status-pill orange">
+                            ⚡ Business OS Active
+                        </span>
+
+                    </div>
+
                 </div>
 
-                <div class="header-filters">
-                    <select id="dashboardRange">
-                        <option value="today">Today</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                        <option value="year">This Year</option>
-                    </select>
+                <div class="master-header-right">
 
-                    <button id="dashboardRefreshBtn">Refresh</button>
+                    <div class="header-filters">
+
+                        <select id="dashboardRange">
+
+                            <option value="today">
+                                Today
+                            </option>
+
+                            <option value="week">
+                                This Week
+                            </option>
+
+                            <option value="month">
+                                This Month
+                            </option>
+
+                            <option value="year">
+                                This Year
+                            </option>
+
+                        </select>
+
+                        <button id="dashboardRefreshBtn">
+
+                            Refresh Dashboard
+
+                        </button>
+
+                    </div>
+
+                    <div class="master-header-actions">
+
+                        <button onclick="window.location.href='admin.html'">
+                            🛠 Admin Control
+                        </button>
+
+                        <button onclick="window.location.href='index.html'">
+                            🏠 View Store
+                        </button>
+
+                    </div>
+
                 </div>
+
             </header>
 
-            <div id="masterDashboardContent"></div>
+            <!-- =====================================
+                 DASHBOARD CONTENT
+            ====================================== -->
+
+            <div id="masterDashboardContent">
+
+                <div class="dashboard-loading">
+
+                    Loading Executive Dashboard...
+
+                </div>
+
+            </div>
 
         </main>
 
     </div>
 
+    <!-- =====================================
+         CHARTS
+    ====================================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- =====================================
+         JS
+    ====================================== -->
+
     <script src="assets/js/api-config.js"></script>
+
     <script src="assets/js/master-dashboard.js"></script>
+
     <script src="assets/js/pricing-dashboard.js"></script>
 
 </body>

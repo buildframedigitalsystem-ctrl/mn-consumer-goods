@@ -3,8 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin CRM Dashboard | M&N</title>
+
+    <title>
+        Admin CRM Dashboard | M&N
+    </title>
 
     <link rel="stylesheet" href="assets/css/store.css">
 </head>
@@ -14,55 +18,133 @@
     <section class="store-page-header wholesale-header">
 
         <div class="store-header-left">
-            <h1>Admin CRM Control Center</h1>
-            <p>Review reseller applications, quotations, delivery bookings, and CRM leads.</p>
+
+            <h1>
+                Admin CRM Control Center
+            </h1>
+
+            <p>
+                Review reseller applications,
+                quotations,
+                delivery bookings,
+                and CRM leads.
+            </p>
 
             <div class="store-page-links">
-                <a href="index.html">Home</a>
-                <a href="master-dashboard.html">Master Dashboard</a>
-                <a href="crm-dashboard.html">CRM View</a>
-                <a href="admin.html">Admin</a>
+
+                <a href="index.html">
+                    🏠 Home
+                </a>
+
+                <a href="master-dashboard.html">
+                    📊 Master Dashboard
+                </a>
+
+                <a href="crm-dashboard.html">
+                    📈 CRM View
+                </a>
+
+                <a href="admin.html">
+                    ⚙️ Admin
+                </a>
+
             </div>
 
             <div class="store-header-actions">
 
-                <div class="header-action-card">
+                <a href="reseller-application.html" class="header-action-card">
+
                     🏪
+
                     <div>
                         <strong>Reseller Approval</strong>
                         <span>Approve or reject applications</span>
                     </div>
-                </div>
 
-                <div class="header-action-card">
+                </a>
+
+                <a href="quotation-request.html" class="header-action-card">
+
                     🧾
+
                     <div>
                         <strong>Quotation Review</strong>
                         <span>Update quotation status</span>
                     </div>
-                </div>
 
-                <div class="header-action-card">
+                </a>
+
+                <a href="delivery-booking.html" class="header-action-card">
+
                     🚚
+
                     <div>
                         <strong>Delivery Status</strong>
                         <span>Track delivery progress</span>
                     </div>
-                </div>
+
+                </a>
 
             </div>
+
         </div>
 
         <div class="store-header-right">
+
             <img src="assets/images/branding/mn-logo.png" alt="M&N Logo">
-            <h3>M&N Consumer Goods</h3>
-            <p>Back Office • CRM • Operations</p>
+
+            <h3>
+                M&N Consumer Goods
+            </h3>
+
+            <p>
+                Back Office • CRM • Operations
+            </p>
 
             <div class="store-header-contact">
-                <span>📱 +639052273431</span>
-                <span>✉️ kokiks@gmail.com</span>
-                <span>📍 Nico Torrevillas</span>
+
+                <span>
+                    📱 +639052273431
+                </span>
+
+                <span>
+                    ✉️ kokiks@gmail.com
+                </span>
+
+                <span>
+                    📘 Nico Torrevillas
+                </span>
+
             </div>
+
+        </div>
+
+    </section>
+
+    <section class="kpi-grid">
+
+        <div class="kpi-card">
+            <span>🏪</span>
+            <p>Pending Applications</p>
+            <h2 id="pendingApplications">0</h2>
+        </div>
+
+        <div class="kpi-card">
+            <span>🧾</span>
+            <p>Pending Quotations</p>
+            <h2 id="pendingQuotes">0</h2>
+        </div>
+
+        <div class="kpi-card">
+            <span>🚚</span>
+            <p>Active Deliveries</p>
+            <h2 id="activeDeliveries">0</h2>
+        </div>
+
+        <div class="kpi-card">
+            <span>📈</span>
+            <p>Total CRM Leads</p>
+            <h2 id="totalLeads">0</h2>
         </div>
 
     </section>
@@ -70,9 +152,13 @@
     <section class="dashboard-grid">
 
         <div class="panel large">
-            <h3>Pending Reseller Applications</h3>
+
+            <h3>
+                Pending Reseller Applications
+            </h3>
 
             <table>
+
                 <thead>
                     <tr>
                         <th>Applicant</th>
@@ -85,16 +171,24 @@
 
                 <tbody id="adminResellerTable">
                     <tr>
-                        <td colspan="5">Loading...</td>
+                        <td colspan="5">
+                            Loading...
+                        </td>
                     </tr>
                 </tbody>
+
             </table>
+
         </div>
 
         <div class="panel large">
-            <h3>Quotation Requests</h3>
+
+            <h3>
+                Quotation Requests
+            </h3>
 
             <table>
+
                 <thead>
                     <tr>
                         <th>Customer</th>
@@ -107,16 +201,24 @@
 
                 <tbody id="adminQuotationTable">
                     <tr>
-                        <td colspan="5">Loading...</td>
+                        <td colspan="5">
+                            Loading...
+                        </td>
                     </tr>
                 </tbody>
+
             </table>
+
         </div>
 
         <div class="panel large">
-            <h3>Delivery Bookings</h3>
+
+            <h3>
+                Delivery Bookings
+            </h3>
 
             <table>
+
                 <thead>
                     <tr>
                         <th>Customer</th>
@@ -129,10 +231,14 @@
 
                 <tbody id="adminDeliveryTable">
                     <tr>
-                        <td colspan="5">Loading...</td>
+                        <td colspan="5">
+                            Loading...
+                        </td>
                     </tr>
                 </tbody>
+
             </table>
+
         </div>
 
     </section>

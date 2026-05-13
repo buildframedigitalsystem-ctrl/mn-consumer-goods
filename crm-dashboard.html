@@ -15,10 +15,6 @@
 
 <body>
 
-    <!-- =====================================
-         HEADER
-    ====================================== -->
-
     <section class="store-page-header wholesale-header">
 
         <div class="store-header-left">
@@ -32,58 +28,39 @@
 
             <div class="store-page-links">
 
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="retail.html">
-                    Retail
-                </a>
-
-                <a href="wholesale.html">
-                    Wholesale
-                </a>
-
-                <a href="cart.html">
-                    🛒 Cart
-                </a>
+                <a href="index.html">🏠 Home</a>
+                <a href="retail.html">🛍 Retail</a>
+                <a href="wholesale.html">📦 Wholesale</a>
+                <a href="cart.html">🛒 Cart</a>
+                <a href="admin-crm-dashboard.html">⚙️ Admin CRM</a>
 
             </div>
 
             <div class="store-header-actions">
 
-                <div class="header-action-card">
-
+                <a href="reseller-application.html" class="header-action-card">
                     📈
-
                     <div>
                         <strong>Lead Tracking</strong>
                         <span>Monitor potential buyers</span>
                     </div>
+                </a>
 
-                </div>
-
-                <div class="header-action-card">
-
+                <a href="quotation-request.html" class="header-action-card">
                     🧾
-
                     <div>
                         <strong>Quotation Monitoring</strong>
                         <span>Track pending quotations</span>
                     </div>
+                </a>
 
-                </div>
-
-                <div class="header-action-card">
-
+                <a href="delivery-booking.html" class="header-action-card">
                     🚚
-
                     <div>
                         <strong>Delivery Monitoring</strong>
                         <span>Monitor delivery requests</span>
                     </div>
-
-                </div>
+                </a>
 
             </div>
 
@@ -100,33 +77,19 @@
             </p>
 
             <div class="store-header-contact">
-
-                <span>
-                    📱 +639052273431
-                </span>
-
-                <span>
-                    ✉️ kokiks@gmail.com
-                </span>
-
-                <span>
-                    📍 Nico Torrevillas
-                </span>
-
+                <span>📱 +639052273431</span>
+                <span>✉️ kokiks@gmail.com</span>
+                <span>📘 Nico Torrevillas</span>
             </div>
 
         </div>
 
     </section>
 
-    <!-- =====================================
-         KPI CARDS
-    ====================================== -->
-
     <section class="kpi-grid">
 
         <div class="kpi-card">
-            <span>👥</span>
+            <span>📈</span>
             <p>Total Leads</p>
             <h2 id="totalLeads">0</h2>
         </div>
@@ -151,10 +114,6 @@
 
     </section>
 
-    <!-- =====================================
-         CRM TABLES
-    ====================================== -->
-
     <section class="dashboard-grid">
 
         <div class="panel large">
@@ -162,7 +121,6 @@
             <h3>Recent Reseller Applications</h3>
 
             <table>
-
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -173,15 +131,10 @@
                 </thead>
 
                 <tbody id="resellerApplicationsTable">
-
                     <tr>
-                        <td colspan="4">
-                            Loading...
-                        </td>
+                        <td colspan="4">Loading...</td>
                     </tr>
-
                 </tbody>
-
             </table>
 
         </div>
@@ -191,7 +144,6 @@
             <h3>Recent Quotation Requests</h3>
 
             <table>
-
                 <thead>
                     <tr>
                         <th>Customer</th>
@@ -202,15 +154,10 @@
                 </thead>
 
                 <tbody id="quotationRequestsTable">
-
                     <tr>
-                        <td colspan="4">
-                            Loading...
-                        </td>
+                        <td colspan="4">Loading...</td>
                     </tr>
-
                 </tbody>
-
             </table>
 
         </div>
@@ -220,7 +167,6 @@
             <h3>Recent Delivery Bookings</h3>
 
             <table>
-
                 <thead>
                     <tr>
                         <th>Customer</th>
@@ -231,15 +177,10 @@
                 </thead>
 
                 <tbody id="deliveryBookingsTable">
-
                     <tr>
-                        <td colspan="4">
-                            Loading...
-                        </td>
+                        <td colspan="4">Loading...</td>
                     </tr>
-
                 </tbody>
-
             </table>
 
         </div>
@@ -248,6 +189,7 @@
 
     <script src="assets/js/api-config.js"></script>
     <script src="assets/js/crm-dashboard.js"></script>
+    <script src="assets/js/universal-search.js"></script>
 
 </body>
 

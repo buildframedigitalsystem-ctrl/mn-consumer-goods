@@ -2,96 +2,449 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>M&N Consumer Goods | Admin Dashboard</title>
+    <title>
+        M&N Consumer Goods | Master Admin Control Center
+    </title>
 
-    <!-- CSS -->
+    <!-- =========================================
+         CSS
+    ========================================== -->
+
     <link rel="stylesheet" href="assets/css/base.css">
+
     <link rel="stylesheet" href="assets/css/admin-layout.css">
+
     <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+
     <link rel="stylesheet" href="assets/css/admin-forms.css">
+
+    <link rel="manifest" href="manifest-admin.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="M&N Admin OS">
 </head>
 
 <body>
 
+    <!-- =========================================
+         ADMIN AUTH CHECK
+    ========================================== -->
+
     <script>
-        if (localStorage.getItem("mnAdminLoggedIn") !== "true") {
-            window.location.href = "admin-login.html";
+
+        if (
+            localStorage.getItem("mnAdminLoggedIn")
+            !== "true"
+        ) {
+
+            window.location.href =
+                "admin-login.html";
+
         }
+
     </script>
 
-    <!-- =========================
-         ADMIN LAYOUT
-    ========================== -->
+    <!-- =========================================
+         MASTER ADMIN LAYOUT
+    ========================================== -->
 
     <div class="admin-layout">
 
-        <!-- SIDEBAR -->
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
         <aside id="adminSidebar"></aside>
 
-        <!-- MAIN -->
+        <!-- =====================================
+             MAIN
+        ====================================== -->
+
         <main class="admin-main">
 
             <!-- HEADER -->
+
             <header id="adminHeader"></header>
 
             <!-- CONTENT -->
-            <section id="adminContent" class="admin-content"></section>
+
+            <section id="adminContent" class="admin-content">
+
+                <!-- =============================
+                     MASTER CONTROL HERO
+                ============================== -->
+
+                <section class="master-admin-hero">
+
+                    <div class="master-admin-left">
+
+                        <h1>
+                            M&N Master Operating Center
+                        </h1>
+
+                        <p>
+                            Centralized control for retail,
+                            wholesale,
+                            CRM,
+                            delivery,
+                            inventory,
+                            accounting,
+                            suppliers,
+                            procurement,
+                            and business operations.
+                        </p>
+
+                        <div class="master-admin-links">
+
+                            <a href="index.html">
+                                🏠 Homepage
+                            </a>
+
+                            <a href="retail.html">
+                                🛍 Retail
+                            </a>
+
+                            <a href="wholesale.html">
+                                📦 Wholesale
+                            </a>
+
+                            <a href="crm-dashboard.html">
+                                📈 CRM
+                            </a>
+
+                            <a href="admin-crm-dashboard.html">
+                                ⚙️ CRM Admin
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="master-admin-right">
+
+                        <img src="assets/images/branding/mn-logo.png" alt="M&N Logo">
+
+                        <h3>
+                            BuildFrame Store Operating System
+                        </h3>
+
+                        <p>
+                            Enterprise Retail • Distribution • Operations
+                        </p>
+
+                    </div>
+
+                </section>
+
+                <!-- =============================
+                     MASTER KPI GRID
+                ============================== -->
+
+                <section class="master-kpi-grid">
+
+                    <div class="master-kpi-card">
+                        <span>🛒</span>
+                        <p>Total Orders</p>
+                        <h2 id="masterTotalOrders">0</h2>
+                    </div>
+
+                    <div class="master-kpi-card">
+                        <span>📦</span>
+                        <p>Inventory Products</p>
+                        <h2 id="masterInventoryCount">0</h2>
+                    </div>
+
+                    <div class="master-kpi-card">
+                        <span>🏪</span>
+                        <p>Reseller Applications</p>
+                        <h2 id="masterResellerCount">0</h2>
+                    </div>
+
+                    <div class="master-kpi-card">
+                        <span>🚚</span>
+                        <p>Delivery Bookings</p>
+                        <h2 id="masterDeliveryCount">0</h2>
+                    </div>
+
+                    <div class="master-kpi-card">
+                        <span>🧾</span>
+                        <p>Quotation Requests</p>
+                        <h2 id="masterQuotationCount">0</h2>
+                    </div>
+
+                    <div class="master-kpi-card">
+                        <span>👥</span>
+                        <p>Customers</p>
+                        <h2 id="masterCustomerCount">0</h2>
+                    </div>
+
+                </section>
+
+                <!-- =============================
+                     QUICK CONTROL GRID
+                ============================== -->
+
+                <section class="master-control-grid">
+
+                    <a href="retail.html" class="master-control-card">
+
+                        <span>🛍</span>
+
+                        <h3>
+                            Retail Store
+                        </h3>
+
+                        <p>
+                            Customer-facing retail storefront.
+                        </p>
+
+                    </a>
+
+                    <a href="wholesale.html" class="master-control-card">
+
+                        <span>📦</span>
+
+                        <h3>
+                            Wholesale Store
+                        </h3>
+
+                        <p>
+                            Bulk pricing and reseller operations.
+                        </p>
+
+                    </a>
+
+                    <a href="crm-dashboard.html" class="master-control-card">
+
+                        <span>📈</span>
+
+                        <h3>
+                            CRM Dashboard
+                        </h3>
+
+                        <p>
+                            Leads, quotations, and customer pipeline.
+                        </p>
+
+                    </a>
+
+                    <a href="delivery-booking.html" class="master-control-card">
+
+                        <span>🚚</span>
+
+                        <h3>
+                            Delivery Operations
+                        </h3>
+
+                        <p>
+                            Logistics and delivery coordination.
+                        </p>
+
+                    </a>
+
+                    <a href="admin-products.html" class="master-control-card">
+
+                        <span>📋</span>
+
+                        <h3>
+                            Product Management
+                        </h3>
+
+                        <p>
+                            Manage products and storefront displays.
+                        </p>
+
+                    </a>
+
+                    <a href="admin-store-setup.html" class="master-control-card">
+
+                        <span>⚙️</span>
+
+                        <h3>
+                            Store Setup
+                        </h3>
+
+                        <p>
+                            Configure homepage and storefront.
+                        </p>
+
+                    </a>
+
+                </section>
+
+            </section>
 
         </main>
 
     </div>
 
+    <!-- =========================================
+         METAL SEARCH SYSTEM
+    ========================================== -->
 
     <div class="metal-search-overlay" id="metalSearchOverlay">
 
         <div class="metal-search-box">
 
-            <button class="metal-search-close" id="metalSearchClose">×</button>
+            <button class="metal-search-close" id="metalSearchClose">
 
-            <h2>Smart Find</h2>
-            <p>Search records like customer, supplier, product, order, invoice, or PO.</p>
+                ×
+
+            </button>
+
+            <h2>
+                Smart Find
+            </h2>
+
+            <p>
+                Search products,
+                customers,
+                suppliers,
+                inventory,
+                orders,
+                invoices,
+                CRM records,
+                and purchase orders.
+            </p>
 
             <div class="metal-search-controls">
+
                 <select id="adminSearchType">
-                    <option value="searchProducts">Products</option>
-                    <option value="searchCustomers">Customers</option>
-                    <option value="searchSuppliers">Suppliers</option>
-                    <option value="searchOrders">Orders</option>
-                    <option value="searchInventory">Inventory</option>
-                    <option value="searchPurchaseOrders">Purchase Orders</option>
+
+                    <option value="searchProducts">
+                        Products
+                    </option>
+
+                    <option value="searchCustomers">
+                        Customers
+                    </option>
+
+                    <option value="searchSuppliers">
+                        Suppliers
+                    </option>
+
+                    <option value="searchOrders">
+                        Orders
+                    </option>
+
+                    <option value="searchInventory">
+                        Inventory
+                    </option>
+
+                    <option value="searchPurchaseOrders">
+                        Purchase Orders
+                    </option>
+
                 </select>
 
                 <input type="text" id="adminSearchInput" placeholder="Find record...">
 
-                <button id="adminSearchBtn">Find</button>
+                <button id="adminSearchBtn">
+                    Find
+                </button>
+
             </div>
 
             <div class="metal-search-actions">
-                <button id="findPrevBtn">Find Prev</button>
-                <button id="findNextBtn">Find Next</button>
-                <button id="criteriaBtn">Criteria</button>
-                <button id="closeSearchBtn">Close</button>
+
+                <button id="findPrevBtn">
+                    Find Prev
+                </button>
+
+                <button id="findNextBtn">
+                    Find Next
+                </button>
+
+                <button id="criteriaBtn">
+                    Criteria
+                </button>
+
+                <button id="closeSearchBtn">
+                    Close
+                </button>
+
             </div>
 
             <div id="adminSearchResults" class="metal-search-results">
-                <p>No search yet.</p>
+
+                <p>
+                    No search yet.
+                </p>
+
             </div>
 
         </div>
 
     </div>
 
-    <!-- =========================
+    <!-- =========================================
          JS
-    ========================== -->
+    ========================================== -->
 
     <script src="assets/js/api-config.js"></script>
+
     <script src="assets/js/admin-search-block.js"></script>
+
     <script src="assets/js/orders.js"></script>
+
     <script src="assets/js/admin-main.js"></script>
+
+    <!-- =========================================
+         CTRL + F METAL SEARCH
+    ========================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.ctrlKey &&
+                    event.key.toLowerCase() === "f"
+                ) {
+
+                    event.preventDefault();
+
+                    const overlay =
+                        document.getElementById(
+                            "metalSearchOverlay"
+                        );
+
+                    if (overlay) {
+
+                        overlay.classList.add(
+                            "active"
+                        );
+
+                        document
+                            .getElementById(
+                                "adminSearchInput"
+                            )
+                            ?.focus();
+
+                    }
+
+                }
+
+            }
+        );
+
+    </script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./service-worker.js")
+                .then(() => console.log("M&N Admin OS service worker registered"))
+                .catch(error => console.error("Service worker error:", error));
+        }
+    </script>
 
 </body>
 

@@ -1,23 +1,279 @@
-<div class="dashboard-grid">
+<!-- =========================================
+     MASTER OPERATIONS OVERVIEW
+========================================= -->
+
+<section class="operations-hero">
+
+    <div class="operations-hero-left">
+
+        <h1>
+            M&N Operations Command Center
+        </h1>
+
+        <p>
+            Centralized monitoring for retail,
+            wholesale,
+            CRM,
+            procurement,
+            delivery,
+            inventory,
+            and business operations.
+        </p>
+
+        <div class="operations-quick-links">
+
+            <a href="index.html">
+                🏠 Public Store
+            </a>
+
+            <a href="retail.html">
+                🛍 Retail
+            </a>
+
+            <a href="wholesale.html">
+                📦 Wholesale
+            </a>
+
+            <a href="crm-dashboard.html">
+                📈 CRM
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="operations-hero-right">
+
+        <img src="assets/images/branding/mn-logo.png" alt="M&N Logo">
+
+        <h3>
+            BuildFrame Store Operating System
+        </h3>
+
+        <p>
+            Retail • Distribution • Procurement • CRM
+        </p>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     KPI GRID
+========================================= -->
+
+<section class="dashboard-grid">
 
     <div class="dashboard-card">
-        <h3>Total Products</h3>
-        <h2>0</h2>
+
+        <span>📦</span>
+
+        <h3>
+            Total Products
+        </h3>
+
+        <h2 id="dashboardTotalProducts">
+            0
+        </h2>
+
     </div>
 
     <div class="dashboard-card">
-        <h3>Total Suppliers</h3>
-        <h2>0</h2>
+
+        <span>🤝</span>
+
+        <h3>
+            Total Suppliers
+        </h3>
+
+        <h2 id="dashboardTotalSuppliers">
+            0
+        </h2>
+
     </div>
 
     <div class="dashboard-card">
-        <h3>Purchase Orders</h3>
-        <h2>0</h2>
+
+        <span>📑</span>
+
+        <h3>
+            Purchase Orders
+        </h3>
+
+        <h2 id="dashboardPurchaseOrders">
+            0
+        </h2>
+
     </div>
 
     <div class="dashboard-card">
-        <h3>Total Inventory</h3>
-        <h2>0</h2>
+
+        <span>🏷</span>
+
+        <h3>
+            Total Inventory
+        </h3>
+
+        <h2 id="dashboardInventory">
+            0
+        </h2>
+
     </div>
 
-</div>
+    <div class="dashboard-card">
+
+        <span>🛒</span>
+
+        <h3>
+            Customer Orders
+        </h3>
+
+        <h2 id="dashboardOrders">
+            0
+        </h2>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <span>📈</span>
+
+        <h3>
+            CRM Leads
+        </h3>
+
+        <h2 id="dashboardLeads">
+            0
+        </h2>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <span>🚚</span>
+
+        <h3>
+            Delivery Requests
+        </h3>
+
+        <h2 id="dashboardDeliveries">
+            0
+        </h2>
+
+    </div>
+
+    <div class="dashboard-card">
+
+        <span>🧾</span>
+
+        <h3>
+            Quotations
+        </h3>
+
+        <h2 id="dashboardQuotes">
+            0
+        </h2>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     QUICK OPERATIONS GRID
+========================================= -->
+
+<section class="operations-grid">
+
+    <div class="operations-panel">
+
+        <h3>
+            Quick Operations
+        </h3>
+
+        <div class="operations-actions">
+
+            <button onclick="loadAdminPage('products')">
+                ➕ Add Product
+            </button>
+
+            <button onclick="loadAdminPage('orders')">
+                🧾 New Order
+            </button>
+
+            <button onclick="loadAdminPage('inventory')">
+                📦 Inventory
+            </button>
+
+            <button onclick="loadAdminPage('customers')">
+                👥 Customers
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="operations-panel">
+
+        <h3>
+            Storefront Access
+        </h3>
+
+        <div class="operations-actions">
+
+            <button onclick="window.location.href='index.html'">
+                🏠 Homepage
+            </button>
+
+            <button onclick="window.location.href='retail.html'">
+                🛍 Retail
+            </button>
+
+            <button onclick="window.location.href='wholesale.html'">
+                📦 Wholesale
+            </button>
+
+            <button onclick="window.location.href='promos.html'">
+                💥 Promos
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     SYSTEM STATUS
+========================================= -->
+
+<section class="operations-panel">
+
+    <h3>
+        System Status
+    </h3>
+
+    <div class="system-status-grid">
+
+        <div class="system-status-card">
+            <strong>Storefront</strong>
+            <span>🟢 Online</span>
+        </div>
+
+        <div class="system-status-card">
+            <strong>CRM</strong>
+            <span>🟢 Active</span>
+        </div>
+
+        <div class="system-status-card">
+            <strong>Inventory</strong>
+            <span>🟢 Synced</span>
+        </div>
+
+        <div class="system-status-card">
+            <strong>Orders</strong>
+            <span>🟢 Running</span>
+        </div>
+
+    </div>
+
+</section>

@@ -5,18 +5,10 @@
 
 const CART_KEY = "mn_store_cart";
 
-/* =========================================
-   INIT
-========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
     renderCart();
     bindCheckoutForm();
 });
-
-/* =========================================
-   CART STORAGE
-========================================= */
 
 function getCart() {
     try {
@@ -29,10 +21,6 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
-
-/* =========================================
-   RENDER CART
-========================================= */
 
 function renderCart() {
     const container = document.getElementById("cartItemsContainer");
@@ -53,6 +41,7 @@ function renderCart() {
                 <div class="empty-cart-actions">
                     <a href="retail.html">Browse Retail</a>
                     <a href="wholesale.html">Browse Wholesale</a>
+                    <a href="promos.html">View Promos</a>
                 </div>
             </div>
         `;
@@ -60,7 +49,6 @@ function renderCart() {
         if (itemCount) itemCount.textContent = "0";
         if (subtotalBox) subtotalBox.textContent = "₱0.00";
         if (totalBox) totalBox.textContent = "₱0.00";
-
         return;
     }
 
@@ -93,21 +81,21 @@ function renderCart() {
                 </div>
 
                 <div class="cart-qty-control">
-                    <button onclick="changeQuantity(${index}, -1)">−</button>
+                    <button type="button" onclick="changeQuantity(${index}, -1)">−</button>
                     <input
                         type="number"
                         value="${quantity}"
                         min="1"
                         onchange="setQuantity(${index}, this.value)"
                     >
-                    <button onclick="changeQuantity(${index}, 1)">+</button>
+                    <button type="button" onclick="changeQuantity(${index}, 1)">+</button>
                 </div>
 
                 <div class="cart-line-total">
                     ₱${formatMoney(lineTotal)}
                 </div>
 
-                <button class="remove-cart-btn" onclick="removeCartItem(${index})">
+                <button type="button" class="remove-cart-btn" onclick="removeCartItem(${index})">
                     Remove
                 </button>
 
@@ -119,10 +107,6 @@ function renderCart() {
     if (subtotalBox) subtotalBox.textContent = `₱${formatMoney(subtotal)}`;
     if (totalBox) totalBox.textContent = `₱${formatMoney(subtotal)}`;
 }
-
-/* =========================================
-   QUANTITY ACTIONS
-========================================= */
 
 function changeQuantity(index, amount) {
     const cart = getCart();
@@ -162,10 +146,6 @@ function clearCart() {
     renderCart();
 }
 
-/* =========================================
-   CHECKOUT FORM
-========================================= */
-
 function bindCheckoutForm() {
     const form = document.getElementById("checkoutForm");
 
@@ -173,14 +153,9 @@ function bindCheckoutForm() {
 
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
-
         await submitCartOrder();
     });
 }
-
-/* =========================================
-   SUBMIT ORDER
-========================================= */
 
 async function submitCartOrder() {
     const cart = getCart();
@@ -190,17 +165,10 @@ async function submitCartOrder() {
         return;
     }
 
-    const customerName =
-        document.getElementById("customerName")?.value.trim();
-
-    const customerMobile =
-        document.getElementById("customerMobile")?.value.trim();
-
-    const customerAddress =
-        document.getElementById("customerAddress")?.value.trim();
-
-    const customerNotes =
-        document.getElementById("customerNotes")?.value.trim();
+    const customerName = document.getElementById("customerName")?.value.trim();
+    const customerMobile = document.getElementById("customerMobile")?.value.trim();
+    const customerAddress = document.getElementById("customerAddress")?.value.trim();
+    const customerNotes = document.getElementById("customerNotes")?.value.trim();
 
     if (!customerName || !customerMobile || !customerAddress) {
         alert("Please complete customer name, mobile, and address.");
@@ -257,13 +225,8 @@ async function submitCartOrder() {
     }
 }
 
-/* =========================================
-   WHATSAPP COPY
-========================================= */
-
 function sendWhatsAppCopy(cart, customer) {
-    let message =
-        `Hello M&N Consumer Goods! New order inquiry:%0A%0A`;
+    let message = `Hello M&N Consumer Goods! New order inquiry:%0A%0A`;
 
     message += `Customer: ${customer.customerName}%0A`;
     message += `Mobile: ${customer.customerMobile}%0A`;
@@ -292,10 +255,6 @@ function sendWhatsAppCopy(cart, customer) {
         "_blank"
     );
 }
-
-/* =========================================
-   HELPERS
-========================================= */
 
 function formatMoney(value) {
     return Number(value || 0).toLocaleString("en-PH", {

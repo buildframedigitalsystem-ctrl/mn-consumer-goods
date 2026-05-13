@@ -8,11 +8,11 @@
 
     <link rel="stylesheet" href="assets/css/store.css">
 
-    <link rel="manifest" href="./manifest.json">
-
+    <link rel="manifest" href="manifest-store.json">
     <meta name="theme-color" content="#005f2f">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="M&N Store">
 </head>
 
 <body>
@@ -311,6 +311,14 @@
 
             });
 
+        }
+    </script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./service-worker.js")
+                .then(() => console.log("M&N Store App service worker registered"))
+                .catch(error => console.error("Service worker error:", error));
         }
     </script>
 
