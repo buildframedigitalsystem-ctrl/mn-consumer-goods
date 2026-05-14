@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&N Store Order Form</title>
 
+    <link rel="stylesheet" href="assets/css/responsive-fixes.css">
+
     <link rel="icon" href="assets/images/branding/mn-logo.png">
     <link rel="manifest" href="manifest-store.json">
     <meta name="theme-color" content="#005f2f">
@@ -341,6 +343,56 @@
         }
 
         /* =========================================
+            STORE SUMMARY STRIP
+        ========================================= */
+
+        .store-summary-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #004225, #007a3d);
+            color: white;
+            padding: 22px;
+            border-radius: 24px;
+            box-shadow: 0 14px 34px rgba(0, 66, 37, 0.16);
+        }
+
+        .summary-box strong {
+            display: block;
+            opacity: 0.88;
+            margin-bottom: 10px;
+        }
+
+        .summary-box h3 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        /* =========================================
+            BETTER MOBILE BALANCING
+    ========================================= */
+
+        @media (max-width: 900px) {
+
+            .store-summary-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .store-summary-strip {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        /* =========================================
    POS RECEIPT PRINT FORMAT - SAFE ADD ONLY
 ========================================= */
 
@@ -495,6 +547,30 @@
             </div>
 
             <a href="store-dashboard.html" class="back-link">← Store Operations</a>
+        </div>
+
+        <div class="store-summary-strip">
+
+            <div class="summary-box">
+                <strong>Today's Orders</strong>
+                <h3>12</h3>
+            </div>
+
+            <div class="summary-box">
+                <strong>Pending Deliveries</strong>
+                <h3>4</h3>
+            </div>
+
+            <div class="summary-box">
+                <strong>Outstanding Balance</strong>
+                <h3>₱18,450</h3>
+            </div>
+
+            <div class="summary-box">
+                <strong>Store Status</strong>
+                <h3>ACTIVE</h3>
+            </div>
+
         </div>
 
         <section class="order-card">

@@ -1,0 +1,158 @@
+/* =========================================
+   STORE OPERATIONS APP POLISH
+   Safe CSS only
+========================================= */
+
+body {
+    background:
+        radial-gradient(circle at top left, rgba(0, 95, 47, 0.12), transparent 35%),
+        linear-gradient(135deg, #f0fdf4, #f8fafc);
+}
+
+.hub-wrapper {
+    min-height: 100vh;
+    padding: 30px;
+    gap: 28px;
+}
+
+.hub-left {
+    background: linear-gradient(160deg, #004225, #007a3d);
+    color: white;
+    border-radius: 32px;
+    padding: 36px;
+    box-shadow: 0 24px 60px rgba(0, 66, 37, 0.25);
+}
+
+.hub-logo {
+    background: white;
+    padding: 12px;
+    border-radius: 24px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hub-left h1 {
+    font-size: 34px;
+    line-height: 1.1;
+    margin-top: 22px;
+}
+
+.hub-left p {
+    font-size: 17px;
+    opacity: 0.95;
+}
+
+.hub-helper-text {
+    display: block;
+    margin-top: 22px;
+    line-height: 1.7;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 18px;
+    border-radius: 18px;
+}
+
+.hub-right {
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(10px);
+    border-radius: 32px;
+    padding: 34px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.10);
+}
+
+.hub-right h2 {
+    font-size: 30px;
+    margin-bottom: 24px;
+    color: #0f172a;
+}
+
+.hub-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.hub-card {
+    position: relative;
+    min-height: 175px;
+    padding: 26px;
+    border-radius: 26px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    text-decoration: none;
+    color: #0f172a;
+    transition: 0.22s ease;
+}
+
+.hub-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.14);
+    border-color: #86efac;
+}
+
+.hub-card span {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+    border-radius: 18px;
+    background: #ecfdf5;
+    margin-bottom: 16px;
+}
+
+.hub-card h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #064e3b;
+}
+
+.hub-card p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.55;
+    font-size: 15px;
+}
+
+/* Helpful label */
+.hub-card::after {
+    content: "Tap to open";
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #047857;
+    background: #ecfdf5;
+    padding: 6px 10px;
+    border-radius: 999px;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .hub-wrapper {
+        padding: 18px;
+    }
+
+    .hub-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .hub-left,
+    .hub-right {
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .hub-left h1 {
+        font-size: 28px;
+    }
+
+    .hub-right h2 {
+        font-size: 25px;
+    }
+
+    .hub-card {
+        min-height: auto;
+        padding: 22px;
+    }
+}
