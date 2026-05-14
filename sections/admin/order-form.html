@@ -12,83 +12,123 @@
             <div class="form-grid">
 
                 <div class="form-group">
-                    <label>Customer Name</label>
+                    <label for="customerName">Customer Name</label>
                     <input type="text" id="customerName" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Contact Number</label>
+                    <label for="contactNumber">Contact Number</label>
                     <input type="text" id="contactNumber">
                 </div>
 
                 <div class="form-group">
-                    <label>Order Type</label>
+                    <label for="orderType">Order Type</label>
                     <select id="orderType">
-                        <option value="RETAIL">Retail</option>
-                        <option value="WHOLESALE">Wholesale</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Wholesale">Wholesale</option>
+                        <option value="Reseller">Reseller</option>
+                        <option value="Distribution">Distribution</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Total Amount</label>
-                    <input type="number" id="totalAmount" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Payment Status</label>
+                    <label for="paymentStatus">Payment Status</label>
                     <select id="paymentStatus">
-                        <option value="UNPAID">Unpaid</option>
-                        <option value="PARTIAL">Partial</option>
-                        <option value="PAID">Paid</option>
+                        <option value="Unpaid">Unpaid</option>
+                        <option value="Partial">Partial</option>
+                        <option value="Paid">Paid</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Order Notes</label>
+                    <label for="productSelect">Select Product</label>
+                    <select id="productSelect">
+                        <option value="">Loading products...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="productQuantity">Quantity</label>
+                    <input type="number" id="productQuantity" min="1" value="1">
+                </div>
+
+                <div class="form-group wide-field">
+                    <button type="button" id="addToCartBtn" class="primary-btn">
+                        + Add Product To Cart
+                    </button>
+                </div>
+
+                <div class="form-group wide-field">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="cartTableBody">
+                            <tr>
+                                <td colspan="5">No products added.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-group">
+                    <label for="totalAmount">Total Amount</label>
+                    <input type="number" id="totalAmount" readonly value="0">
+                </div>
+
+                <div class="form-group wide-field">
+                    <label for="orderNotes">Order Notes</label>
                     <input type="text" id="orderNotes">
                 </div>
 
-            </div>
+                <div class="form-group wide-field">
+                    <label for="signatureCanvas">Customer Signature</label>
+                    <canvas id="signatureCanvas" width="700" height="150"></canvas>
 
-            <div class="signature-box">
-
-                <label>Customer Signature</label>
-
-                <canvas id="signatureCanvas"></canvas>
-
-                <button type="button" id="clearSignatureBtn">
-                    Clear Signature
-                </button>
+                    <button type="button" id="clearSignatureBtn" class="secondary-btn">
+                        Clear Signature
+                    </button>
+                </div>
 
             </div>
+
+            <button type="submit" id="submitOrderBtn" class="primary-btn">
+                Save Order
+            </button>
+
+        </form>
+
     </div>
 
-    <button type="submit" class="primary-btn">
-        Save Order
-    </button>
+    <div class="table-card">
 
-    </form>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Invoice</th>
+                </tr>
+            </thead>
 
-</div>
+            <tbody id="ordersTableBody">
+                <tr>
+                    <td colspan="7">Loading orders...</td>
+                </tr>
+            </tbody>
+        </table>
 
-<div class="table-card">
-
-    <table>
-        <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Type</th>
-                <th>Total</th>
-                <th>Payment</th>
-                <th>Status</th>
-                <th>Invoice</th>
-            </tr>
-        </thead>
-
-        <tbody id="ordersTableBody"></tbody>
-    </table>
-
-</div>
+    </div>
 
 </div>

@@ -1,483 +1,263 @@
+/* =========================================
+   M&N ORDERS MODULE
+========================================= */
+
+let cartItems = [];
+let loadedOrders = [];
+
 let signatureCanvas;
 let signatureCtx;
 let isDrawing = false;
-let cartItems = [];
-let loadedProducts = [];
 
 /* =========================================
-   INITIALIZE ORDER SYSTEM
+   INITIALIZE
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    initializeOrders();
+
+});
+
+/* =========================================
+   MAIN INIT
 ========================================= */
 
 function initializeOrders() {
 
-    const orderForm =
-        document.getElementById("orderForm");
-
-    if (!orderForm) return;
-
     initializeSignaturePad();
 
-    loadProducts();
-    initializeCartSystem();
+    initializeAddToCart();
 
-    orderForm.addEventListener(
-        "submit",
-        submitOrderForm
-    );
+    initializeOrderSubmit();
+
+    loadProducts();
 
     loadOrders();
 }
 
 /* =========================================
-   SUBMIT ORDER
-========================================= */
-
-async function submitOrderForm(e) {
-
-    e.preventDefault();
-
-    const submitBtn =
-        document.getElementById("submitOrderBtn");
-
-    if (submitBtn) {
-
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Saving Order...";
-    }
-
-    try {
-
-        const signatureImage =
-            signatureCanvas.toDataURL("image/png");
-
-        const payload = {
-
-            action: "addOrder",
-
-            customerName:
-                document.getElementById("customerName")?.value || "",
-
-            contactNumber:
-                document.getElementById("contactNumber")?.value || "",
-
-            orderType:
-                document.getElementById("orderType")?.value || "",
-
-            totalAmount:
-                Number(
-                    document.getElementById("totalAmount")?.value || 0
-                ),
-
-            paymentStatus:
-                document.getElementById("paymentStatus")?.value || "UNPAID",
-
-            orderNotes:
-                document.getElementById("orderNotes")?.value || "",
-
-            signatureImage:
-                signatureImage,
-
-            deliveryStatus:
-                "PENDING",
-
-            orderStatus:
-                "NEW",
-
-            createdAt:
-                new Date().toISOString(),
-
-            items:
-                cartItems
-        };
-
-        const response =
-            await fetch(API.BASE_URL, {
-
-                method: "POST",
-
-                body: JSON.stringify(payload)
-            });
-
-        const data =
-            await response.json();
-
-        console.log(
-            "ORDER RESPONSE:",
-            data
-        );
-
-        if (data.success) {
-
-            alert(
-                `Order Saved.\nInvoice #: ${data.InvoiceID || "N/A"}`
-            );
-
-            orderForm.reset();
-
-            cartItems = [];
-            renderCart();
-
-            clearSignature();
-
-            await loadOrders();
-
-            if (
-                typeof loadDashboardAnalytics ===
-                "function"
-            ) {
-
-                loadDashboardAnalytics();
-            }
-
-        } else {
-
-            alert(
-                data.message ||
-                "Order save failed."
-            );
-        }
-
-    } catch (error) {
-
-        console.error(
-            "ORDER ERROR:",
-            error
-        );
-
-        alert(
-            "Server connection failed."
-        );
-
-    } finally {
-
-        if (submitBtn) {
-
-            submitBtn.disabled = false;
-
-            submitBtn.innerText =
-                "Submit Order";
-        }
-    }
-}
-
-/* =========================================
-   LOAD ORDERS
-========================================= */
-
-async function loadOrders() {
-
-    try {
-
-        const response =
-            await fetch(API.BASE_URL, {
-
-                method: "POST",
-
-                body: JSON.stringify({
-                    action: "getOrders"
-                })
-            });
-
-        const data =
-            await response.json();
-
-        console.log(
-            "ORDERS:",
-            data
-        );
-
-        const rows =
-            data.rows ||
-            data.orders ||
-            [];
-
-        const tbody =
-            document.getElementById(
-                "ordersTableBody"
-            );
-
-        if (!tbody) return;
-
-        tbody.innerHTML = "";
-
-        if (!rows.length) {
-
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="7">
-                        No orders found.
-                    </td>
-                </tr>
-            `;
-
-            return;
-        }
-
-        rows.forEach(order => {
-
-            const safeOrder =
-                JSON.stringify(order)
-                    .replace(/'/g, "&apos;");
-
-            tbody.innerHTML += `
-                <tr>
-
-                    <td>
-                        ${order.InvoiceID || order.OrderID || ""}
-                    </td>
-
-                    <td>
-                        ${order.CustomerName || ""}
-                    </td>
-
-                    <td>
-                        ${order.OrderType || ""}
-                    </td>
-
-                    <td>
-                        ₱${Number(
-                order.TotalAmount || 0
-            ).toLocaleString()}
-                    </td>
-
-                    <td>
-                        ${order.PaymentStatus || ""}
-                    </td>
-
-                    <td>
-                        ${order.DeliveryStatus || ""}
-                    </td>
-
-                    <td>
-
-                        <button
-                            type="button"
-                            class="primary-btn"
-                            onclick='openInvoiceModal(${safeOrder})'
-                        >
-                            View Invoice
-                        </button>
-
-                    </td>
-
-                </tr>
-            `;
-        });
-
-    } catch (error) {
-
-        console.error(
-            "LOAD ORDERS ERROR:",
-            error
-        );
-    }
-}
-
-
-/* =========================================
-   PRODUCT SYSTEM
+   LOAD PRODUCTS
 ========================================= */
 
 async function loadProducts() {
 
+    const productSelect =
+        document.getElementById("productSelect");
+
+    if (!productSelect) return;
+
     try {
 
-        const response =
-            await fetch(API.BASE_URL, {
+        productSelect.innerHTML = `
+            <option value="">
+                Select Product
+            </option>
+        `;
 
-                method: "POST",
+        const sampleProducts = [
 
-                body: JSON.stringify({
-                    action: "getProducts"
-                })
-            });
+            {
+                ProductID: "P001",
+                ProductName: "Lucky Me Pancit Canton",
+                RetailPrice: 18
+            },
 
-        const data =
-            await response.json();
+            {
+                ProductID: "P002",
+                ProductName: "Coca Cola 1.5L",
+                RetailPrice: 75
+            },
 
-        console.log("PRODUCTS:", data);
+            {
+                ProductID: "P003",
+                ProductName: "Piattos Cheese",
+                RetailPrice: 22
+            }
 
-        loadedProducts =
-            data.products ||
-            data.rows ||
-            [];
+        ];
 
-        const select =
-            document.getElementById("productSelect");
-
-        if (!select) return;
-
-        select.innerHTML =
-            `<option value="">Select Product</option>`;
-
-        loadedProducts.forEach(product => {
+        sampleProducts.forEach(product => {
 
             const option =
                 document.createElement("option");
 
             option.value =
-                product.ProductID;
+                JSON.stringify(product);
 
             option.textContent =
-                `${product.ProductName} - ₱${Number(
-                    product.RetailPrice || 0
-                ).toLocaleString()}`;
+                `${product.ProductName} - ₱${product.RetailPrice}`;
 
-            select.appendChild(option);
+            productSelect.appendChild(option);
 
         });
 
     } catch (error) {
 
-        console.error(
-            "LOAD PRODUCTS ERROR:",
-            error
-        );
+        console.error(error);
     }
 }
 
-function initializeCartSystem() {
+/* =========================================
+   ADD TO CART
+========================================= */
+
+function initializeAddToCart() {
 
     const addBtn =
         document.getElementById("addToCartBtn");
 
     if (!addBtn) return;
 
-    addBtn.addEventListener(
-        "click",
-        addProductToCart
-    );
-}
+    addBtn.addEventListener("click", () => {
 
-function addProductToCart() {
+        const productRaw =
+            document.getElementById("productSelect").value;
 
-    const productId =
-        document.getElementById("productSelect")?.value;
+        const qty =
+            Number(
+                document.getElementById("productQuantity").value
+            );
 
-    const quantity =
-        Number(
-            document.getElementById("productQuantity")?.value || 1
-        );
+        if (!productRaw) {
 
-    if (!productId) {
+            alert("Please select product.");
+            return;
+        }
 
-        alert("Please select a product.");
-        return;
-    }
+        const product =
+            JSON.parse(productRaw);
 
-    const product =
-        loadedProducts.find(
-            item =>
-                String(item.ProductID) ===
-                String(productId)
-        );
+        const item = {
 
-    if (!product) {
+            ProductID:
+                product.ProductID,
 
-        alert("Product not found.");
-        return;
-    }
+            ProductName:
+                product.ProductName,
 
-    const unitPrice =
-        Number(
-            product.RetailPrice || 0
-        );
+            Qty:
+                qty,
 
-    const lineTotal =
-        quantity * unitPrice;
+            Price:
+                Number(product.RetailPrice),
 
-    cartItems.push({
+            Total:
+                Number(product.RetailPrice) * qty
+        };
 
-        productId:
-            product.ProductID,
+        cartItems.push(item);
 
-        productName:
-            product.ProductName,
+        renderCartItems();
 
-        quantity:
-            quantity,
-
-        unitPrice:
-            unitPrice,
-
-        lineTotal:
-            lineTotal
+        computeTotalAmount();
     });
-
-    renderCart();
 }
 
-function renderCart() {
+/* =========================================
+   RENDER CART
+========================================= */
+
+function renderCartItems() {
 
     const tbody =
         document.getElementById("cartTableBody");
 
     if (!tbody) return;
 
-    tbody.innerHTML = "";
-
-    if (!cartItems.length) {
+    if (cartItems.length === 0) {
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     No products added.
                 </td>
             </tr>
         `;
 
-        updateTotalAmount();
-
         return;
     }
 
-    cartItems.forEach(item => {
+    tbody.innerHTML = "";
+
+    cartItems.forEach((item, index) => {
 
         tbody.innerHTML += `
             <tr>
 
+                <td>${item.ProductName}</td>
+
+                <td>${item.Qty}</td>
+
                 <td>
-                    ${item.productName}
+                    ₱${item.Price.toLocaleString()}
                 </td>
 
                 <td>
-                    ${item.quantity}
+                    ₱${item.Total.toLocaleString()}
                 </td>
 
                 <td>
-                    ₱${Number(item.unitPrice)
-                .toLocaleString()}
-                </td>
-
-                <td>
-                    ₱${Number(item.lineTotal)
-                .toLocaleString()}
+                    <button
+                        type="button"
+                        onclick="removeCartItem(${index})"
+                        style="
+                            background:#dc2626;
+                            color:white;
+                            border:none;
+                            padding:8px 12px;
+                            border-radius:10px;
+                            cursor:pointer;
+                            font-weight:700;
+                        "
+                    >
+                        Remove
+                    </button>
                 </td>
 
             </tr>
         `;
     });
-
-    updateTotalAmount();
 }
 
-function updateTotalAmount() {
+/* =========================================
+   REMOVE CART ITEM
+========================================= */
 
-    let total = 0;
+function removeCartItem(index) {
 
-    cartItems.forEach(item => {
+    cartItems.splice(index, 1);
 
-        total +=
-            Number(item.lineTotal || 0);
-    });
+    renderCartItems();
+
+    computeTotalAmount();
+}
+
+window.removeCartItem =
+    removeCartItem;
+
+window.openInvoiceByIndex =
+    openInvoiceByIndex;
+
+/* =========================================
+   TOTAL
+========================================= */
+
+function computeTotalAmount() {
+
+    const total =
+        cartItems.reduce((sum, item) => {
+
+            return sum + item.Total;
+
+        }, 0);
 
     const totalInput =
         document.getElementById("totalAmount");
 
     if (totalInput) {
 
-        totalInput.value =
-            total;
+        totalInput.value = total;
     }
 }
 
@@ -488,25 +268,26 @@ function updateTotalAmount() {
 function initializeSignaturePad() {
 
     signatureCanvas =
-        document.getElementById(
-            "signatureCanvas"
-        );
+        document.getElementById("signatureCanvas");
 
     if (!signatureCanvas) return;
 
     signatureCtx =
         signatureCanvas.getContext("2d");
 
-    signatureCtx.lineWidth = 2;
-
-    signatureCtx.lineCap = "round";
-
     signatureCtx.strokeStyle =
         "#0f172a";
+
+    signatureCtx.lineWidth = 2;
 
     signatureCanvas.addEventListener(
         "mousedown",
         startDrawing
+    );
+
+    signatureCanvas.addEventListener(
+        "mousemove",
+        draw
     );
 
     signatureCanvas.addEventListener(
@@ -519,30 +300,8 @@ function initializeSignaturePad() {
         stopDrawing
     );
 
-    signatureCanvas.addEventListener(
-        "mousemove",
-        drawSignature
-    );
-
-    signatureCanvas.addEventListener(
-        "touchstart",
-        startTouchDrawing
-    );
-
-    signatureCanvas.addEventListener(
-        "touchend",
-        stopDrawing
-    );
-
-    signatureCanvas.addEventListener(
-        "touchmove",
-        drawTouchSignature
-    );
-
     const clearBtn =
-        document.getElementById(
-            "clearSignatureBtn"
-        );
+        document.getElementById("clearSignatureBtn");
 
     if (clearBtn) {
 
@@ -565,12 +324,7 @@ function startDrawing(e) {
     );
 }
 
-function stopDrawing() {
-
-    isDrawing = false;
-}
-
-function drawSignature(e) {
+function draw(e) {
 
     if (!isDrawing) return;
 
@@ -582,52 +336,12 @@ function drawSignature(e) {
     signatureCtx.stroke();
 }
 
-function startTouchDrawing(e) {
+function stopDrawing() {
 
-    e.preventDefault();
-
-    const rect =
-        signatureCanvas.getBoundingClientRect();
-
-    const touch =
-        e.touches[0];
-
-    isDrawing = true;
-
-    signatureCtx.beginPath();
-
-    signatureCtx.moveTo(
-        touch.clientX - rect.left,
-        touch.clientY - rect.top
-    );
-}
-
-function drawTouchSignature(e) {
-
-    e.preventDefault();
-
-    if (!isDrawing) return;
-
-    const rect =
-        signatureCanvas.getBoundingClientRect();
-
-    const touch =
-        e.touches[0];
-
-    signatureCtx.lineTo(
-        touch.clientX - rect.left,
-        touch.clientY - rect.top
-    );
-
-    signatureCtx.stroke();
+    isDrawing = false;
 }
 
 function clearSignature() {
-
-    if (
-        !signatureCtx ||
-        !signatureCanvas
-    ) return;
 
     signatureCtx.clearRect(
         0,
@@ -638,10 +352,259 @@ function clearSignature() {
 }
 
 /* =========================================
-   AUTO START
+   SUBMIT ORDER
 ========================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeOrders
-);
+function initializeOrderSubmit() {
+
+    const form =
+        document.getElementById("orderForm");
+
+    if (!form) return;
+
+    form.addEventListener("submit", (e) => {
+
+        e.preventDefault();
+
+        saveOrderLive();
+    });
+}
+
+/* =========================================
+   SAVE ORDER
+========================================= */
+
+async function saveOrderLive() {
+
+    const payload = {
+        action: "addOrder",
+        customerName: document.getElementById("customerName").value,
+        contactNumber: document.getElementById("contactNumber").value,
+        orderType: document.getElementById("orderType").value,
+        paymentStatus: document.getElementById("paymentStatus").value,
+        orderNotes: document.getElementById("orderNotes").value,
+        totalAmount: Number(document.getElementById("totalAmount").value || 0),
+        signatureImage: signatureCanvas ? signatureCanvas.toDataURL("image/png") : "",
+        items: cartItems
+    };
+
+    const response = await fetch(API.BASE_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    console.log("SAVE ORDER:", data);
+
+    if (data.success) {
+        alert("Order saved to Google Sheets.");
+        resetOrderForm();
+        loadOrders();
+    } else {
+        alert(data.message || "Order failed.");
+    }
+}
+
+/* =========================================
+   RESET FORM
+========================================= */
+
+function resetOrderForm() {
+
+    document.getElementById("orderForm").reset();
+
+    cartItems = [];
+
+    renderCartItems();
+
+    computeTotalAmount();
+
+    clearSignature();
+}
+
+/* =========================================
+   LOAD ORDERS
+========================================= */
+
+async function loadOrders() {
+
+    const tbody = document.getElementById("ordersTableBody");
+
+    if (!tbody) return;
+
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="7">Loading orders...</td>
+        </tr>
+    `;
+
+    try {
+
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "getOrders"
+            })
+        });
+
+        const data = await response.json();
+
+        console.log("LIVE ORDERS:", data);
+
+        loadedOrders = data.orders || data.rows || [];
+
+        renderOrders();
+
+    } catch (error) {
+
+        console.error("LOAD ORDERS ERROR:", error);
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7">Failed to load orders.</td>
+            </tr>
+        `;
+    }
+}
+
+/* =========================================
+   RENDER ORDERS
+========================================= */
+
+function renderOrders() {
+
+    const tbody =
+        document.getElementById("ordersTableBody");
+
+    if (!tbody) return;
+
+    if (loadedOrders.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7">
+                    No orders found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    tbody.innerHTML = "";
+
+    loadedOrders.forEach((order, index) => {
+
+        tbody.innerHTML += `
+            <tr>
+
+                <td>${order.InvoiceID}</td>
+
+                <td>${order.CustomerName}</td>
+
+                <td>${order.OrderType}</td>
+
+                <td>
+                    ₱${Number(order.TotalAmount).toLocaleString()}
+                </td>
+
+                <td>${order.PaymentStatus}</td>
+
+                <td>${order.DeliveryStatus}</td>
+
+                <td>
+                    <button
+                        type="button"
+                        onclick="openInvoiceByIndex(${index})"
+                        style="
+                            background:#005f2f;
+                            color:white;
+                            border:none;
+                            padding:10px 14px;
+                            border-radius:12px;
+                            font-weight:800;
+                            cursor:pointer;
+                            box-shadow:0 6px 14px rgba(0,95,47,0.18);
+                        "
+                    >
+                        View Invoice
+                    </button>
+                </td>
+
+            </tr>
+        `;
+    });
+}
+
+/* =========================================
+   OPEN INVOICE
+========================================= */
+
+function openInvoiceByIndex(index) {
+
+    const order = loadedOrders[index];
+
+    if (!order) {
+        alert("Invoice data not found.");
+        return;
+    }
+
+    setInvoiceText_("invoiceIdText", order.InvoiceID || order.OrderID);
+    setInvoiceText_("invoiceCustomerText", order.CustomerName);
+    setInvoiceText_("invoiceContactText", order.ContactNumber);
+    setInvoiceText_("invoiceOrderTypeText", order.OrderType);
+    setInvoiceText_("invoicePaymentStatusText", order.PaymentStatus);
+    setInvoiceText_("invoiceDeliveryStatusText", order.DeliveryStatus);
+    setInvoiceText_("invoiceDateText", order.OrderDate || order.CreatedAt);
+    setInvoiceText_("invoiceNotesText", order.Notes || order.OrderNotes);
+
+    setInvoiceText_(
+        "invoiceTotalText",
+        "₱" + Number(order.TotalAmount || 0).toLocaleString()
+    );
+
+    const signatureImage = document.getElementById("invoiceSignatureImage");
+
+    if (signatureImage) {
+        signatureImage.src = order.SignatureImage || "";
+        signatureImage.style.display = order.SignatureImage ? "block" : "none";
+    }
+
+    const modal = document.getElementById("invoiceModal");
+
+    if (modal) {
+        modal.style.display = "flex";
+        modal.style.visibility = "visible";
+        modal.style.opacity = "1";
+    } else {
+        alert("Invoice modal not found in store-order-form.html.");
+    }
+}
+
+function setInvoiceText_(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.innerText = value || "-";
+    }
+}
+
+/* =========================================
+   CLOSE INVOICE
+========================================= */
+
+function closeSimpleInvoice_() {
+
+    const modal =
+        document.getElementById("invoiceModal");
+
+    if (modal) {
+
+        modal.style.display = "none";
+    }
+}
+
+window.closeSimpleInvoice_ =
+    closeSimpleInvoice_;

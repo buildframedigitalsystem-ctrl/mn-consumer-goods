@@ -47,7 +47,7 @@ loginForm.addEventListener("submit", async (e) => {
 
             /* REDIRECT */
 
-            window.location.href = "dashboard-hub.html";
+            window.location.href = "admin-dashboard.html";
 
         } else {
 

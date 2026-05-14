@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&N Store Order Form</title>
 
+    <link rel="icon" href="assets/images/branding/mn-logo.png">
     <link rel="manifest" href="manifest-store.json">
     <meta name="theme-color" content="#005f2f">
 
@@ -113,35 +114,30 @@
             background: #f8fafc;
         }
 
-        .form-group textarea {
-            resize: vertical;
-        }
-
-        .wide-field {
+        .wide-field,
+        .signature-section,
+        .order-actions {
             grid-column: span 2;
-        }
-
-        .signature-section {
-            margin-top: 26px;
         }
 
         #signatureCanvas {
             width: 100%;
-            height: 220px;
+            height: 150px;
             border: 2px dashed #94a3b8;
             border-radius: 18px;
             background: #f8fafc;
+            touch-action: none;
         }
 
         .order-actions {
             display: flex;
             justify-content: flex-end;
             gap: 14px;
-            margin-top: 24px;
         }
 
         .clear-btn,
-        .save-btn {
+        .save-btn,
+        .primary-btn {
             border: none;
             padding: 15px 24px;
             border-radius: 14px;
@@ -155,7 +151,8 @@
             color: #0f172a;
         }
 
-        .save-btn {
+        .save-btn,
+        .primary-btn {
             background: #005f2f;
             color: white;
         }
@@ -181,26 +178,304 @@
             color: #334155;
         }
 
+        .invoice-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 22px;
+            overflow-y: auto;
+        }
+
+        .invoice-modal-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 880px;
+            max-height: 92vh;
+            border-radius: 28px;
+            overflow-y: auto;
+            box-shadow: 0 28px 80px rgba(15, 23, 42, 0.38);
+        }
+
+        .invoice-header {
+            background: linear-gradient(135deg, #004225, #007a3d);
+            color: white;
+            padding: 30px 34px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .invoice-header h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .invoice-header p {
+            margin: 8px 0 0;
+            font-weight: 600;
+        }
+
+        .close-invoice-btn {
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.16);
+            color: white;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .invoice-body {
+            padding: 34px;
+        }
+
+        .invoice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .invoice-grid div {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .invoice-grid strong {
+            display: block;
+            color: #64748b;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .invoice-grid p {
+            margin: 8px 0 0;
+            font-weight: 800;
+        }
+
+        .invoice-total-box {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border: 1px solid #bbf7d0;
+            padding: 26px;
+            border-radius: 24px;
+            margin-bottom: 26px;
+            text-align: right;
+        }
+
+        .invoice-total-box h3 {
+            margin: 0;
+            color: #166534;
+        }
+
+        .invoice-total-box h1 {
+            margin: 10px 0 0;
+            color: #005f2f;
+            font-size: 42px;
+        }
+
+        .invoice-notes {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .invoice-signature {
+            padding: 20px;
+            border: 1px dashed #94a3b8;
+            border-radius: 20px;
+            background: #f8fafc;
+        }
+
+        .invoice-signature img {
+            width: 100%;
+            max-width: 320px;
+            min-height: 90px;
+            object-fit: contain;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            margin-top: 12px;
+            background: white;
+        }
+
+        .invoice-actions {
+            padding: 24px 34px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
         @media (max-width: 768px) {
-            .top-bar {
+
+            .top-bar,
+            .order-actions {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
             }
 
-            .order-grid {
+            .order-grid,
+            .invoice-grid {
                 grid-template-columns: 1fr;
             }
 
-            .wide-field {
+            .wide-field,
+            .signature-section,
+            .order-actions {
                 grid-column: span 1;
             }
 
             .brand h1 {
                 font-size: 26px;
             }
+        }
 
-            .order-actions {
-                flex-direction: column;
+        /* =========================================
+   POS RECEIPT PRINT FORMAT - SAFE ADD ONLY
+========================================= */
+
+        @media print {
+
+            @page {
+                size: 80mm auto;
+                margin: 4mm;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+                font-family: Arial, sans-serif !important;
+                font-size: 11px !important;
+            }
+
+            body * {
+                visibility: hidden !important;
+            }
+
+            #invoiceModal,
+            #invoiceModal * {
+                visibility: visible !important;
+            }
+
+            #invoiceModal {
+                display: block !important;
+                position: absolute !important;
+                inset: 0 !important;
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+            }
+
+            .invoice-modal-content {
+                width: 80mm !important;
+                max-width: 80mm !important;
+                max-height: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                border: none !important;
+                overflow: visible !important;
+            }
+
+            .invoice-header {
+                background: white !important;
+                color: black !important;
+                padding: 0 0 8px 0 !important;
+                text-align: center !important;
+                display: block !important;
+                border-bottom: 1px dashed black !important;
+            }
+
+            .invoice-header h2 {
+                font-size: 16px !important;
+                margin: 0 !important;
+            }
+
+            .invoice-header p {
+                font-size: 11px !important;
+                margin: 3px 0 0 !important;
+            }
+
+            .close-invoice-btn,
+            .invoice-actions {
+                display: none !important;
+            }
+
+            .invoice-body {
+                padding: 8px 0 !important;
+            }
+
+            .invoice-grid {
+                display: block !important;
+                margin: 0 !important;
+            }
+
+            .invoice-grid div {
+                background: white !important;
+                border: none !important;
+                border-radius: 0 !important;
+                padding: 3px 0 !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                gap: 8px !important;
+            }
+
+            .invoice-grid strong {
+                font-size: 10px !important;
+                color: black !important;
+            }
+
+            .invoice-grid p {
+                font-size: 10px !important;
+                margin: 0 !important;
+                text-align: right !important;
+            }
+
+            .invoice-total-box {
+                background: white !important;
+                border: none !important;
+                border-top: 1px dashed black !important;
+                border-bottom: 1px dashed black !important;
+                border-radius: 0 !important;
+                padding: 8px 0 !important;
+                margin: 8px 0 !important;
+                text-align: right !important;
+            }
+
+            .invoice-total-box h3 {
+                font-size: 11px !important;
+                color: black !important;
+            }
+
+            .invoice-total-box h1 {
+                font-size: 22px !important;
+                color: black !important;
+                margin: 3px 0 0 !important;
+            }
+
+            .invoice-notes,
+            .invoice-signature {
+                background: white !important;
+                border: none !important;
+                border-radius: 0 !important;
+                padding: 5px 0 !important;
+                margin: 0 !important;
+            }
+
+            .invoice-signature img {
+                max-width: 60mm !important;
+                min-height: 35px !important;
+                border: none !important;
             }
         }
     </style>
@@ -213,24 +488,19 @@
         <div class="top-bar">
             <div class="brand">
                 <img src="assets/images/branding/mn-logo.png" alt="M&N Logo">
-
                 <div>
                     <h1>Store Order Form</h1>
                     <p>Retail • Wholesale • Reseller • Distribution Orders</p>
                 </div>
             </div>
 
-            <a href="store-dashboard.html" class="back-link">
-                ← Store Operations
-            </a>
+            <a href="store-dashboard.html" class="back-link">← Store Operations</a>
         </div>
 
         <section class="order-card">
-
             <h2 class="section-title">Create New Order</h2>
 
             <form id="orderForm">
-
                 <div class="order-grid">
 
                     <div class="form-group">
@@ -282,7 +552,7 @@
                     </div>
 
                     <div class="form-group wide-field">
-                        <div id="cartContainer">
+                        <div class="table-wrap">
                             <table class="orders-table">
                                 <thead>
                                     <tr>
@@ -290,12 +560,12 @@
                                         <th>Qty</th>
                                         <th>Price</th>
                                         <th>Total</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
-
                                 <tbody id="cartTableBody">
                                     <tr>
-                                        <td colspan="4">No products added.</td>
+                                        <td colspan="5">No products added.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -314,25 +584,23 @@
 
                     <div class="signature-section">
                         <label for="signatureCanvas">Customer / Receiver Signature</label>
-                        <canvas id="signatureCanvas" width="700" height="220"></canvas>
+                        <canvas id="signatureCanvas" width="700" height="150"></canvas>
                     </div>
 
                     <div class="order-actions">
                         <button type="button" id="clearSignatureBtn" class="clear-btn">
                             Clear Signature
                         </button>
-
                         <button type="submit" id="submitOrderBtn" class="save-btn">
                             Submit Order
                         </button>
                     </div>
 
+                </div>
             </form>
-
         </section>
 
         <section class="order-card">
-
             <h2 class="section-title">Recent Orders</h2>
 
             <div class="table-wrap">
@@ -348,7 +616,6 @@
                             <th>Invoice</th>
                         </tr>
                     </thead>
-
                     <tbody id="ordersTableBody">
                         <tr>
                             <td colspan="7">Loading orders...</td>
@@ -356,26 +623,78 @@
                     </tbody>
                 </table>
             </div>
-
         </section>
 
     </div>
 
-    <div id="invoiceModalContainer"></div>
+    <div id="invoiceModal" class="invoice-modal">
+        <div class="invoice-modal-content">
+
+            <div class="invoice-header">
+                <div>
+                    <h2>M&N Consumer Goods</h2>
+                    <p>Official Invoice</p>
+                </div>
+
+                <button type="button" class="close-invoice-btn" onclick="closeSimpleInvoice_()">
+                    ✕
+                </button>
+            </div>
+
+            <div class="invoice-body">
+                <div class="invoice-grid">
+                    <div><strong>Invoice ID:</strong>
+                        <p id="invoiceIdText">-</p>
+                    </div>
+                    <div><strong>Customer:</strong>
+                        <p id="invoiceCustomerText">-</p>
+                    </div>
+                    <div><strong>Contact Number:</strong>
+                        <p id="invoiceContactText">-</p>
+                    </div>
+                    <div><strong>Order Type:</strong>
+                        <p id="invoiceOrderTypeText">-</p>
+                    </div>
+                    <div><strong>Payment Status:</strong>
+                        <p id="invoicePaymentStatusText">-</p>
+                    </div>
+                    <div><strong>Delivery Status:</strong>
+                        <p id="invoiceDeliveryStatusText">-</p>
+                    </div>
+                    <div><strong>Order Date:</strong>
+                        <p id="invoiceDateText">-</p>
+                    </div>
+                </div>
+
+                <div class="invoice-total-box">
+                    <h3>Total Amount</h3>
+                    <h1 id="invoiceTotalText">₱0</h1>
+                </div>
+
+                <div class="invoice-notes">
+                    <strong>Order Notes</strong>
+                    <p id="invoiceNotesText">-</p>
+                </div>
+
+                <div class="invoice-signature">
+                    <strong>Customer Signature</strong><br>
+                    <img id="invoiceSignatureImage" src="" alt="Signature">
+                </div>
+            </div>
+
+            <div class="invoice-actions">
+                <button type="button" class="save-btn" onclick="window.print()">
+                    Print Invoice
+                </button>
+            </div>
+
+        </div>
+    </div>
 
     <script src="assets/js/api-config.js"></script>
-    <script src="assets/js/invoice.js"></script>
     <script src="assets/js/orders.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            initializeOrders();
-        });
 
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./service-worker.js");
-        }
-    </script>
 
 </body>
 
