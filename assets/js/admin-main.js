@@ -114,8 +114,7 @@ async function loadAdminPage(page) {
         },
 
         products: {
-            file: "sections/admin/product-form.html",
-            init: "initializeProducts"
+            external: "admin-products.html"
         },
 
         suppliers: {
@@ -195,8 +194,7 @@ async function loadAdminPage(page) {
         },
 
         "admin-products": {
-            file: "sections/admin/product-form.html",
-            init: "initializeProducts"
+            external: "admin-products.html"
         },
 
         "master-dashboard": {

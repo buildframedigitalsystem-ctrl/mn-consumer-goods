@@ -304,20 +304,37 @@ function closeProductFormBlock() {
 }
 
 /* =========================================
-   FORM BLOCK OPEN / CLOSE
-========================================= */
-
-function closeProductFormBlock() {
-    ...
-}
-
-/* =========================================
    LOAD CATEGORY FILTER
 ========================================= */
 
 function loadCategoryFilter_(products) {
+    const categorySelect = document.querySelector(".metal-toolbar select");
 
-    ...
+    if (!categorySelect) return;
+
+    const categories = [];
+
+    products.forEach(product => {
+        const category = product.Category || product.category || "";
+
+        if (category && !categories.includes(category)) {
+            categories.push(category);
+        }
+    });
+
+    categories.sort();
+
+    categorySelect.innerHTML = `
+        <option value="">All Categories</option>
+    `;
+
+    categories.forEach(category => {
+        categorySelect.innerHTML += `
+            <option value="${escapeHTML_(category)}">
+                ${escapeHTML_(category)}
+            </option>
+        `;
+    });
 }
 
 /* =========================================
@@ -325,95 +342,42 @@ function loadCategoryFilter_(products) {
 ========================================= */
 
 function getValue(id) {
+    return document.getElementById(id)?.value.trim() || "";
+}
 
-    /* =========================================
-       HELPERS
-    ========================================= */
+function isChecked(id) {
+    return document.getElementById(id)?.checked || false;
+}
 
-    function getValue(id) {
-        return document.getElementById(id)?.value.trim() || "";
-    }
+function resetDefaultCheckboxes_() {
+    const defaults = [
+        "showOnHomepage",
+        "showInRetail",
+        "showInWholesale",
+        "featured"
+    ];
 
-    function isChecked(id) {
-        return document.getElementById(id)?.checked || false;
-    }
+    defaults.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = true;
+    });
 
-    function resetDefaultCheckboxes_() {
-        const defaults = [
-            "showOnHomepage",
-            "showInRetail",
-            "showInWholesale",
-            "featured"
-        ];
+    const isPromo = document.getElementById("isPromo");
+    if (isPromo) isPromo.checked = false;
+}
 
-        defaults.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.checked = true;
-        });
+function formatMoney_(value) {
+    return Number(value || 0).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
 
-        const isPromo = document.getElementById("isPromo");
-        if (isPromo) isPromo.checked = false;
-    }
-
-    function formatMoney_(value) {
-        return Number(value || 0).toLocaleString("en-PH", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-    }
-
-    function escapeHTML_(value) {
-        return String(value || "")
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-    }
-
-    /* =========================================
-       LOAD CATEGORY FILTER
-    ========================================= */
-
-    function loadCategoryFilter_(products) {
-
-        const categorySelect =
-            document.querySelector(".metal-toolbar select");
-
-        if (!categorySelect) return;
-
-        const categories = [];
-
-        products.forEach(product => {
-
-            const category =
-                product.Category ||
-                product.category ||
-                "";
-
-            if (
-                category &&
-                !categories.includes(category)
-            ) {
-                categories.push(category);
-            }
-
-        });
-
-        categories.sort();
-
-        categorySelect.innerHTML = `
-        <option value="">All Categories</option>
-    `;
-
-        categories.forEach(category => {
-
-            categorySelect.innerHTML += `
-            <option value="${category}">
-                ${category}
-            </option>
-        `;
-
-        });
-
-    }
+function escapeHTML_(value) {
+    return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
