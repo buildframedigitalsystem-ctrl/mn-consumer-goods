@@ -67,8 +67,8 @@ async function loadProductsFromAPI() {
         const response = await fetch(API.BASE_URL, {
             method: "POST",
             body: JSON.stringify({
-                action: "getProducts"
-            })
+                action: "getWholesaleProducts"
+            }
         });
 
         const data = await response.json();
