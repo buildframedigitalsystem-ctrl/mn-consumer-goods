@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&N Retail Store</title>
 
-    <link rel="stylesheet" href="assets/css/store.css">
+    <link rel="stylesheet" href="assets/css/store.css?v=20">
     <link rel="stylesheet" href="assets/css/responsive-fixes.css">
 
 </head>
@@ -77,59 +77,59 @@
             </a>
         </div>
 
-        <div id="productGrid" class="product-grid"></div>
+        <div class="product-grid" id="productGrid">
+            <!-- PRODUCTS LOAD HERE -->
+        </div>
 
-    </section>
-
-    <div class="load-more-wrap">
-        <button id="loadMoreProducts">
+        <button type="button" id="loadMoreProducts">
             Load More Products
         </button>
-    </div>
 
-    <!-- =========================================
+        <!-- =========================================
          PRODUCT MODAL
     ========================================= -->
 
-    <div id="productModal" class="product-modal">
+        <div id="productModal" class="product-modal">
 
-        <div class="product-modal-content">
+            <div class="product-modal-content">
 
-            <button class="close-modal" onclick="closeProductModal()">
-                ✕
-            </button>
+                <button class="close-modal" onclick="closeProductModal()">
+                    ✕
+                </button>
 
-            <div class="modal-image-wrap">
-                <img id="modalProductImage" src="" alt="">
-            </div>
+                <div class="modal-image-wrap">
+                    <img id="modalProductImage" src="" alt="">
+                </div>
 
-            <div class="modal-details">
+                <div class="modal-details">
 
-                <div id="modalBadges" class="modal-badges"></div>
+                    <div id="modalBadges" class="modal-badges"></div>
 
-                <h2 id="modalProductName">
-                    Product Name
-                </h2>
+                    <h2 id="modalProductName">
+                        Product Name
+                    </h2>
 
-                <p id="modalProductCategory" class="modal-category">
-                    Category
-                </p>
+                    <p id="modalProductCategory" class="modal-category">
+                        Category
+                    </p>
 
-                <div id="modalPriceBox" class="modal-price-box"></div>
+                    <div id="modalPriceBox" class="modal-price-box"></div>
 
-                <p id="modalProductDescription" class="modal-description">
-                    Product description here...
-                </p>
+                    <p id="modalProductDescription" class="modal-description">
+                        Product description here...
+                    </p>
 
-                <div class="modal-actions">
+                    <div class="modal-actions">
 
-                    <a id="modalWhatsAppBtn" href="#" target="_blank" class="modal-btn primary-btn">
-                        💬 WhatsApp Inquiry
-                    </a>
+                        <a id="modalWhatsAppBtn" href="#" target="_blank" class="modal-btn primary-btn">
+                            💬 WhatsApp Inquiry
+                        </a>
 
-                    <button class="modal-btn secondary-btn" onclick="closeProductModal()">
-                        Close
-                    </button>
+                        <button class="modal-btn secondary-btn" onclick="closeProductModal()">
+                            Close
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -137,12 +137,10 @@
 
         </div>
 
-    </div>
-
-    <script src="assets/js/api-config.js"></script>
-    <script src="assets/js/store.js"></script>
-    <script src="assets/js/universal-search.js"></script>
-
+        <script src="assets/js/api-config.js"></script>
+        <script src="assets/js/cart.js"></script>
+        <script src="assets/js/store.js?v=12"></script>
+        <script src="assets/js/universal-search.js"></script>
 </body>
 
 </html>

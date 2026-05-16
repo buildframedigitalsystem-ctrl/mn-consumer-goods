@@ -1890,3 +1890,139 @@ body:has(.wholesale-header) #productGrid {
     color: #0f172a;
     font-weight: 700;
 }
+
+/* =========================================
+   PRODUCT SECTION ALIGNMENT FIX
+========================================= */
+
+.products-section {
+    max-width: 1500px;
+    margin: 70px auto;
+    padding: 0 32px;
+}
+
+.products-header,
+.product-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    max-width: 100%;
+    margin-bottom: 24px;
+}
+
+.products-header h2,
+.product-section-header h2 {
+    margin: 0;
+    font-size: 42px;
+    color: #06142e;
+}
+
+.products-header p,
+.product-section-header p {
+    margin: 6px 0 0;
+    color: #334155;
+}
+
+.products-header a,
+.product-section-header a,
+.view-cart-link {
+    text-decoration: none;
+    color: #005f2f;
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.store-tools {
+    max-width: 560px;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.store-tools input,
+.store-tools select {
+    height: 58px;
+    border-radius: 14px;
+    border: 1px solid #cbd5e1;
+    padding: 0 20px;
+    font-size: 16px;
+    background: white;
+}
+
+.load-more-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+#loadMoreProducts {
+    margin: 0 auto;
+    display: block;
+    padding: 18px 36px;
+    border-radius: 16px;
+}
+
+/* =========================================
+   STORE PRODUCT SECTION FINAL SPACING FIX
+========================================= */
+
+#products {
+    max-width: 1500px;
+    margin: 70px auto;
+    padding: 0 32px;
+}
+
+#products .section-header,
+#products .products-header,
+#products .product-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+#products .section-header>div,
+#products .products-header>div,
+#products .product-section-header>div {
+    flex: 1;
+}
+
+#products h2 {
+    margin: 0;
+    font-size: 42px;
+    color: #06142e;
+}
+
+#products p {
+    margin: 6px 0 0;
+}
+
+#products .view-cart-link,
+#products a[href="cart.html"] {
+    white-space: nowrap;
+    margin-top: 12px;
+    color: #005f2f;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+#productGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 28px;
+}
+
+.load-more-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 35px;
+}
+
+#loadMoreProducts {
+    margin: 0 auto;
+}

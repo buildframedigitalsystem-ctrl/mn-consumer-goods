@@ -52,8 +52,25 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Product Image URL</label>
-                    <input type="text" id="productImage" placeholder="Paste image link">
+
+                    <label>Product Image</label>
+
+                    <input type="text" id="productImage" placeholder="Image URL will appear here after upload">
+
+                    <input type="file" id="productImageFile" accept="image/*" style="margin-top:10px;">
+
+                    <button type="button" id="uploadProductImageBtn" class="primary-btn" style="margin-top:10px;">
+                        Upload Product Image
+                    </button>
+
+                    <small style="
+            display:block;
+            margin-top:10px;
+            color:#64748b;
+        ">
+                        Choose image directly from your device.
+                    </small>
+
                 </div>
 
                 <div class="form-group">

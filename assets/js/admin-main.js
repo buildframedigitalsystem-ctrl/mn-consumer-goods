@@ -195,7 +195,8 @@ async function loadAdminPage(page) {
         },
 
         "admin-products": {
-            external: "admin-products.html"
+            file: "sections/admin/product-form.html",
+            init: "initializeProducts"
         },
 
         "master-dashboard": {

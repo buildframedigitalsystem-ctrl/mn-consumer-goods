@@ -128,7 +128,63 @@
 
                     <input type="text" id="productName" placeholder="Product Name" required>
 
-                    <input type="text" id="category" placeholder="Category" required>
+                    <select id="category" required>
+
+                        <option value="">Select Category</option>
+
+                        <option value="Chocolates">Chocolates</option>
+
+                        <option value="Biscuits & Wafers">
+                            Biscuits & Wafers
+                        </option>
+
+                        <option value="Candies">Candies</option>
+
+                        <option value="Dips & Sauces">
+                            Dips & Sauces
+                        </option>
+
+                        <option value="Snacks & Crisps">
+                            Snacks & Crisps
+                        </option>
+
+                        <option value="Beverages & Cocoa">
+                            Beverages & Cocoa
+                        </option>
+
+                        <option value="Coffee">Coffee</option>
+
+                        <option value="Canned Goods">
+                            Canned Goods
+                        </option>
+
+                        <option value="Instant Noodles">
+                            Instant Noodles
+                        </option>
+
+                        <option value="School Supplies">
+                            School Supplies
+                        </option>
+
+                        <option value="Toiletries">
+                            Toiletries
+                        </option>
+
+                        <option value="Household">
+                            Household
+                        </option>
+
+                        <option value="Promo Bundles">
+                            Promo Bundles
+                        </option>
+
+                        <option value="Wholesale Packs">
+                            Wholesale Packs
+                        </option>
+
+                        <option value="Others">Others</option>
+
+                    </select>
 
                     <input type="text" id="brand" placeholder="Brand">
 
@@ -142,7 +198,21 @@
 
                     <input type="number" id="wholesalePrice" placeholder="Wholesale Price">
 
-                    <input type="text" id="productImage" placeholder="Product Image URL / Filename">
+                    <div class="form-group image-upload-group">
+
+                        <input type="text" id="productImage" placeholder="Product Image URL will appear here">
+
+                        <input type="file" id="productImageFile" accept="image/*">
+
+                        <button type="button" id="uploadProductImageBtn" class="metal-save-btn">
+                            Upload Product Image
+                        </button>
+
+                        <small>
+                            Choose a product photo from your device. The image link will appear above after upload.
+                        </small>
+
+                    </div>
 
                     <input type="text" id="stockStatus" placeholder="Stock Status e.g. In Stock">
 

@@ -21,19 +21,35 @@ function getStoreMode() {
 }
 
 /* ===============================
+   URL CATEGORY DETECTION
+================================ */
+
+function getCategoryFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("category") || "";
+}
+
+/* ===============================
    INITIALIZE STORE
 ================================ */
 
 document.addEventListener("DOMContentLoaded", async () => {
     initializeCategoryCards();
-
+    bindStoreEvents();
     await loadProductsFromAPI();
 
-    bindStoreEvents();
+    const categoryFromURL = getCategoryFromURL();
+    const categoryFilter = document.getElementById("categoryFilter");
+
+    if (categoryFromURL && categoryFilter) {
+        categoryFilter.value = categoryFromURL;
+        visibleCount = 20;
+        filterProducts();
+    }
 });
 
 /* ===============================
-   LOAD PRODUCTS FROM APPS SCRIPT
+   LOAD PRODUCTS
 ================================ */
 
 async function loadProductsFromAPI() {
@@ -42,6 +58,10 @@ async function loadProductsFromAPI() {
     try {
         if (productGrid) {
             productGrid.innerHTML = `<p>Loading products...</p>`;
+        }
+
+        if (typeof API === "undefined" || !API.BASE_URL) {
+            throw new Error("API config is missing.");
         }
 
         const response = await fetch(API.BASE_URL, {
@@ -53,16 +73,23 @@ async function loadProductsFromAPI() {
 
         const data = await response.json();
 
-        const rows = data.rows || data.products || data.data || [];
+        if (!data.success) {
+            throw new Error(data.message || "Failed to fetch products.");
+        }
 
-        allProducts = rows;
+        const rows =
+            data.rows ||
+            data.products ||
+            data.data ||
+            [];
+
+        allProducts = Array.isArray(rows) ? rows : [];
 
         populateCategoryFilter(allProducts);
-
         filterProducts();
 
     } catch (error) {
-        console.error(error);
+        console.error("Product load error:", error);
 
         if (productGrid) {
             productGrid.innerHTML = `<p>Failed to load products.</p>`;
@@ -71,7 +98,7 @@ async function loadProductsFromAPI() {
 }
 
 /* ===============================
-   STORE EVENTS
+   EVENTS
 ================================ */
 
 function bindStoreEvents() {
@@ -110,21 +137,36 @@ function filterProducts() {
 
     const searchValue =
         document.getElementById("storeSearch")
-            ?.value.toLowerCase() || "";
+            ?.value
+            .toLowerCase()
+            .trim() || "";
 
     const categoryValue =
         document.getElementById("categoryFilter")
             ?.value || "all";
 
-    let filtered = allProducts.filter(product => {
+    const filtered = allProducts.filter(product => {
         const productName =
-            String(product.ProductName || product.Name || "").toLowerCase();
+            String(
+                product.ProductName ||
+                product.productName ||
+                product.Name ||
+                ""
+            ).toLowerCase();
 
         const description =
-            String(product.Description || "").toLowerCase();
+            String(
+                product.Description ||
+                product.description ||
+                ""
+            ).toLowerCase();
 
         const category =
-            String(product.Category || "");
+            String(
+                product.Category ||
+                product.category ||
+                ""
+            );
 
         const matchesSearch =
             productName.includes(searchValue) ||
@@ -134,7 +176,8 @@ function filterProducts() {
             categoryValue === "all" ||
             category === categoryValue;
 
-        const matchesMode = productMatchesMode(product, mode);
+        const matchesMode =
+            productMatchesMode(product, mode);
 
         return matchesSearch && matchesCategory && matchesMode;
     });
@@ -148,22 +191,34 @@ function filterProducts() {
 
 function productMatchesMode(product, mode) {
     if (mode === "home") {
-        return isYes(product.ShowOnHomepage) || isYes(product.Featured) || true;
+        return (
+            isYes(product.ShowOnHomepage) ||
+            isYes(product.Featured)
+        );
     }
 
     if (mode === "retail") {
-        return isYes(product.ShowInRetail) || Number(product.RetailPrice || 0) > 0;
+        return (
+            isYes(product.ShowInRetail) ||
+            Number(product.RetailPrice || 0) > 0
+        );
     }
 
     if (mode === "wholesale") {
-        return isYes(product.ShowInWholesale) || Number(product.WholesalePrice || 0) > 0;
+        return (
+            isYes(product.ShowInWholesale) ||
+            Number(product.WholesalePrice || 0) > 0
+        );
     }
 
     if (mode === "promo") {
-        return isYes(product.IsPromo) ||
+        return (
+            isYes(product.IsPromo) ||
             isYes(product.OnSale) ||
             Number(product.PromoPrice || 0) > 0 ||
-            String(product.DiscountLabel || "").trim() !== "";
+            String(product.DiscountLabel || "").trim() !== "" ||
+            String(product.BundleName || "").trim() !== ""
+        );
     }
 
     return true;
@@ -191,13 +246,16 @@ function renderProducts(products, mode) {
 
     const visibleProducts = products.slice(0, visibleCount);
 
-    productGrid.innerHTML = visibleProducts.map(product => {
-        return createProductCard(product, mode);
-    }).join("");
+    productGrid.innerHTML =
+        visibleProducts
+            .map(product => createProductCard(product, mode))
+            .join("");
 
     if (loadMoreBtn) {
         loadMoreBtn.style.display =
-            products.length > visibleCount ? "inline-block" : "none";
+            products.length > visibleCount
+                ? "inline-block"
+                : "none";
     }
 }
 
@@ -206,14 +264,34 @@ function renderProducts(products, mode) {
 ================================ */
 
 function createProductCard(product, mode) {
-    const name = product.ProductName || product.Name || "Unnamed Product";
-    const category = product.Category || "";
-    const description = product.Description || "";
+    const productIndex = getProductIndex_(product);
+
+    const name =
+        product.ProductName ||
+        product.productName ||
+        product.Name ||
+        "Unnamed Product";
+
+    const category =
+        product.Category ||
+        product.category ||
+        "";
+
+    const description =
+        product.Description ||
+        product.description ||
+        "";
+
     const image = getProductImage(product);
 
-    const retailPrice = Number(product.RetailPrice || 0);
-    const wholesalePrice = Number(product.WholesalePrice || 0);
-    const promoPrice = Number(product.PromoPrice || 0);
+    const retailPrice =
+        Number(product.RetailPrice || product.retailPrice || 0);
+
+    const wholesalePrice =
+        Number(product.WholesalePrice || product.wholesalePrice || 0);
+
+    const promoPrice =
+        Number(product.PromoPrice || product.promoPrice || 0);
 
     const priceHTML = getPriceHTML({
         mode,
@@ -225,10 +303,7 @@ function createProductCard(product, mode) {
     });
 
     return `
-        <div
-    class="product-card"
-    onclick="openProductModal(${allProducts.indexOf(product)})"
->
+        <div class="product-card">
 
             <div class="product-image">
                 ${image
@@ -251,26 +326,44 @@ function createProductCard(product, mode) {
 
                 <div class="product-actions">
 
-             <button
-                 class="view-btn"
-                 onclick="openProductModal(${index})"
-                 >
-                   View Details
-              </button>
+                    <button
+                        type="button"
+                        class="view-btn"
+                        onclick="openProductModal(${productIndex})"
+                    >
+                        View Details
+                    </button>
 
-                 <button
-                    class="cart-btn"
-                       onclick="addToCart(${index})"
-                       >
-                 🛒 Add To Cart
-             </button>
+                    <button
+                        type="button"
+                        class="cart-btn"
+                        onclick="addProductToCartSafe_(${productIndex})"
+                    >
+                        🛒 Add To Cart
+                    </button>
 
-            </div>
+                </div>
 
             </div>
 
         </div>
     `;
+}
+
+function getProductIndex_(product) {
+    return allProducts.findIndex(item => {
+        const itemKey =
+            item.ProductID ||
+            item.ProductName ||
+            item.Name;
+
+        const productKey =
+            product.ProductID ||
+            product.ProductName ||
+            product.Name;
+
+        return String(itemKey) === String(productKey);
+    });
 }
 
 /* ===============================
@@ -290,6 +383,7 @@ function getPriceHTML(data) {
     if (data.mode === "promo") {
         return `
             <div class="product-price">
+
                 ${data.discountLabel
                 ? `<span class="promo-label">${escapeHTML(data.discountLabel)}</span>`
                 : ""
@@ -302,6 +396,7 @@ function getPriceHTML(data) {
 
                 <strong>Promo: ₱${formatMoney(data.promoPrice || data.retailPrice)}</strong>
                 <small>Regular: ₱${formatMoney(data.retailPrice)}</small>
+
             </div>
         `;
     }
@@ -315,58 +410,60 @@ function getPriceHTML(data) {
 }
 
 /* ===============================
-   CATEGORY FILTER OPTIONS
+   CATEGORY FILTER
 ================================ */
 
 function populateCategoryFilter(products) {
-    const categoryFilter = document.getElementById("categoryFilter");
+    const categoryFilter =
+        document.getElementById("categoryFilter");
 
     if (!categoryFilter) return;
 
-    const categories = [...new Set(
-        products
-            .map(product => product.Category)
-            .filter(Boolean)
-    )];
+    const categories =
+        [...new Set(
+            products
+                .map(product =>
+                    product.Category ||
+                    product.category ||
+                    ""
+                )
+                .filter(Boolean)
+        )];
 
     categoryFilter.innerHTML = `
         <option value="all">All Categories</option>
-        ${categories.map(category => `
-            <option value="${escapeHTML(category)}">
-                ${escapeHTML(category)}
-            </option>
-        `).join("")}
+
+        ${categories
+            .map(category => `
+                    <option value="${escapeHTML(category)}">
+                        ${escapeHTML(category)}
+                    </option>
+                `)
+            .join("")
+        }
     `;
 }
 
-/* =================================
-   CATEGORY CARD FILTERING
-================================= */
+/* ===============================
+   CATEGORY CARDS
+================================ */
 
 function initializeCategoryCards() {
     const cards = document.querySelectorAll(".category-card");
 
     cards.forEach(card => {
-        card.addEventListener("click", function () {
+        card.addEventListener("click", function (event) {
+            event.preventDefault();
+
             const category = this.dataset.category;
 
-            const categoryFilter =
-                document.getElementById("categoryFilter");
-
-            if (categoryFilter) {
-                categoryFilter.value = category;
-                visibleCount = 20;
-                filterProducts();
+            if (!category || category === "all") {
+                window.location.href = "retail.html";
+                return;
             }
 
-            const productsSection =
-                document.getElementById("products");
-
-            if (productsSection) {
-                productsSection.scrollIntoView({
-                    behavior: "smooth"
-                });
-            }
+            window.location.href =
+                `retail.html?category=${encodeURIComponent(category)}`;
         });
     });
 }
@@ -378,13 +475,14 @@ function initializeCategoryCards() {
 function getProductImage(product) {
     const image =
         product.ProductImage ||
+        product.productImage ||
         product.ImageURL ||
         product.Image ||
         "";
 
     if (!image) return "";
 
-    if (image.startsWith("http")) {
+    if (String(image).startsWith("http")) {
         return image;
     }
 
@@ -392,29 +490,275 @@ function getProductImage(product) {
 }
 
 /* ===============================
-   INQUIRY ACTION
+   PRODUCT MODAL
 ================================ */
 
-function inquireProduct(productName) {
-    alert(`Inquiry for: ${productName}`);
+function openProductModal(productIndex) {
+    const product = allProducts[productIndex];
+
+    if (!product) return;
+
+    const modal =
+        document.getElementById("productModal");
+
+    if (!modal) {
+        alert(product.ProductName || "Product selected.");
+        return;
+    }
+
+    const image = getProductImage(product);
+
+    setModalImage_("modalProductImage", image);
+    setModalText_("modalProductName", product.ProductName || "Unnamed Product");
+    setModalText_("modalProductCategory", product.Category || "General");
+    setModalText_("modalProductDescription", product.Description || "No description available.");
+
+    const modalPriceBox =
+        document.getElementById("modalPriceBox");
+
+    if (modalPriceBox) {
+        modalPriceBox.innerHTML = `
+            <strong>Retail: ₱${formatMoney(product.RetailPrice || 0)}</strong>
+            <small>Wholesale: ₱${formatMoney(product.WholesalePrice || 0)}</small>
+
+            ${Number(product.PromoPrice || 0) > 0
+                ? `<small>Promo: ₱${formatMoney(product.PromoPrice)}</small>`
+                : ""
+            }
+        `;
+    }
+
+    renderModalBadges_(product);
+
+    const addToCartBtn =
+        document.getElementById("modalAddToCartBtn");
+
+    if (addToCartBtn) {
+        addToCartBtn.onclick = function () {
+            addProductToCartSafe_(productIndex);
+        };
+    }
+
+    modal.classList.add("active");
+}
+
+function renderModalBadges_(product) {
+    const badgeBox =
+        document.getElementById("modalBadges");
+
+    if (!badgeBox) return;
+
+    const badges = [];
+
+    if (isYes(product.IsPromo)) badges.push("PROMO");
+    if (isYes(product.Featured)) badges.push("FEATURED");
+    if (isYes(product.ShowInWholesale)) badges.push("WHOLESALE");
+    if (isYes(product.ShowInRetail)) badges.push("RETAIL");
+
+    if (String(product.DiscountLabel || "").trim() !== "") {
+        badges.push(product.DiscountLabel);
+    }
+
+    badgeBox.innerHTML =
+        badges
+            .map(badge => `
+                <span class="modal-badge">
+                    ${escapeHTML(badge)}
+                </span>
+            `)
+            .join("");
+}
+
+function closeProductModal() {
+    const modal =
+        document.getElementById("productModal");
+
+    if (modal) {
+        modal.classList.remove("active");
+    }
+}
+
+window.addEventListener("click", function (event) {
+    const modal =
+        document.getElementById("productModal");
+
+    if (event.target === modal) {
+        closeProductModal();
+    }
+});
+
+/* ===============================
+   REAL ADD TO CART
+================================ */
+
+const STORE_CART_KEY_PUBLIC = "mn_store_cart";
+
+function addProductToCartSafe_(productIndex) {
+
+    const product =
+        allProducts[productIndex];
+
+    if (!product) return;
+
+    const cart =
+        JSON.parse(
+            localStorage.getItem(STORE_CART_KEY_PUBLIC)
+        ) || [];
+
+    const mode =
+        getStoreMode();
+
+    const existingIndex =
+        cart.findIndex(item =>
+            String(item.productId) ===
+            String(product.ProductID)
+        );
+
+    const price =
+        mode === "wholesale"
+            ? Number(product.WholesalePrice || 0)
+            : Number(
+                product.PromoPrice ||
+                product.RetailPrice ||
+                0
+            );
+
+    const cartItem = {
+
+        productId:
+            product.ProductID,
+
+        name:
+            product.ProductName,
+
+        category:
+            product.Category || "",
+
+        image:
+            getProductImage(product),
+
+        quantity: 1,
+
+        mode:
+            mode.toUpperCase(),
+
+        price
+
+    };
+
+    if (existingIndex >= 0) {
+
+        cart[existingIndex].quantity += 1;
+
+    } else {
+
+        cart.push(cartItem);
+
+    }
+
+    localStorage.setItem(
+        STORE_CART_KEY_PUBLIC,
+        JSON.stringify(cart)
+    );
+
+    showCartSuccess_(product.ProductName);
+
 }
 
 /* ===============================
-   HELPERS
+   CART SUCCESS
 ================================ */
 
+function showCartSuccess_(productName) {
+
+    window.location.href = "cart.html";
+
+}
+
+/* ===============================
+   HEADER SEARCH
+================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const headerSearchInput =
+        document.getElementById("headerSearchInput");
+
+    const headerSearchBtn =
+        document.getElementById("headerSearchBtn");
+
+    if (headerSearchBtn && headerSearchInput) {
+        headerSearchBtn.addEventListener("click", () => {
+            applyHeaderSearch();
+        });
+
+        headerSearchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                applyHeaderSearch();
+            }
+        });
+    }
+});
+
+function applyHeaderSearch() {
+    const headerSearchInput =
+        document.getElementById("headerSearchInput");
+
+    const storeSearch =
+        document.getElementById("storeSearch");
+
+    if (!headerSearchInput || !storeSearch) return;
+
+    storeSearch.value =
+        headerSearchInput.value.trim();
+
+    const productsSection =
+        document.getElementById("products");
+
+    if (productsSection) {
+        productsSection.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    visibleCount = 20;
+    filterProducts();
+}
+
+/* ===============================
+   SMALL HELPERS
+================================ */
+
+function setModalText_(id, value) {
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+        element.innerText = value || "-";
+    }
+}
+
+function setModalImage_(id, image) {
+    const element =
+        document.getElementById(id);
+
+    if (!element) return;
+
+    element.src =
+        image || "assets/images/no-image.png";
+}
+
 function isYes(value) {
-    return String(value || "")
-        .toLowerCase()
-        .trim() === "yes" ||
+    const normalized =
         String(value || "")
             .toLowerCase()
-            .trim() === "true" ||
-        String(value || "")
-            .toLowerCase()
-            .trim() === "active" ||
-        String(value || "")
-            .trim() === "1";
+            .trim();
+
+    return (
+        normalized === "yes" ||
+        normalized === "true" ||
+        normalized === "active" ||
+        normalized === "1"
+    );
 }
 
 function formatMoney(value) {
@@ -431,239 +775,4 @@ function escapeHTML(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
-}
-
-/* =========================================
-   PRODUCT MODAL SYSTEM
-========================================= */
-
-function openProductModal(productIndex) {
-
-    const product = allProducts[productIndex];
-
-    if (!product) return;
-
-    const modal =
-        document.getElementById("productModal");
-
-    if (!modal) return;
-
-    const image =
-        getProductImage(product);
-
-    const retailPrice =
-        Number(product.RetailPrice || 0);
-
-    const wholesalePrice =
-        Number(product.WholesalePrice || 0);
-
-    const promoPrice =
-        Number(product.PromoPrice || 0);
-
-    document.getElementById(
-        "modalProductImage"
-    ).src =
-        image || "assets/images/no-image.png";
-
-    document.getElementById(
-        "modalProductName"
-    ).innerText =
-        product.ProductName || "Unnamed Product";
-
-    document.getElementById(
-        "modalProductCategory"
-    ).innerText =
-        product.Category || "General";
-
-    document.getElementById(
-        "modalProductDescription"
-    ).innerText =
-        product.Description ||
-        "No description available.";
-
-    /* =========================
-       PRICE BOX
-    ========================= */
-
-    document.getElementById(
-        "modalPriceBox"
-    ).innerHTML = `
-        <strong>
-            Retail: ₱${formatMoney(retailPrice)}
-        </strong>
-
-        <small>
-            Wholesale: ₱${formatMoney(wholesalePrice)}
-        </small>
-
-        ${promoPrice > 0
-            ? `
-                <small>
-                    Promo: ₱${formatMoney(promoPrice)}
-                </small>
-            `
-            : ""
-        }
-    `;
-
-    /* =========================
-       BADGES
-    ========================= */
-
-    const badges = [];
-
-    if (isYes(product.IsPromo)) {
-        badges.push("PROMO");
-    }
-
-    if (isYes(product.Featured)) {
-        badges.push("FEATURED");
-    }
-
-    if (isYes(product.ShowInWholesale)) {
-        badges.push("WHOLESALE");
-    }
-
-    if (isYes(product.ShowInRetail)) {
-        badges.push("RETAIL");
-    }
-
-    if (
-        String(product.DiscountLabel || "")
-            .trim() !== ""
-    ) {
-        badges.push(product.DiscountLabel);
-    }
-
-    document.getElementById(
-        "modalBadges"
-    ).innerHTML =
-        badges.map(badge => `
-            <span class="modal-badge">
-                ${escapeHTML(badge)}
-            </span>
-        `).join("");
-
-    /* =========================
-       WHATSAPP BUTTON
-    ========================= */
-
-    const message =
-        encodeURIComponent(
-            `Hello M&N Consumer Goods! I would like to inquire about:\n\n${product.ProductName}`
-        );
-
-    document.getElementById(
-        "modalWhatsAppBtn"
-    ).href =
-        `https://wa.me/639052273431?text=${message}`;
-
-    /* =========================
-       ADD TO CART BUTTON
-    ========================= */
-
-    const addToCartBtn =
-        document.getElementById(
-            "modalAddToCartBtn"
-        );
-
-    if (addToCartBtn) {
-
-        addToCartBtn.onclick = function () {
-            addToCart(productIndex);
-        };
-
-    }
-
-    modal.classList.add("active");
-
-}
-
-/* =========================
-   WHATSAPP BUTTON
-========================= */
-
-const message =
-    encodeURIComponent(
-        `Hello M&N Consumer Goods! I would like to inquire about:\n\n${product.ProductName}`
-    );
-
-document.getElementById(
-    "modalWhatsAppBtn"
-).href =
-    `https://wa.me/639052273431?text=${message}`;
-
-modal.classList.add("active");
-
-/* =========================================
-   CLOSE MODAL
-========================================= */
-
-function closeProductModal() {
-
-    const modal =
-        document.getElementById("productModal");
-
-    if (modal) {
-        modal.classList.remove("active");
-    }
-
-}
-
-/* =========================================
-   CLOSE WHEN CLICK OUTSIDE
-========================================= */
-
-window.addEventListener("click", function (event) {
-
-    const modal =
-        document.getElementById("productModal");
-
-    if (
-        event.target === modal
-    ) {
-        closeProductModal();
-    }
-
-});
-
-/* ===============================
-   HEADER SEARCH
-================================ */
-
-document.addEventListener("DOMContentLoaded", () => {
-    const headerSearchInput = document.getElementById("headerSearchInput");
-    const headerSearchBtn = document.getElementById("headerSearchBtn");
-
-    if (headerSearchBtn && headerSearchInput) {
-        headerSearchBtn.addEventListener("click", () => {
-            applyHeaderSearch();
-        });
-
-        headerSearchInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                applyHeaderSearch();
-            }
-        });
-    }
-});
-
-function applyHeaderSearch() {
-    const headerSearchInput = document.getElementById("headerSearchInput");
-    const storeSearch = document.getElementById("storeSearch");
-
-    if (!headerSearchInput || !storeSearch) return;
-
-    storeSearch.value = headerSearchInput.value.trim();
-
-    const productsSection = document.getElementById("products");
-
-    if (productsSection) {
-        productsSection.scrollIntoView({
-            behavior: "smooth"
-        });
-    }
-
-    visibleCount = 20;
-    filterProducts();
 }

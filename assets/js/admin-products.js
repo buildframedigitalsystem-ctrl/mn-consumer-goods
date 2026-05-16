@@ -1,6 +1,21 @@
+/* =========================================
+   ADMIN PRODUCTS
+   Official Product Control System
+========================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
-    bindAdminProductForm();
+    initializeAdminProducts();
 });
+
+function initializeAdminProducts() {
+    bindAdminProductForm();
+    bindProductImageUpload();
+    loadAdminProducts_();
+}
+
+/* =========================================
+   PRODUCT FORM
+========================================= */
 
 function bindAdminProductForm() {
     const form = document.getElementById("adminProductForm");
@@ -12,6 +27,90 @@ function bindAdminProductForm() {
         await saveAdminProduct();
     });
 }
+
+/* =========================================
+   PRODUCT IMAGE UPLOAD
+========================================= */
+
+function bindProductImageUpload() {
+    const uploadBtn = document.getElementById("uploadProductImageBtn");
+
+    if (!uploadBtn) return;
+
+    uploadBtn.addEventListener("click", async function () {
+        await uploadProductImage_();
+    });
+}
+
+async function uploadProductImage_() {
+    const fileInput = document.getElementById("productImageFile");
+    const imageInput = document.getElementById("productImage");
+    const uploadBtn = document.getElementById("uploadProductImageBtn");
+
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        alert("Please choose a product image first.");
+        return;
+    }
+
+    const file = fileInput.files[0];
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please upload an image file only.");
+        return;
+    }
+
+    try {
+        uploadBtn.disabled = true;
+        uploadBtn.innerText = "Uploading...";
+
+        const base64 = await fileToBase64_(file);
+
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "uploadProductImage",
+                fileName: file.name,
+                mimeType: file.type,
+                imageData: base64
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.imageUrl) {
+            imageInput.value = result.imageUrl;
+            alert("Product image uploaded successfully.");
+        } else {
+            alert(result.message || "Image upload failed.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Connection error while uploading image.");
+    } finally {
+        uploadBtn.disabled = false;
+        uploadBtn.innerText = "Upload Product Image";
+    }
+}
+
+function fileToBase64_(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            const result = String(reader.result || "");
+            const base64 = result.split(",")[1] || "";
+            resolve(base64);
+        };
+
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+/* =========================================
+   SAVE PRODUCT
+========================================= */
 
 async function saveAdminProduct() {
     const payload = {
@@ -59,12 +158,13 @@ async function saveAdminProduct() {
 
         if (result.success) {
             alert("Product saved successfully!");
+
             document.getElementById("adminProductForm").reset();
 
-            document.getElementById("showOnHomepage").checked = true;
-            document.getElementById("showInRetail").checked = true;
-            document.getElementById("showInWholesale").checked = true;
-            document.getElementById("featured").checked = true;
+            resetDefaultCheckboxes_();
+            closeProductFormBlock();
+            await loadAdminProducts_();
+
         } else {
             alert(result.message || "Failed to save product.");
         }
@@ -75,13 +175,105 @@ async function saveAdminProduct() {
     }
 }
 
-function getValue(id) {
-    return document.getElementById(id)?.value.trim() || "";
+/* =========================================
+   LOAD PRODUCT TABLE
+========================================= */
+
+async function loadAdminProducts_() {
+    const tbody = document.querySelector(".metal-table tbody");
+
+    if (!tbody) return;
+
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="6">Loading products...</td>
+        </tr>
+    `;
+
+    try {
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "getProducts"
+            })
+        });
+
+        const result = await response.json();
+
+        const products =
+            result.products ||
+            result.rows ||
+            result.data ||
+            [];
+
+        if (!products.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6">No products found yet.</td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = products.map(product => {
+            const name =
+                product.ProductName ||
+                product.productName ||
+                product.Name ||
+                "-";
+
+            const category =
+                product.Category ||
+                product.category ||
+                "-";
+
+            const retailPrice =
+                product.RetailPrice ||
+                product.retailPrice ||
+                "0";
+
+            const wholesalePrice =
+                product.WholesalePrice ||
+                product.wholesalePrice ||
+                "0";
+
+            const promoPrice =
+                product.PromoPrice ||
+                product.promoPrice ||
+                "-";
+
+            const display =
+                product.ShowOnHomepage ||
+                product.showOnHomepage ||
+                product.Featured ||
+                "-";
+
+            return `
+                <tr>
+                    <td>${escapeHTML_(name)}</td>
+                    <td>${escapeHTML_(category)}</td>
+                    <td>₱${formatMoney_(retailPrice)}</td>
+                    <td>₱${formatMoney_(wholesalePrice)}</td>
+                    <td>${promoPrice && promoPrice !== "-" ? "₱" + formatMoney_(promoPrice) : "-"}</td>
+                    <td>${escapeHTML_(display)}</td>
+                </tr>
+            `;
+        }).join("");
+
+    } catch (error) {
+        console.error(error);
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6">Failed to load products.</td>
+            </tr>
+        `;
+    }
 }
 
-function isChecked(id) {
-    return document.getElementById(id)?.checked || false;
-}
+/* =========================================
+   FORM BLOCK OPEN / CLOSE
+========================================= */
 
 function openProductFormBlock() {
     const overlay = document.getElementById("productFormOverlay");
@@ -101,18 +293,47 @@ function closeProductFormBlock() {
     }
 }
 
-function openProductFormBlock() {
-    const overlay = document.getElementById("productFormOverlay");
+/* =========================================
+   HELPERS
+========================================= */
 
-    if (overlay) {
-        overlay.classList.add("active");
-    }
+function getValue(id) {
+    return document.getElementById(id)?.value.trim() || "";
 }
 
-function closeProductFormBlock() {
-    const overlay = document.getElementById("productFormOverlay");
+function isChecked(id) {
+    return document.getElementById(id)?.checked || false;
+}
 
-    if (overlay) {
-        overlay.classList.remove("active");
-    }
+function resetDefaultCheckboxes_() {
+    const defaults = [
+        "showOnHomepage",
+        "showInRetail",
+        "showInWholesale",
+        "featured"
+    ];
+
+    defaults.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = true;
+    });
+
+    const isPromo = document.getElementById("isPromo");
+    if (isPromo) isPromo.checked = false;
+}
+
+function formatMoney_(value) {
+    return Number(value || 0).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function escapeHTML_(value) {
+    return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
