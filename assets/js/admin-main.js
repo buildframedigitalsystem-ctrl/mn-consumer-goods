@@ -3,10 +3,6 @@
    BuildFrame Store Operating System
 ========================================= */
 
-/* ===============================
-   SECTION LOADER
-================================ */
-
 async function loadSection(id, file) {
     const el = document.getElementById(id);
 
@@ -16,24 +12,15 @@ async function loadSection(id, file) {
     }
 
     try {
-        el.innerHTML = `
-            <div class="admin-loading">
-                Loading module...
-            </div>
-        `;
+        el.innerHTML = `<div class="admin-loading">Loading module...</div>`;
 
-        const res = await fetch(file, {
-            cache: "no-store"
-        });
+        const res = await fetch(file, { cache: "no-store" });
 
         if (!res.ok) {
             throw new Error(`Failed to load ${file}`);
         }
 
-        const html = await res.text();
-
-        el.innerHTML = html;
-
+        el.innerHTML = await res.text();
         return true;
 
     } catch (error) {
@@ -51,47 +38,31 @@ async function loadSection(id, file) {
     }
 }
 
-/* ===============================
-   ADMIN DASHBOARD INIT
-================================ */
-
 async function initializeAdminDashboard() {
     console.log("Initializing M&N Admin OS...");
 
-    await loadSection(
-        "adminSidebar",
-        "sections/admin/admin-sidebar.html"
-    );
-
-    await loadSection(
-        "adminHeader",
-        "sections/admin/admin-header.html"
-    );
-
+    await loadSection("adminSidebar", "sections/admin/admin-sidebar.html");
+    await loadSection("adminHeader", "sections/admin/admin-header.html");
     await loadAdminPage("home");
 
     bindSidebarMenu();
     bindAdminKeyboardShortcuts();
     exposeAdminControlRoutes();
+    initializeAdminMobileSidebar();
 
     console.log("M&N Admin OS initialized.");
 }
 
-/* ===============================
-   SIDEBAR MENU
-================================ */
-
 function bindSidebarMenu() {
-    const menuItems =
-        document.querySelectorAll(".sidebar-menu li, .sidebar-menu a[data-page]");
+    const menuItems = document.querySelectorAll(
+        ".sidebar-menu li, .sidebar-menu a[data-page]"
+    );
 
     menuItems.forEach(item => {
-        item.addEventListener("click", async (event) => {
+        item.addEventListener("click", async event => {
             event.preventDefault();
 
-            const page =
-                item.dataset.page ||
-                item.getAttribute("data-page");
+            const page = item.dataset.page || item.getAttribute("data-page");
 
             if (!page) return;
 
@@ -99,10 +70,6 @@ function bindSidebarMenu() {
         });
     });
 }
-
-/* ===============================
-   MASTER PAGE ROUTER
-================================ */
 
 async function loadAdminPage(page) {
     setActiveSidebarItem(page);
@@ -114,6 +81,10 @@ async function loadAdminPage(page) {
         },
 
         products: {
+            external: "admin-products.html"
+        },
+
+        "admin-products": {
             external: "admin-products.html"
         },
 
@@ -193,10 +164,6 @@ async function loadAdminPage(page) {
             external: "admin-store-setup.html"
         },
 
-        "admin-products": {
-            external: "admin-products.html"
-        },
-
         "master-dashboard": {
             external: "master-dashboard.html"
         }
@@ -209,36 +176,25 @@ async function loadAdminPage(page) {
         return;
     }
 
-    const loaded =
-        await loadSection(
-            "adminContent",
-            route.file
-        );
+    const loaded = await loadSection("adminContent", route.file);
 
     if (!loaded) return;
 
     runModuleInitializer(route.init);
 }
 
-/* ===============================
-   ACTIVE SIDEBAR STATE
-================================ */
-
 function setActiveSidebarItem(page) {
-    const menuItems =
-        document.querySelectorAll(".sidebar-menu li, .sidebar-menu a[data-page]");
+    const menuItems = document.querySelectorAll(
+        ".sidebar-menu li, .sidebar-menu a[data-page]"
+    );
 
     menuItems.forEach(item => {
         item.classList.toggle(
             "active",
-            item.dataset.page === page
+            item.dataset.page === page || item.getAttribute("data-page") === page
         );
     });
 }
-
-/* ===============================
-   SAFE MODULE INITIALIZER
-================================ */
 
 function runModuleInitializer(functionName) {
     if (!functionName) return;
@@ -251,10 +207,6 @@ function runModuleInitializer(functionName) {
         console.warn(`${functionName} is not available yet.`);
     }
 }
-
-/* ===============================
-   ADMIN CONTROL ROUTES
-================================ */
 
 function exposeAdminControlRoutes() {
     window.loadAdminPage = loadAdminPage;
@@ -270,11 +222,11 @@ function exposeAdminControlRoutes() {
     window.goToMasterDashboard = function () {
         window.location.href = "master-dashboard.html";
     };
-}
 
-/* ===============================
-   KEYBOARD SHORTCUTS
-================================ */
+    window.goToAdminProducts = function () {
+        window.location.href = "admin-products.html";
+    };
+}
 
 function bindAdminKeyboardShortcuts() {
     document.addEventListener("keydown", function (event) {
@@ -292,7 +244,7 @@ function bindAdminKeyboardShortcuts() {
 
         if ((event.ctrlKey || event.metaKey) && key === "p") {
             event.preventDefault();
-            loadAdminPage("products");
+            window.location.href = "admin-products.html";
         }
 
         if ((event.ctrlKey || event.metaKey) && key === "o") {
@@ -306,13 +258,8 @@ function bindAdminKeyboardShortcuts() {
     });
 }
 
-/* ===============================
-   SAFE SEARCH OVERLAY CONTROL
-================================ */
-
 function openAdminSearchOverlay() {
-    const overlay =
-        document.getElementById("metalSearchOverlay");
+    const overlay = document.getElementById("metalSearchOverlay");
 
     if (!overlay) {
         console.warn("Search overlay not found.");
@@ -322,32 +269,17 @@ function openAdminSearchOverlay() {
     overlay.classList.add("active");
 
     setTimeout(() => {
-        document
-            .getElementById("adminSearchInput")
-            ?.focus();
+        document.getElementById("adminSearchInput")?.focus();
     }, 80);
 }
 
 function closeAdminSearchOverlay() {
-    const overlay =
-        document.getElementById("metalSearchOverlay");
+    const overlay = document.getElementById("metalSearchOverlay");
 
     if (!overlay) return;
 
     overlay.classList.remove("active");
 }
-
-/* ===============================
-   AUTO INITIALIZE
-================================ */
-
-document.addEventListener("DOMContentLoaded", () => {
-    initializeAdminDashboard();
-});
-
-/* ===============================
-   MOBILE SIDEBAR TOGGLE
-================================ */
 
 function initializeAdminMobileSidebar() {
     const sidebar = document.getElementById("adminSidebar");
@@ -367,8 +299,7 @@ function initializeAdminMobileSidebar() {
     });
 
     sidebar.addEventListener("click", event => {
-        const clickedMenu =
-            event.target.closest("li, a, button");
+        const clickedMenu = event.target.closest("li, a, button");
 
         if (!clickedMenu) return;
 
@@ -380,5 +311,5 @@ function initializeAdminMobileSidebar() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    initializeAdminMobileSidebar();
+    initializeAdminDashboard();
 });
