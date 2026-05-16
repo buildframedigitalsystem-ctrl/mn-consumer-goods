@@ -157,15 +157,23 @@ async function saveAdminProduct() {
         const result = await response.json();
 
         if (result.success) {
-            alert("Product saved successfully!");
+
+            alert("✅ Product saved successfully!");
+
+            console.log("Saved Product:", result);
 
             document.getElementById("adminProductForm").reset();
 
             resetDefaultCheckboxes_();
-            closeProductFormBlock();
+
             await loadAdminProducts_();
 
+            closeProductFormBlock();
+
         } else {
+
+            console.error("Save Failed:", result);
+
             alert(result.message || "Failed to save product.");
         }
 
@@ -205,6 +213,8 @@ async function loadAdminProducts_() {
             result.rows ||
             result.data ||
             [];
+
+        loadCategoryFilter_(products);
 
         if (!products.length) {
             tbody.innerHTML = `
@@ -294,46 +304,116 @@ function closeProductFormBlock() {
 }
 
 /* =========================================
+   FORM BLOCK OPEN / CLOSE
+========================================= */
+
+function closeProductFormBlock() {
+    ...
+}
+
+/* =========================================
+   LOAD CATEGORY FILTER
+========================================= */
+
+function loadCategoryFilter_(products) {
+
+    ...
+}
+
+/* =========================================
    HELPERS
 ========================================= */
 
 function getValue(id) {
-    return document.getElementById(id)?.value.trim() || "";
-}
 
-function isChecked(id) {
-    return document.getElementById(id)?.checked || false;
-}
+    /* =========================================
+       HELPERS
+    ========================================= */
 
-function resetDefaultCheckboxes_() {
-    const defaults = [
-        "showOnHomepage",
-        "showInRetail",
-        "showInWholesale",
-        "featured"
-    ];
+    function getValue(id) {
+        return document.getElementById(id)?.value.trim() || "";
+    }
 
-    defaults.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.checked = true;
-    });
+    function isChecked(id) {
+        return document.getElementById(id)?.checked || false;
+    }
 
-    const isPromo = document.getElementById("isPromo");
-    if (isPromo) isPromo.checked = false;
-}
+    function resetDefaultCheckboxes_() {
+        const defaults = [
+            "showOnHomepage",
+            "showInRetail",
+            "showInWholesale",
+            "featured"
+        ];
 
-function formatMoney_(value) {
-    return Number(value || 0).toLocaleString("en-PH", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-}
+        defaults.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.checked = true;
+        });
 
-function escapeHTML_(value) {
-    return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
+        const isPromo = document.getElementById("isPromo");
+        if (isPromo) isPromo.checked = false;
+    }
+
+    function formatMoney_(value) {
+        return Number(value || 0).toLocaleString("en-PH", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    function escapeHTML_(value) {
+        return String(value || "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    /* =========================================
+       LOAD CATEGORY FILTER
+    ========================================= */
+
+    function loadCategoryFilter_(products) {
+
+        const categorySelect =
+            document.querySelector(".metal-toolbar select");
+
+        if (!categorySelect) return;
+
+        const categories = [];
+
+        products.forEach(product => {
+
+            const category =
+                product.Category ||
+                product.category ||
+                "";
+
+            if (
+                category &&
+                !categories.includes(category)
+            ) {
+                categories.push(category);
+            }
+
+        });
+
+        categories.sort();
+
+        categorySelect.innerHTML = `
+        <option value="">All Categories</option>
+    `;
+
+        categories.forEach(category => {
+
+            categorySelect.innerHTML += `
+            <option value="${category}">
+                ${category}
+            </option>
+        `;
+
+        });
+
+    }
