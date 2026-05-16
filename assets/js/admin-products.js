@@ -99,6 +99,7 @@ function initializeAutoPricing_() {
             "input",
             computePrices_
         );
+
     }
 
     /* =========================================
