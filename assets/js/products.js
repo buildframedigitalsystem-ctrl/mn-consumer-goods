@@ -1,152 +1,219 @@
-async function initializeProducts() {
+/* =========================================
+   PRODUCTS MODULE
+   M&N Consumer Goods / BuildFrame Store OS
+========================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
+    initializeProducts();
+});
+
+/* =========================================
+   INITIALIZE PRODUCTS
+========================================= */
+
+function initializeProducts() {
     const productForm =
         document.getElementById("productForm");
 
     if (!productForm) return;
 
-    productForm.addEventListener(
-        "submit",
-        async (e) => {
+    initializeProductAutoPricing_();
 
-            e.preventDefault();
+    productForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-            const payload = {
+        const payload = {
+            action: "addProduct",
 
-                action: "addProduct",
+            productName: getProductValue_("productName"),
+            category: getProductValue_("category"),
+            brand: getProductValue_("brand"),
 
-                productName:
-                    document.getElementById("productName").value,
+            supplierCost: getProductValue_("supplierCost"),
+            markupPercent: getProductValue_("wholesaleMarkup"),
+            wholesalePrice: getProductValue_("wholesalePrice"),
 
-                category:
-                    document.getElementById("category").value,
+            stockStatus: getProductValue_("stockStatus")
+        };
 
-                brand:
-                    document.getElementById("brand").value,
-
-                supplierCost:
-                    document.getElementById("supplierCost").value,
-
-                markupPercent:
-                    document.getElementById("wholesaleMarkup").value,
-
-                wholesalePrice:
-                    document.getElementById("wholesalePrice").value,
-
-                stockStatus:
-                    document.getElementById("stockStatus").value
-
-            };
-
-            try {
-
-                const response =
-                    await fetch(API.BASE_URL, {
-
-                        method: "POST",
-
-                        body: JSON.stringify(payload)
-
-                    });
-
-                const data =
-                    await response.json();
-
-                if (data.success) {
-
-                    alert("Product saved.");
-
-                    productForm.reset();
-
-                    loadProducts();
-
-                } else {
-
-                    alert(
-                        data.message ||
-                        "Product save failed."
-                    );
-
-                }
-
-            } catch (error) {
-
-                console.error(error);
-
-                alert("Server error.");
-
-            }
-
+        if (!payload.productName || !payload.category) {
+            alert("Please complete Product Name and Category.");
+            return;
         }
-    );
 
-    loadProducts();
-
-}
-
-async function loadProducts() {
-
-    try {
-
-        const response =
-            await fetch(API.BASE_URL, {
-
+        try {
+            const response = await fetch(API.BASE_URL, {
                 method: "POST",
-
-                body: JSON.stringify({
-                    action: "getProducts"
-                })
-
+                body: JSON.stringify(payload)
             });
 
-        const data =
-            await response.json();
+            const data = await response.json();
+
+            if (data.success) {
+                alert("Product saved.");
+
+                productForm.reset();
+
+                loadProducts();
+            } else {
+                alert(data.message || "Product save failed.");
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Server error.");
+        }
+    });
+
+    loadProducts();
+}
+
+/* =========================================
+   AUTO WHOLESALE PRICE CALCULATOR
+========================================= */
+
+function initializeProductAutoPricing_() {
+    const supplierCostInput =
+        document.getElementById("supplierCost");
+
+    const wholesaleMarkupInput =
+        document.getElementById("wholesaleMarkup");
+
+    const wholesalePriceInput =
+        document.getElementById("wholesalePrice");
+
+    if (
+        !supplierCostInput ||
+        !wholesaleMarkupInput ||
+        !wholesalePriceInput
+    ) {
+        return;
+    }
+
+    function computeWholesalePrice_() {
+        const supplierCost =
+            parseFloat(supplierCostInput.value) || 0;
+
+        const wholesaleMarkup =
+            parseFloat(wholesaleMarkupInput.value) || 0;
+
+        const wholesalePrice =
+            supplierCost +
+            (supplierCost * wholesaleMarkup / 100);
+
+        wholesalePriceInput.value =
+            wholesalePrice.toFixed(2);
+    }
+
+    supplierCostInput.addEventListener(
+        "input",
+        computeWholesalePrice_
+    );
+
+    wholesaleMarkupInput.addEventListener(
+        "input",
+        computeWholesalePrice_
+    );
+}
+
+/* =========================================
+   LOAD PRODUCTS
+========================================= */
+
+async function loadProducts() {
+    try {
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "getProducts"
+            })
+        });
+
+        const data = await response.json();
 
         const rows =
-            data.rows || data.data || [];
+            data.products ||
+            data.rows ||
+            data.data ||
+            [];
 
         const tbody =
-            document.getElementById(
-                "productsTableBody"
-            );
+            document.getElementById("productsTableBody");
 
         if (!tbody) return;
 
-        tbody.innerHTML = "";
-
-        rows.forEach(product => {
-
-            tbody.innerHTML += `
+        if (!rows.length) {
+            tbody.innerHTML = `
                 <tr>
-                    <td>${product.ProductName || ""}</td>
-
-                    <td>${product.Category || ""}</td>
-
-                    <td>${product.Brand || ""}</td>
-
-                    <td>
-                        ₱${Number(
-                product.WholesalePrice || 0
-            ).toLocaleString()}
-                    </td>
-
-                    <td>
-                        ${product.StockStatus || ""}
-                    </td>
+                    <td colspan="5">No products found yet.</td>
                 </tr>
             `;
+            return;
+        }
 
-        });
+        tbody.innerHTML = rows.map(product => {
+            const productName =
+                product.ProductName ||
+                product.productName ||
+                product.Name ||
+                "";
+
+            const category =
+                product.Category ||
+                product.category ||
+                "";
+
+            const brand =
+                product.Brand ||
+                product.brand ||
+                "";
+
+            const wholesalePrice =
+                product.WholesalePrice ||
+                product.wholesalePrice ||
+                0;
+
+            const stockStatus =
+                product.StockStatus ||
+                product.stockStatus ||
+                "";
+
+            return `
+                <tr>
+                    <td>${escapeProductHTML_(productName)}</td>
+                    <td>${escapeProductHTML_(category)}</td>
+                    <td>${escapeProductHTML_(brand)}</td>
+                    <td>₱${formatProductMoney_(wholesalePrice)}</td>
+                    <td>${escapeProductHTML_(stockStatus)}</td>
+                </tr>
+            `;
+        }).join("");
 
     } catch (error) {
-
         console.error(error);
-
     }
-
 }
 
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeProducts
-);
+/* =========================================
+   HELPERS
+========================================= */
+
+function getProductValue_(id) {
+    return document.getElementById(id)?.value.trim() || "";
+}
+
+function formatProductMoney_(value) {
+    return Number(value || 0).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function escapeProductHTML_(value) {
+    return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
