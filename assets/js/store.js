@@ -67,14 +67,16 @@ async function loadProductsFromAPI() {
         const response = await fetch(API.BASE_URL, {
             method: "POST",
             body: JSON.stringify({
-                action: "getWholesaleProducts",
-            }
+                action: "getWholesaleProducts"
+            })
         });
 
         const data = await response.json();
 
         if (!data.success) {
-            throw new Error(data.message || "Failed to fetch products.");
+            throw new Error(
+                data.message || "Failed to fetch products."
+            );
         }
 
         const rows =
