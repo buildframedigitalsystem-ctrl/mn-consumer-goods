@@ -218,6 +218,11 @@ async function saveAdminProduct() {
         wholesalePrice: getValue("wholesalePrice"),
 
         productImage: getValue("productImage"),
+        imageUrl: getValue("productImage"),
+        imageURL: getValue("productImage"),
+        IMAGE_URL: getValue("productImage"),
+        ProductImage: getValue("productImage"),
+
         stockStatus: getValue("stockStatus") || "In Stock",
 
         promoPrice: getValue("promoPrice"),
