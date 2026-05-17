@@ -84,24 +84,24 @@ function initializeAutoPricing_() {
             retailPriceInput.value =
                 retailPrice.toFixed(2);
         }
+    }
 
-        supplierCostInput.addEventListener(
-            "input",
-            computePrices_
-        );
+    supplierCostInput.addEventListener(
+        "input",
+        computePrices_
+    );
 
-        wholesaleMarkupInput.addEventListener(
-            "input",
-            computePrices_
-        );
+    wholesaleMarkupInput.addEventListener(
+        "input",
+        computePrices_
+    );
 
+    if (retailMarkupInput) {
         retailMarkupInput.addEventListener(
             "input",
             computePrices_
         );
-
     }
-
 }
 
 /* =========================================
