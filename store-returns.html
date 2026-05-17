@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&N Returns</title>
+
+    <link rel="manifest" href="manifest-store.json">
+
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/store.css">
+
+    <meta name="theme-color" content="#005f2f">
+</head>
+
+<body>
+
+    <header class="store-header">
+
+        <div class="store-logo">
+            <h1>M&N Store</h1>
+            <p>Returns Center</p>
+        </div>
+
+        <nav class="store-nav">
+            <a href="store-dashboard.html">Dashboard</a>
+            <a href="wholesale.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="store-payments.html">Payments</a>
+            <a href="store-deliveries.html">Deliveries</a>
+        </nav>
+
+    </header>
+
+    <main class="store-container">
+
+        <section class="page-hero">
+            <h2>Returns & Concerns</h2>
+            <p>Submit damaged, missing, or incorrect product concerns.</p>
+        </section>
+
+        <section class="dashboard-card">
+
+            <form class="admin-form">
+
+                <div class="form-group">
+                    <label>Invoice Number</label>
+                    <input type="text">
+                </div>
+
+                <div class="form-group">
+                    <label>Reason</label>
+
+                    <select>
+                        <option>Damaged Product</option>
+                        <option>Wrong Item</option>
+                        <option>Missing Product</option>
+                        <option>Expired Product</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Details</label>
+                    <textarea rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    Submit Return Request
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
