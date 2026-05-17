@@ -12,10 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================================= */
 
 function initializeProducts() {
-    const productForm =
-        document.getElementById("productForm");
+    const productForm = document.getElementById("productForm");
 
-    if (!productForm) return;
+    if (!productForm) {
+        loadProducts();
+        return;
+    }
 
     initializeProductAutoPricing_();
 
@@ -51,9 +53,7 @@ function initializeProducts() {
 
             if (data.success) {
                 alert("Product saved.");
-
                 productForm.reset();
-
                 loadProducts();
             } else {
                 alert(data.message || "Product save failed.");
@@ -73,47 +73,26 @@ function initializeProducts() {
 ========================================= */
 
 function initializeProductAutoPricing_() {
-    const supplierCostInput =
-        document.getElementById("supplierCost");
+    const supplierCostInput = document.getElementById("supplierCost");
+    const wholesaleMarkupInput = document.getElementById("wholesaleMarkup");
+    const wholesalePriceInput = document.getElementById("wholesalePrice");
 
-    const wholesaleMarkupInput =
-        document.getElementById("wholesaleMarkup");
-
-    const wholesalePriceInput =
-        document.getElementById("wholesalePrice");
-
-    if (
-        !supplierCostInput ||
-        !wholesaleMarkupInput ||
-        !wholesalePriceInput
-    ) {
+    if (!supplierCostInput || !wholesaleMarkupInput || !wholesalePriceInput) {
         return;
     }
 
     function computeWholesalePrice_() {
-        const supplierCost =
-            parseFloat(supplierCostInput.value) || 0;
-
-        const wholesaleMarkup =
-            parseFloat(wholesaleMarkupInput.value) || 0;
+        const supplierCost = parseFloat(supplierCostInput.value) || 0;
+        const wholesaleMarkup = parseFloat(wholesaleMarkupInput.value) || 0;
 
         const wholesalePrice =
-            supplierCost +
-            (supplierCost * wholesaleMarkup / 100);
+            supplierCost + (supplierCost * wholesaleMarkup / 100);
 
-        wholesalePriceInput.value =
-            wholesalePrice.toFixed(2);
+        wholesalePriceInput.value = wholesalePrice.toFixed(2);
     }
 
-    supplierCostInput.addEventListener(
-        "input",
-        computeWholesalePrice_
-    );
-
-    wholesaleMarkupInput.addEventListener(
-        "input",
-        computeWholesalePrice_
-    );
+    supplierCostInput.addEventListener("input", computeWholesalePrice_);
+    wholesaleMarkupInput.addEventListener("input", computeWholesalePrice_);
 }
 
 /* =========================================
@@ -137,8 +116,7 @@ async function loadProducts() {
             data.data ||
             [];
 
-        const tbody =
-            document.getElementById("productsTableBody");
+        const tbody = document.getElementById("productsTableBody");
 
         if (!tbody) return;
 
@@ -151,7 +129,7 @@ async function loadProducts() {
             return;
         }
 
-        tbody.innerHTML = rows.map(product => {
+        tbody.innerHTML = rows.map((product) => {
             const productName =
                 product.ProductName ||
                 product.productName ||
@@ -173,6 +151,16 @@ async function loadProducts() {
                 product.wholesalePrice ||
                 0;
 
+            const imageUrl =
+                product.ProductImage ||
+                product.productImage ||
+                product.ImageUrl ||
+                product.imageUrl ||
+                product.IMAGE_URL ||
+                product.ImageURL ||
+                product.imageURL ||
+                "";
+
             const stockStatus =
                 product.StockStatus ||
                 product.stockStatus ||
@@ -180,7 +168,15 @@ async function loadProducts() {
 
             return `
                 <tr>
-                    <td>${escapeProductHTML_(productName)}</td>
+                    <td>
+                        ${imageUrl
+                    ? `<img src="${escapeProductHTML_(imageUrl)}"
+                                     alt="${escapeProductHTML_(productName)}"
+                                     style="width:55px;height:55px;object-fit:cover;border-radius:10px;margin-right:8px;vertical-align:middle;">`
+                    : ""
+                }
+                        ${escapeProductHTML_(productName)}
+                    </td>
                     <td>${escapeProductHTML_(category)}</td>
                     <td>${escapeProductHTML_(brand)}</td>
                     <td>₱${formatProductMoney_(wholesalePrice)}</td>
