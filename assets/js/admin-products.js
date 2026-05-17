@@ -213,7 +213,7 @@ async function saveAdminProduct() {
         defaultSupplierName: getValue("defaultSupplierName"),
 
         supplierCost: getValue("supplierCost"),
-        markupPercent: getValue("markupPercent"),
+        markupPercent: getValue("wholesaleMarkup"),
         retailPrice: getValue("retailPrice"),
         wholesalePrice: getValue("wholesalePrice"),
 
