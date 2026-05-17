@@ -234,8 +234,8 @@ async function saveAdminProduct() {
         featured: isChecked("featured") ? "Yes" : "No"
     };
 
-    if (!payload.productName || !payload.category || !payload.retailPrice) {
-        alert("Please complete Product Name, Category, and Retail Price.");
+    if (!payload.productName || !payload.category || !payload.wholesalePrice) {
+        alert("Please complete Product Name, Category, and Wholesale Price.");
         return;
     }
 
