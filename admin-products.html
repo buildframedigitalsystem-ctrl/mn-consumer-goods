@@ -192,11 +192,15 @@
 
                     <input type="number" id="supplierCost" placeholder="Supplier Cost">
 
-                    <input type="number" id="markupPercent" placeholder="Markup Percent">
+                    <input type="number" id="supplierCost" placeholder="Supplier Cost">
 
-                    <input type="number" id="retailPrice" placeholder="Retail Price" required>
+                    <input type="number" id="wholesaleMarkup" placeholder="Wholesale Markup %">
 
-                    <input type="number" id="wholesalePrice" placeholder="Wholesale Price">
+                    <input type="number" id="wholesalePrice" placeholder="Wholesale Price" readonly>
+
+                    <input type="hidden" id="retailMarkup" value="0">
+
+                    <input type="hidden" id="retailPrice" value="0">
 
                     <div class="form-group image-upload-group">
 
@@ -236,8 +240,8 @@
                     </label>
 
                     <label>
-                        <input type="checkbox" id="showInRetail" checked>
-                        Show in Retail
+                        <input type="checkbox" id="showInRetail">
+                        Show in Retail Store App
                     </label>
 
                     <label>

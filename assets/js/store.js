@@ -473,7 +473,8 @@ function initializeCategoryCards() {
 ================================ */
 
 function getProductImage(product) {
-    const image =
+
+    let image =
         product.ProductImage ||
         product.productImage ||
         product.ImageURL ||
@@ -482,11 +483,24 @@ function getProductImage(product) {
 
     if (!image) return "";
 
-    if (String(image).startsWith("http")) {
+    image = String(image).trim();
+
+    const driveMatch =
+        image.match(/\/d\/([^/]+)/) ||
+        image.match(/id=([^&]+)/);
+
+    if (driveMatch && driveMatch[1]) {
+
+        return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+
+    }
+
+    if (image.startsWith("http")) {
         return image;
     }
 
     return `assets/images/products/${image}`;
+
 }
 
 /* ===============================
