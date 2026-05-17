@@ -74,9 +74,7 @@ async function loadProductsFromAPI() {
         const data = await response.json();
 
         if (!data.success) {
-            throw new Error(
-                data.message || "Failed to fetch products."
-            );
+            throw new Error(data.message || "Failed to fetch products.");
         }
 
         const rows =
@@ -195,14 +193,8 @@ function productMatchesMode(product, mode) {
     if (mode === "home") {
         return (
             isYes(product.ShowOnHomepage) ||
-            isYes(product.Featured)
-        );
-    }
-
-    if (mode === "retail") {
-        return (
-            isYes(product.ShowInRetail) ||
-            Number(product.RetailPrice || 0) > 0
+            isYes(product.Featured) ||
+            isYes(product.ShowInWholesale)
         );
     }
 
@@ -286,9 +278,6 @@ function createProductCard(product, mode) {
 
     const image = getProductImage(product);
 
-    const retailPrice =
-        Number(product.RetailPrice || product.retailPrice || 0);
-
     const wholesalePrice =
         Number(product.WholesalePrice || product.wholesalePrice || 0);
 
@@ -297,7 +286,6 @@ function createProductCard(product, mode) {
 
     const priceHTML = getPriceHTML({
         mode,
-        retailPrice,
         wholesalePrice,
         promoPrice,
         discountLabel: product.DiscountLabel || "",
@@ -309,7 +297,7 @@ function createProductCard(product, mode) {
 
             <div class="product-image">
                 ${image
-            ? `<img src="${image}" alt="${escapeHTML(name)}" loading="lazy">`
+            ? `<img src="${image}" alt="${escapeHTML(name)}" loading="lazy" onerror="this.src='assets/images/no-image.png';">`
             : `<span>No Image Yet</span>`
         }
             </div>
@@ -373,19 +361,9 @@ function getProductIndex_(product) {
 ================================ */
 
 function getPriceHTML(data) {
-    if (data.mode === "wholesale") {
+    if (data.mode === "promo" && data.promoPrice > 0) {
         return `
             <div class="product-price">
-                <strong>Wholesale: ₱${formatMoney(data.wholesalePrice)}</strong>
-                <small>Retail: ₱${formatMoney(data.retailPrice)}</small>
-            </div>
-        `;
-    }
-
-    if (data.mode === "promo") {
-        return `
-            <div class="product-price">
-
                 ${data.discountLabel
                 ? `<span class="promo-label">${escapeHTML(data.discountLabel)}</span>`
                 : ""
@@ -396,17 +374,15 @@ function getPriceHTML(data) {
                 : ""
             }
 
-                <strong>Promo: ₱${formatMoney(data.promoPrice || data.retailPrice)}</strong>
-                <small>Regular: ₱${formatMoney(data.retailPrice)}</small>
-
+                <strong>Promo: ₱${formatMoney(data.promoPrice)}</strong>
+                <small>Wholesale: ₱${formatMoney(data.wholesalePrice)}</small>
             </div>
         `;
     }
 
     return `
         <div class="product-price">
-            <strong>Retail: ₱${formatMoney(data.retailPrice)}</strong>
-            <small>Wholesale: ₱${formatMoney(data.wholesalePrice)}</small>
+            <strong>Wholesale: ₱${formatMoney(data.wholesalePrice)}</strong>
         </div>
     `;
 }
@@ -460,12 +436,12 @@ function initializeCategoryCards() {
             const category = this.dataset.category;
 
             if (!category || category === "all") {
-                window.location.href = "retail.html";
+                window.location.href = "wholesale.html";
                 return;
             }
 
             window.location.href =
-                `retail.html?category=${encodeURIComponent(category)}`;
+                `wholesale.html?category=${encodeURIComponent(category)}`;
         });
     });
 }
@@ -475,7 +451,6 @@ function initializeCategoryCards() {
 ================================ */
 
 function getProductImage(product) {
-
     let image =
         product.ProductImage ||
         product.productImage ||
@@ -492,9 +467,7 @@ function getProductImage(product) {
         image.match(/id=([^&]+)/);
 
     if (driveMatch && driveMatch[1]) {
-
-        return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
-
+        return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w1000`;
     }
 
     if (image.startsWith("http")) {
@@ -502,7 +475,6 @@ function getProductImage(product) {
     }
 
     return `assets/images/products/${image}`;
-
 }
 
 /* ===============================
@@ -534,8 +506,7 @@ function openProductModal(productIndex) {
 
     if (modalPriceBox) {
         modalPriceBox.innerHTML = `
-            <strong>Retail: ₱${formatMoney(product.RetailPrice || 0)}</strong>
-            <small>Wholesale: ₱${formatMoney(product.WholesalePrice || 0)}</small>
+            <strong>Wholesale: ₱${formatMoney(product.WholesalePrice || 0)}</strong>
 
             ${Number(product.PromoPrice || 0) > 0
                 ? `<small>Promo: ₱${formatMoney(product.PromoPrice)}</small>`
@@ -569,7 +540,6 @@ function renderModalBadges_(product) {
     if (isYes(product.IsPromo)) badges.push("PROMO");
     if (isYes(product.Featured)) badges.push("FEATURED");
     if (isYes(product.ShowInWholesale)) badges.push("WHOLESALE");
-    if (isYes(product.ShowInRetail)) badges.push("RETAIL");
 
     if (String(product.DiscountLabel || "").trim() !== "") {
         badges.push(product.DiscountLabel);
@@ -610,7 +580,6 @@ window.addEventListener("click", function (event) {
 const STORE_CART_KEY_PUBLIC = "mn_store_cart";
 
 function addProductToCartSafe_(productIndex) {
-
     const product =
         allProducts[productIndex];
 
@@ -621,9 +590,6 @@ function addProductToCartSafe_(productIndex) {
             localStorage.getItem(STORE_CART_KEY_PUBLIC)
         ) || [];
 
-    const mode =
-        getStoreMode();
-
     const existingIndex =
         cart.findIndex(item =>
             String(item.productId) ===
@@ -631,16 +597,13 @@ function addProductToCartSafe_(productIndex) {
         );
 
     const price =
-        mode === "wholesale"
-            ? Number(product.WholesalePrice || 0)
-            : Number(
-                product.PromoPrice ||
-                product.RetailPrice ||
-                0
-            );
+        Number(
+            product.PromoPrice ||
+            product.WholesalePrice ||
+            0
+        );
 
     const cartItem = {
-
         productId:
             product.ProductID,
 
@@ -656,20 +619,15 @@ function addProductToCartSafe_(productIndex) {
         quantity: 1,
 
         mode:
-            mode.toUpperCase(),
+            "WHOLESALE",
 
         price
-
     };
 
     if (existingIndex >= 0) {
-
         cart[existingIndex].quantity += 1;
-
     } else {
-
         cart.push(cartItem);
-
     }
 
     localStorage.setItem(
@@ -678,7 +636,6 @@ function addProductToCartSafe_(productIndex) {
     );
 
     showCartSuccess_(product.ProductName);
-
 }
 
 /* ===============================
@@ -686,9 +643,7 @@ function addProductToCartSafe_(productIndex) {
 ================================ */
 
 function showCartSuccess_(productName) {
-
     window.location.href = "cart.html";
-
 }
 
 /* ===============================
