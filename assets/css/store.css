@@ -1474,6 +1474,55 @@ body:has(.wholesale-header) #productGrid {
 }
 
 /* =========================================
+   MOBILE PRODUCT CARD FIX
+========================================= */
+
+@media (max-width: 768px) {
+
+    .product-card {
+
+        min-height: auto !important;
+
+    }
+
+    .product-info h3 {
+
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+
+        word-break: break-word;
+        overflow-wrap: break-word;
+
+    }
+
+    .product-info p {
+
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+
+        word-break: break-word;
+        overflow-wrap: break-word;
+
+        min-height: auto !important;
+
+    }
+
+    .product-image {
+
+        height: 140px !important;
+
+    }
+
+    .product-image img {
+
+        padding: 10px !important;
+        object-fit: contain !important;
+
+    }
+
+}
+
+/* =========================================
    METAL ADMIN FORM BLOCK SYSTEM
 ========================================= */
 

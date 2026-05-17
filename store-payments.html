@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>M&N Store Payments</title>
+
+    <link rel="stylesheet" href="assets/css/store-payments.css">
+
+</head>
+
+<body>
+
+    <div class="store-payments-layout">
+
+        <header class="store-payments-header">
+
+            <h1>
+                💳 Payments & Balance
+            </h1>
+
+            <p>
+                Review invoices,
+                outstanding balances,
+                and payment history.
+            </p>
+
+        </header>
+
+        <!-- SUMMARY CARDS -->
+
+        <section class="store-balance-grid">
+
+            <div class="balance-card">
+
+                <h3>
+                    Outstanding Balance
+                </h3>
+
+                <strong>
+                    ₱0.00
+                </strong>
+
+            </div>
+
+            <div class="balance-card">
+
+                <h3>
+                    Total Paid
+                </h3>
+
+                <strong>
+                    ₱0.00
+                </strong>
+
+            </div>
+
+            <div class="balance-card">
+
+                <h3>
+                    Pending Invoices
+                </h3>
+
+                <strong>
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+        <!-- PAYMENTS TABLE -->
+
+        <section class="payments-table-section">
+
+            <h2>
+                Payment Records
+            </h2>
+
+            <table class="payments-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Invoice</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="paymentsTableBody">
+
+                    <tr>
+
+                        <td colspan="4">
+                            No payment records yet.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </div>
+
+    <script src="assets/js/store-payments.js"></script>
+
+</body>
+
+</html>
