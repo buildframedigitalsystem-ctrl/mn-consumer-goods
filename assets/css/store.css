@@ -473,7 +473,7 @@ body {
     margin: 0 auto 30px;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 24px;
 }
 
@@ -487,12 +487,19 @@ body {
 }
 
 .product-image {
-    height: 210px;
+
+    height: 150px;
+
     background: #f8fafc;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     overflow: hidden;
+
 }
 
 .product-image img {
@@ -519,7 +526,7 @@ body {
 }
 
 .product-info h3 {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .product-info p {
