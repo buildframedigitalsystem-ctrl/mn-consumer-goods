@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Health | M&N OS</title>
 
-    <link rel="manifest" href="manifest-admin.json">
+    <link rel="manifest" href="manifest-admin.json?v=2">
     <meta name="theme-color" content="#07152f">
 
     <link rel="stylesheet" href="assets/css/base.css?v=2">
@@ -18,7 +18,6 @@
             background: #eef2f7;
         }
     </style>
-
 </head>
 
 <body>
@@ -30,14 +29,47 @@
         </a>
 
         <section class="admin-page-hero">
-            <span>SYSTEM MODULE</span>
-            <h1>System Health</h1>
-            <p>Check backend status, migration logs, reports log, system readiness, and admin diagnostics.</p>
+            <span>SYSTEM HEALTH MONITOR</span>
+            <h1>M&N Admin OS Status</h1>
+            <p>Check if the Admin App, Store App, Google Sheet, backend WebApp, and core modules are ready.</p>
         </section>
 
         <section class="admin-module-card">
-            <h2>System Checks</h2>
-            <p>This page is prepared for MIGRATION_LOG, REPORTS_LOG, and system health checks.</p>
+
+            <div class="system-health-top">
+                <div>
+                    <h2>Live System Checks</h2>
+                    <p>Use this page before turnover to confirm the owner’s tablet is connected and ready.</p>
+                </div>
+
+                <button type="button" class="primary-btn" id="runSystemCheckBtn">
+                    Run System Check
+                </button>
+            </div>
+
+            <div class="system-status-grid">
+
+                <div class="system-status-card">
+                    <strong>Admin App</strong>
+                    <span id="adminAppStatus">Checking...</span>
+                </div>
+
+                <div class="system-status-card">
+                    <strong>Store App</strong>
+                    <span id="storeAppStatus">Checking...</span>
+                </div>
+
+                <div class="system-status-card">
+                    <strong>Backend WebApp</strong>
+                    <span id="backendStatus">Waiting...</span>
+                </div>
+
+                <div class="system-status-card">
+                    <strong>Google Sheet Sync</strong>
+                    <span id="sheetStatus">Waiting...</span>
+                </div>
+
+            </div>
 
             <table class="admin-simple-table">
                 <thead>
@@ -49,7 +81,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="systemHealthTableBody">
                     <tr>
                         <td>Admin App Manifest</td>
                         <td>PWA</td>
@@ -63,13 +95,26 @@
                         <td>Store app uses manifest-store.json</td>
                     </tr>
                     <tr>
-                        <td colspan="4">Live backend checks will be connected here later.</td>
+                        <td>Products Module</td>
+                        <td>Products</td>
+                        <td>Protected</td>
+                        <td>Product upload logic was not touched.</td>
+                    </tr>
+                    <tr>
+                        <td>Orders Module</td>
+                        <td>Orders</td>
+                        <td>Ready for Testing</td>
+                        <td>Order form layout and invoice area are available.</td>
                     </tr>
                 </tbody>
             </table>
+
         </section>
 
     </main>
+
+    <script src="assets/js/api-config.js?v=2"></script>
+    <script src="assets/js/admin-system.js?v=2"></script>
 
 </body>
 

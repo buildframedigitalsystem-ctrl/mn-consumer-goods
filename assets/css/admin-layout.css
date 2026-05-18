@@ -514,3 +514,58 @@ body {
     max-width: 100%;
     overflow-x: auto;
 }
+
+/* =========================================
+   SYSTEM HEALTH PAGE
+========================================= */
+
+.system-health-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.system-status-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.system-status-card {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid #e2e8f0;
+}
+
+.system-status-card strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #07152f;
+}
+
+.system-status-card span {
+    font-weight: 800;
+}
+
+.status-good {
+    color: #15803d;
+}
+
+.status-pending {
+    color: #b45309;
+}
+
+.status-bad {
+    color: #dc2626;
+}
+
+@media (max-width: 900px) {
+    .system-status-grid {
+        grid-template-columns: 1fr;
+    }
+}

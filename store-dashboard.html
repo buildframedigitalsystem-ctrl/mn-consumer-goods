@@ -305,11 +305,12 @@
 
     <script>
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./store-sw.js")
+            navigator.serviceWorker.register("./assets/js/store-sw.js")
                 .then(() => console.log("M&N Store App service worker registered"))
                 .catch(error => console.error("Store service worker error:", error));
         }
     </script>
+
 
 </body>
 
