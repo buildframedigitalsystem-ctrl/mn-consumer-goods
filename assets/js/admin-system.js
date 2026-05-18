@@ -30,10 +30,7 @@ async function runSystemCheck() {
             throw new Error("API.BASE_URL is missing.");
         }
 
-        const response = await fetch(`${API.BASE_URL}?action=systemHealth`, {
-            method: "GET"
-        });
-
+        const response = await fetch(`${API.BASE_URL}?action=systemHealth`);
         const data = await response.json();
 
         if (!data.success) {

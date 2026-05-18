@@ -4,73 +4,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Build My Retail Store</title>
-
-    <link rel="manifest" href="manifest-store.json">
+    <title>Build My Retail Store | BuildFrame</title>
 
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/store.css">
+    <link rel="stylesheet" href="assets/css/build-my-retail-store.css">
 
     <meta name="theme-color" content="#005f2f">
 </head>
 
 <body>
 
-    <header class="store-header">
+    <main class="build-store-page">
 
-        <div class="store-logo">
-            <h1>BuildFrame</h1>
-            <p>Retail Store Solutions</p>
-        </div>
+        <a href="store-dashboard.html" class="back-link">← Back to Store App</a>
 
-        <nav class="store-nav">
-            <a href="store-dashboard.html">Dashboard</a>
-            <a href="wholesale.html">Products</a>
-            <a href="cart.html">Cart</a>
-        </nav>
-
-    </header>
-
-    <main class="store-container">
-
-        <section class="page-hero">
-            <h2>Build Your Own Retail Store</h2>
-
+        <section class="build-hero">
+            <span>POWERED BY BUILDFRAME</span>
+            <h1>Build Your Own Retail Store App</h1>
             <p>
-                Want your own ordering app, inventory system,
-                customer management, delivery tracking,
-                and online store?
+                Choose a ready design style for your future online store,
+                ordering system, inventory dashboard, and customer app.
             </p>
         </section>
 
-        <section class="dashboard-card">
+        <section class="design-selector">
 
-            <h3>Powered by BuildFrame Store Operating System</h3>
+            <h2>Choose Your Store Design Style</h2>
+            <p>Tap a design below to preview the look.</p>
 
-            <p>
-                We help wholesalers, distributors,
-                and retail stores build their own
-                complete business operating systems.
-            </p>
+            <div class="design-buttons">
+                <button onclick="setDesign('grocery')">🛒 Grocery</button>
+                <button onclick="setDesign('wholesale')">📦 Wholesale</button>
+                <button onclick="setDesign('beauty')">✨ Beauty</button>
+                <button onclick="setDesign('hardware')">🛠 Hardware</button>
+                <button onclick="setDesign('premium')">💎 Premium</button>
+            </div>
+
+        </section>
+
+        <section id="storePreview" class="store-preview grocery">
+
+            <div class="preview-header">
+                <div>
+                    <span id="previewLabel">GROCERY STORE</span>
+                    <h2 id="previewTitle">Fresh Daily Market</h2>
+                    <p id="previewDesc">
+                        A clean and friendly store layout for groceries, household goods, and daily essentials.
+                    </p>
+                </div>
+
+                <a href="https://buildframedigitalsystem-ctrl.github.io/myportfolio/" class="preview-btn">
+                    Request This Style
+                </a>
+            </div>
+
+            <div class="preview-grid">
+
+                <div class="preview-card">
+                    <h3>Featured Products</h3>
+                    <p>Show best sellers, promos, and new arrivals.</p>
+                </div>
+
+                <div class="preview-card">
+                    <h3>Ordering System</h3>
+                    <p>Customers can order from phone, tablet, or desktop.</p>
+                </div>
+
+                <div class="preview-card">
+                    <h3>Inventory Dashboard</h3>
+                    <p>Track stocks, alerts, supplier records, and reports.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="build-info-card">
+
+            <h2>What BuildFrame Can Build</h2>
 
             <ul>
-                <li>Wholesale Ordering</li>
-                <li>Inventory Management</li>
-                <li>Delivery Tracking</li>
-                <li>Store Dashboard</li>
-                <li>Mobile & Tablet Ready</li>
                 <li>Installable Store App</li>
+                <li>Admin Dashboard</li>
+                <li>Inventory System</li>
+                <li>Orders, Payments, Deliveries, Returns</li>
+                <li>Wholesale / Retail / Reseller Pricing</li>
+                <li>Google Sheets + Apps Script Backend</li>
             </ul>
-
-            <br>
-
-            <a href="https://buildframedigitalsystem-ctrl.github.io/myportfolio/" class="primary-btn">
-                Learn More
-            </a>
 
         </section>
 
     </main>
+
+    <script>
+        const designs = {
+            grocery: {
+                label: "GROCERY STORE",
+                title: "Fresh Daily Market",
+                desc: "A clean and friendly store layout for groceries, household goods, and daily essentials."
+            },
+            wholesale: {
+                label: "WHOLESALE DISTRIBUTOR",
+                title: "Bulk Supply Hub",
+                desc: "A strong business layout for wholesalers, distributors, resellers, and partner stores."
+            },
+            beauty: {
+                label: "BEAUTY STORE",
+                title: "Glow Essentials",
+                desc: "A soft elegant layout for beauty products, wellness items, skincare, and personal care."
+            },
+            hardware: {
+                label: "HARDWARE STORE",
+                title: "Builder Supply Center",
+                desc: "A bold practical layout for construction supplies, hardware, tools, and materials."
+            },
+            premium: {
+                label: "PREMIUM RETAIL",
+                title: "Signature Retail Studio",
+                desc: "A minimal premium layout for curated products, modern brands, and boutique stores."
+            }
+        };
+
+        function setDesign(type) {
+            const preview = document.getElementById("storePreview");
+            const selected = designs[type];
+
+            preview.className = "store-preview " + type;
+
+            document.getElementById("previewLabel").textContent = selected.label;
+            document.getElementById("previewTitle").textContent = selected.title;
+            document.getElementById("previewDesc").textContent = selected.desc;
+        }
+    </script>
 
 </body>
 
