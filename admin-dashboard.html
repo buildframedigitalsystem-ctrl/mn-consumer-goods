@@ -185,7 +185,7 @@
 
     <script>
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./service-worker.js")
+            navigator.serviceWorker.register("./admin-sw.js")
                 .then(() => console.log("M&N Admin OS service worker registered"))
                 .catch(error => console.error("Service worker error:", error));
         }

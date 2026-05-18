@@ -303,6 +303,14 @@
     <script src="assets/js/api-config.js"></script>
     <script src="assets/js/store-dashboard.js?v=1"></script>
 
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./store-sw.js")
+                .then(() => console.log("M&N Store App service worker registered"))
+                .catch(error => console.error("Store service worker error:", error));
+        }
+    </script>
+
 </body>
 
 </html>
