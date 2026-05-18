@@ -9,7 +9,7 @@
 
         <form id="orderForm">
 
-            <div class="form-grid">
+            <div class="form-grid order-form-grid">
 
                 <div class="form-group">
                     <label for="customerName">Customer Name</label>
@@ -52,30 +52,33 @@
                     <input type="number" id="productQuantity" min="1" value="1">
                 </div>
 
-                <div class="form-group wide-field">
-                    <button type="button" id="addToCartBtn" class="primary-btn">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button type="button" id="addToCartBtn" class="primary-btn full-width-btn">
                         + Add Product To Cart
                     </button>
                 </div>
 
-                <div class="form-group wide-field">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                <div class="form-group full-row">
+                    <div class="table-scroll-box">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
 
-                        <tbody id="cartTableBody">
-                            <tr>
-                                <td colspan="5">No products added.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <tbody id="cartTableBody">
+                                <tr>
+                                    <td colspan="5">No products added.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -83,14 +86,17 @@
                     <input type="number" id="totalAmount" readonly value="0">
                 </div>
 
-                <div class="form-group wide-field">
+                <div class="form-group">
                     <label for="orderNotes">Order Notes</label>
                     <input type="text" id="orderNotes">
                 </div>
 
-                <div class="form-group wide-field">
+                <div class="form-group full-row">
                     <label for="signatureCanvas">Customer Signature</label>
-                    <canvas id="signatureCanvas" width="700" height="150"></canvas>
+
+                    <div class="signature-box">
+                        <canvas id="signatureCanvas" width="700" height="150"></canvas>
+                    </div>
 
                     <button type="button" id="clearSignatureBtn" class="secondary-btn">
                         Clear Signature
@@ -108,27 +114,27 @@
     </div>
 
     <div class="table-card">
+        <div class="table-scroll-box">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Type</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Invoice</th>
+                    </tr>
+                </thead>
 
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Type</th>
-                    <th>Total</th>
-                    <th>Payment</th>
-                    <th>Status</th>
-                    <th>Invoice</th>
-                </tr>
-            </thead>
-
-            <tbody id="ordersTableBody">
-                <tr>
-                    <td colspan="7">Loading orders...</td>
-                </tr>
-            </tbody>
-        </table>
-
+                <tbody id="ordersTableBody">
+                    <tr>
+                        <td colspan="7">Loading orders...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>

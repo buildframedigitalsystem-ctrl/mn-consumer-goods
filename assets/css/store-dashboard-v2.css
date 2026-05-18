@@ -230,3 +230,37 @@ body {
     border-radius: 18px;
     padding: 10px;
 }
+
+.store-soft-promo {
+    margin-top: 30px;
+}
+
+.soft-promo-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.soft-promo-card h3 {
+    margin-bottom: 8px;
+    color: #005f2f;
+}
+
+.soft-promo-card p {
+    color: #555;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+
+    .soft-promo-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}

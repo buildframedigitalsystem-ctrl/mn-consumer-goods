@@ -75,6 +75,7 @@ async function loadAdminPage(page) {
     setActiveSidebarItem(page);
 
     const routes = {
+
         home: {
             file: "sections/admin/admin-home.html",
             init: null
@@ -84,8 +85,14 @@ async function loadAdminPage(page) {
             external: "admin-products.html"
         },
 
-        "admin-products": {
-            external: "admin-products.html"
+        orders: {
+            file: "sections/admin/order-form.html",
+            init: "initializeOrders"
+        },
+
+        inventory: {
+            file: "sections/admin/inventory-view.html",
+            init: "initializeInventory"
         },
 
         suppliers: {
@@ -103,14 +110,28 @@ async function loadAdminPage(page) {
             init: "initializeProductReceiving"
         },
 
-        inventory: {
-            file: "sections/admin/inventory-view.html",
-            init: "initializeInventory"
+        payments: {
+            external: "admin-payments.html"
         },
 
-        orders: {
-            file: "sections/admin/order-form.html",
-            init: "initializeOrders"
+        payables: {
+            external: "admin-payables.html"
+        },
+
+        returns: {
+            external: "admin-returns.html"
+        },
+
+        "delivery-tracking": {
+            external: "admin-delivery-tracking.html"
+        },
+
+        expenses: {
+            external: "admin-expenses.html"
+        },
+
+        agents: {
+            external: "admin-agents.html"
         },
 
         customers: {
@@ -123,50 +144,18 @@ async function loadAdminPage(page) {
             init: "initializeReports"
         },
 
-        search: {
-            file: "sections/admin/admin-search-block.html",
-            init: "initAdminSearchBlock"
+        settings: {
+            external: "admin-settings.html"
         },
 
-        crm: {
-            external: "admin-crm-dashboard.html"
+        system: {
+            external: "admin-system.html"
         },
 
         store: {
-            external: "index.html"
-        },
-
-        retail: {
-            external: "retail.html"
-        },
-
-        wholesale: {
-            external: "wholesale.html"
-        },
-
-        promos: {
-            external: "promos.html"
-        },
-
-        delivery: {
-            external: "delivery-booking.html"
-        },
-
-        quotation: {
-            external: "quotation-request.html"
-        },
-
-        reseller: {
-            external: "reseller-application.html"
-        },
-
-        "store-setup": {
-            external: "admin-store-setup.html"
-        },
-
-        "master-dashboard": {
-            external: "master-dashboard.html"
+            external: "store-dashboard.html"
         }
+
     };
 
     const route = routes[page] || routes.home;

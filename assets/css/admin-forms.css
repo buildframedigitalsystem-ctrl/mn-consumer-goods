@@ -410,3 +410,143 @@ table td {
 
     padding-bottom: 10px;
 }
+
+/* =========================================
+   ORDER FORM RESPONSIVE WIDTH FIX
+========================================= */
+
+.order-form-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+}
+
+.full-row {
+    grid-column: 1 / -1;
+}
+
+.full-width-btn {
+    width: 100%;
+}
+
+.table-scroll-box {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table-scroll-box .admin-table {
+    width: 100%;
+    min-width: 720px;
+}
+
+.signature-box {
+    width: 100%;
+    max-width: 700px;
+    overflow-x: auto;
+}
+
+.signature-box canvas {
+    max-width: 100%;
+    border: 2px dashed #94a3b8;
+    border-radius: 14px;
+}
+
+@media (max-width: 1100px) {
+    .order-form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .order-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .table-scroll-box .admin-table {
+        min-width: 650px;
+    }
+}
+
+/* =========================================
+   FORCE FIX: ORDER CART TABLE SPILLING
+========================================= */
+
+#orderForm {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+#orderForm .form-grid,
+#orderForm .order-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 22px;
+    width: 100%;
+    max-width: 100%;
+}
+
+#orderForm .full-row {
+    grid-column: 1 / -1 !important;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+#orderForm .table-scroll-box {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+#orderForm .table-scroll-box table,
+#orderForm table.admin-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+}
+
+#orderForm table.admin-table th,
+#orderForm table.admin-table td {
+    white-space: normal !important;
+    word-break: break-word;
+}
+
+#orderForm table.admin-table th:nth-child(1),
+#orderForm table.admin-table td:nth-child(1) {
+    width: 35%;
+}
+
+#orderForm table.admin-table th:nth-child(2),
+#orderForm table.admin-table td:nth-child(2) {
+    width: 10%;
+}
+
+#orderForm table.admin-table th:nth-child(3),
+#orderForm table.admin-table td:nth-child(3),
+#orderForm table.admin-table th:nth-child(4),
+#orderForm table.admin-table td:nth-child(4) {
+    width: 18%;
+}
+
+#orderForm table.admin-table th:nth-child(5),
+#orderForm table.admin-table td:nth-child(5) {
+    width: 19%;
+}
+
+@media (max-width: 1100px) {
+
+    #orderForm .form-grid,
+    #orderForm .order-form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 700px) {
+
+    #orderForm .form-grid,
+    #orderForm .order-form-grid {
+        grid-template-columns: 1fr !important;
+    }
+}

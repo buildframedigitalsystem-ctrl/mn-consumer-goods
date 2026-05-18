@@ -342,3 +342,104 @@
     }
 
 }
+
+/* ================================
+   ADMIN CONTROL CENTER UPGRADE
+================================ */
+
+.admin-command-header {
+    background: linear-gradient(135deg, #07152f, #0f2f4a);
+    color: #ffffff;
+    border-radius: 24px;
+    padding: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 18px 45px rgba(7, 21, 47, 0.25);
+}
+
+.admin-command-header h1 {
+    margin: 8px 0;
+    font-size: 32px;
+}
+
+.admin-command-header p {
+    margin: 0;
+    color: #cbd5e1;
+}
+
+.admin-app-label {
+    display: inline-block;
+    background: rgba(0, 194, 122, 0.18);
+    color: #7dffca;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.admin-store-switch-btn {
+    background: #00c27a;
+    color: #07152f;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.admin-control-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.admin-control-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 6px solid #07152f;
+    border-radius: 20px;
+    padding: 20px;
+    text-decoration: none;
+    color: #0f172a;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    transition: 0.2s ease;
+}
+
+.admin-control-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 35px rgba(15, 23, 42, 0.14);
+    border-left-color: #00c27a;
+}
+
+.admin-control-card strong {
+    display: block;
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.admin-control-card span {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+    .admin-command-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-control-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-store-switch-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
