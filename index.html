@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&N Consumer Goods | Online Store</title>
 
-    <link rel="stylesheet" href="assets/css/store.css?v=22">
+    <link rel="stylesheet" href="assets/css/store.css?v=23">
     <link rel="stylesheet" href="assets/css/responsive-fixes.css">
 
     <link rel="manifest" href="manifest-admin.json">
@@ -50,7 +50,6 @@
         </div>
 
         <div class="header-account-cart">
-
             <button id="installStoreAppBtn" class="install-app-btn">
                 📲 Install App
             </button>
@@ -67,12 +66,10 @@
                 🛒 Cart
                 <span class="cart-count">0</span>
             </a>
-
         </div>
     </header>
 
     <nav class="store-navigation">
-
         <div class="nav-left">
             <a href="index.html">🏠 Home</a>
             <a href="#products">📦 Products</a>
@@ -98,9 +95,10 @@
 
         <div class="nav-right">
             <a href="admin-dashboard.html" class="nav-admin-link">🛠️ Admin</a>
-            <a href="cart.html" class="nav-cart-link">🛒 Cart <span class="cart-count">0</span></a>
+            <a href="cart.html" class="nav-cart-link">
+                🛒 Cart <span class="cart-count">0</span>
+            </a>
         </div>
-
     </nav>
 
     <section class="hero-banner-section">
@@ -134,7 +132,6 @@
     </section>
 
     <section class="category-section" id="store-network">
-
         <div class="section-title-row">
             <h2>Shop By Category</h2>
 
@@ -145,38 +142,89 @@
 
         <div class="category-grid">
 
-            <!-- CHOCOLATES -->
+            <a href="wholesale.html?category=Dips%20%26%20Sauces" class="category-card" data-category="Dips & Sauces">
+                <img src="assets/images/category/category-dips-sauces.png" alt="Dips and Sauces">
+            </a>
+
             <a href="wholesale.html?category=Chocolates" class="category-card" data-category="Chocolates">
                 <img src="assets/images/category/category-chocolates.png" alt="Chocolates and Confectionery">
             </a>
 
-            <!-- BISCUITS -->
+            <a href="wholesale.html?category=Cakes%20%26%20Pastries" class="category-image-card">
+                <img src="assets/images/category/category-cakes-and-pastries.png" alt="Cakes and Pastries">
+                <span>Cakes & Pastries</span>
+            </a>
+
             <a href="wholesale.html?category=Biscuits%20%26%20Wafers" class="category-card"
                 data-category="Biscuits & Wafers">
                 <img src="assets/images/category/category-biscuits-wafers.png" alt="Biscuits and Wafers">
             </a>
 
-            <!-- CANDIES -->
             <a href="wholesale.html?category=Candies%20%26%20Lollies" class="category-card"
                 data-category="Candies & Lollies">
                 <img src="assets/images/category/category-candies-lollies.png" alt="Candies and Lollies">
             </a>
 
-            <!-- DIPS -->
-            <a href="wholesale.html?category=Dips%20%26%20Sauces" class="category-card" data-category="Dips & Sauces">
-                <img src="assets/images/category/category-dips-sauces.png" alt="Dips and Sauces">
-            </a>
 
-            <!-- SNACKS -->
             <a href="wholesale.html?category=Snacks%20%26%20Crisps" class="category-card"
                 data-category="Snacks & Crisps">
                 <img src="assets/images/category/category-snacks-crisps.png" alt="Snacks and Crisps">
             </a>
 
-            <!-- BEVERAGES -->
             <a href="wholesale.html?category=Beverages%20%26%20Cocoa" class="category-card"
                 data-category="Beverages & Cocoa">
                 <img src="assets/images/category/category-beverages-cocoa.png" alt="Beverages and Cocoa">
+            </a>
+        </div>
+    </section>
+
+    <section class="more-category-section">
+        <div class="section-title-row">
+            <div>
+                <h2>Explore More Categories</h2>
+                <p>Browse more wholesale product groups for stores and resellers.</p>
+            </div>
+        </div>
+
+        <div class="more-category-grid">
+
+            </a>
+
+            <a href="wholesale.html?category=Household%20Essentials" class="category-chip"
+                data-category="Household Essentials">
+
+                🏠
+                <span>Household Essentials</span>
+
+            </a>
+
+            <a href="wholesale.html?category=Laundry%20%26%20Bath" class="category-chip" data-category="Laundry & Bath">
+
+                🧴
+                <span>Laundry & Bath</span>
+
+            </a>
+
+            <a href="wholesale.html?category=Baby%20%26%20Adult%20Diapers" class="category-chip"
+                data-category="Baby & Adult Diapers">
+
+                🩵
+                <span>Baby & Adult Diapers</span>
+
+            </a>
+
+            <a href="wholesale.html?category=Baby%20Care" class="category-chip" data-category="Baby Care">
+
+                👶
+                <span>Baby Care</span>
+
+            </a>
+
+            <a href="wholesale.html?category=Others" class="category-chip" data-category="Others">
+
+                📦
+                <span>Others</span>
+
             </a>
 
         </div>
@@ -197,18 +245,9 @@
         </div>
 
         <div class="special-shop-card promo-bundles">
-
             <h3>💥 Promo Bundles</h3>
-
-            <p>
-                Special bundle offers for wholesale buyers,
-                partner stores, and resellers.
-            </p>
-
-            <a href="promos.html">
-                See Promos →
-            </a>
-
+            <p>Special bundle offers for wholesale buyers, partner stores, and resellers.</p>
+            <a href="promos.html">See Promos →</a>
         </div>
 
         <div class="special-shop-card wholesale-packs">
@@ -216,15 +255,53 @@
             <p>Bulk order options for resellers, stores, and businesses.</p>
             <a href="quotation-request.html">Wholesale Inquiry →</a>
         </div>
+    </section>
 
-        <p>📍 Store Location: To Be Updated</p>
+    <section class="products-section" id="products">
+
+        <div class="section-title-row">
+            <div>
+                <h2>Featured Products</h2>
+                <p>
+                    Browse wholesale and store network products uploaded by M&N.
+                </p>
+            </div>
+
+            <a href="#products" class="view-all-link" data-category="all">
+                View All Products →
+            </a>
+        </div>
+
+        <div class="store-tools">
+
+            <input type="text" id="storeSearch" placeholder="Search products...">
+
+            <select id="categoryFilter">
+                <option value="all">
+                    All Categories
+                </option>
+            </select>
+
+        </div>
+
+        <div class="product-grid" id="productGrid">
+        </div>
+
+        <button type="button" id="loadMoreProducts">
+
+            Load More Products
+
+        </button>
 
     </section>
 
     <section class="wholesale-strip" id="wholesale">
         <div>
             <h2>Wholesale Solutions For Your Business</h2>
-            <p>Bulk orders, competitive prices, and reliable supply for store partners, and institutions.</p>
+            <p>
+                Bulk orders, competitive prices, and reliable supply for store partners,
+                resellers, and institutions.
+            </p>
         </div>
 
         <div class="wholesale-features">
@@ -235,8 +312,8 @@
         </div>
 
         <p class="wholesale-helper-text">
-            For bulk orders, reseller pricing, delivery schedules, or product bundles, send a quotation request and our
-            team will review your needs.
+            For bulk orders, reseller pricing, delivery schedules, or product bundles,
+            send a quotation request and our team will review your needs.
         </p>
 
         <a href="quotation-request.html">
@@ -244,38 +321,41 @@
         </a>
     </section>
 
-    <section class="products-section" id="products">
-        <div class="section-title-row">
-            <div>
-                <h2>Featured Products</h2>
-                <p>Browse wholesale and store network products uploaded by M&N.</p>
+    <section class="store-map-section">
+        <div class="store-map-info">
+            <span class="map-label">
+                📍 Store Location
+            </span>
+
+            <h2>
+                Visit M&N Consumer Goods
+            </h2>
+
+            <p>
+                Find our store location for wholesale inquiries,
+                pickup coordination, deliveries,
+                and partner store orders.
+            </p>
+
+            <div class="map-contact-list">
+                <span>📱 +639052273431</span>
+                <span>✉️ kokiks@mail.com</span>
+                <span>🚚 Delivery coordination available</span>
             </div>
 
-            <a href="#products" class="view-all-link" data-category="all">View All Products →</a>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/@11.2331325,124.9881434,21z" target="_blank">
+                    Open in Google Maps →
+                </a>
+            </div>
         </div>
 
-        <div class="store-tools">
-            <input type="text" id="storeSearch" placeholder="Search products...">
-
-            <select id="categoryFilter">
-                <option value="all">All Categories</option>
-                <option value="Chocolates">Chocolates</option>
-                <option value="Biscuits">Biscuits & Wafers</option>
-                <option value="Candies">Candies & Lollies</option>
-                <option value="Dips">Dips & Sauces</option>
-                <option value="Snacks">Snacks & Crisps</option>
-                <option value="Beverages">Beverages & Cocoa</option>
-            </select>
+        <div class="store-map-frame">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d244.58650368469293!2d124.98814340000001!3d11.233132499999996!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sph!4v1779287544456!5m2!1sen!2sph"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
-
-        <div class="product-grid" id="productGrid">
-            <!-- PRODUCTS LOAD HERE -->
-        </div>
-
-        <button type="button" id="loadMoreProducts">
-            Load More Products
-        </button>
-
     </section>
 
     <footer class="store-footer" id="contact">
@@ -326,9 +406,8 @@
 
     <script src="assets/js/api-config.js"></script>
     <script src="assets/js/cart.js"></script>
-    <script src="assets/js/store.js?v=13"></script>
+    <script src="assets/js/store.js?v=14"></script>
     <script src="assets/js/universal-search.js"></script>
-
 
     <script>
         if ("serviceWorker" in navigator) {

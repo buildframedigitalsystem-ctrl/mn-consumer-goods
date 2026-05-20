@@ -313,22 +313,34 @@ function createProductCard(product, mode) {
         wholesalePrice * piecesPerBox;
 
     const stockStatus =
-        String(
-            product.StockStatus ||
-            product.stockStatus ||
-            ""
-        )
+        String(product.StockStatus || product.stockStatus || "")
             .toLowerCase()
             .trim();
 
-    const isOutOfStock =
-        stockStatus === "out of stock";
+    const stockQtyRaw =
+        product.StockQty || product.stockQty || "";
+
+    const hasStockQty =
+        stockQtyRaw !== "" &&
+        stockQtyRaw !== null &&
+        stockQtyRaw !== undefined;
 
     const stockQty =
-        Number(product.StockQty || product.stockQty || 0);
+        hasStockQty ? Number(stockQtyRaw) : null;
 
     const reorderLevel =
         Number(product.ReorderLevel || product.reorderLevel || 10);
+
+    let isOutOfStock =
+        stockStatus === "out of stock";
+
+    let isLowStock =
+        stockStatus === "low stock";
+
+    if (hasStockQty) {
+        isOutOfStock = stockQty <= 0;
+        isLowStock = stockQty > 0 && stockQty <= reorderLevel;
+    }
 
     let stockBadge = `
     <span class="stock-badge in-stock">
@@ -336,22 +348,18 @@ function createProductCard(product, mode) {
     </span>
 `;
 
-    if (stockQty <= 0) {
-
+    if (isOutOfStock) {
         stockBadge = `
         <span class="stock-badge out-stock">
             🔴 Out Of Stock
         </span>
     `;
-
-    } else if (stockQty <= reorderLevel) {
-
+    } else if (isLowStock) {
         stockBadge = `
         <span class="stock-badge low-stock">
             🔵 Low Stock
         </span>
     `;
-
     }
 
     const priceHTML = getPriceHTML({
@@ -554,10 +562,15 @@ function populateCategoryFilter(products) {
 ================================ */
 
 function initializeCategoryCards() {
-    const cards = document.querySelectorAll(".category-card");
+
+    const cards = document.querySelectorAll(
+        ".category-card, .category-chip"
+    );
 
     cards.forEach(card => {
+
         card.addEventListener("click", function (event) {
+
             event.preventDefault();
 
             const category =
@@ -571,8 +584,11 @@ function initializeCategoryCards() {
 
             window.location.href =
                 `wholesale.html?category=${encodeURIComponent(category)}`;
+
         });
+
     });
+
 }
 
 /* ===============================
@@ -778,7 +794,7 @@ function addProductToCartSafe_(productIndex) {
 ================================ */
 
 function showCartSuccess_() {
-    window.location.href = "store-cart.html";
+    window.location.href = "cart.html";
 }
 
 /* ===============================
