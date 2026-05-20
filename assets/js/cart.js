@@ -1,9 +1,14 @@
 /* =========================================
-   M&N CART SYSTEM
-   BuildFrame Store OS
+   M&N STORE PARTNER CART SYSTEM
+   BuildFrame Store Network OS
 ========================================= */
 
-const CART_KEY = "mn_store_cart";
+const CART_KEY = "mn_store_partner_cart";
+
+const STORE_ACCOUNT = {
+    storeId: localStorage.getItem("mn_store_id") || "STORE001",
+    storeName: localStorage.getItem("mn_store_name") || "M&N Partner Store"
+};
 
 document.addEventListener("DOMContentLoaded", () => {
     renderCart();
@@ -35,12 +40,11 @@ function renderCart() {
     if (!cart.length) {
         container.innerHTML = `
             <div class="empty-cart">
-                <h3>Your cart is empty.</h3>
-                <p>Add products from the retail or wholesale store.</p>
+                <h3>Your wholesale cart is empty.</h3>
+                <p>Add products from the wholesale products page.</p>
 
                 <div class="empty-cart-actions">
-                    <a href="retail.html">Browse Retail</a>
-                    <a href="wholesale.html">Browse Wholesale</a>
+                    <a href="wholesale.html">Browse Wholesale Products</a>
                     <a href="promos.html">View Promos</a>
                 </div>
             </div>
@@ -74,7 +78,7 @@ function renderCart() {
                 </div>
 
                 <div class="cart-item-info">
-                    <span>${escapeHTML(item.mode || "Product")}</span>
+                    <span>${escapeHTML(item.mode || "Wholesale Product")}</span>
                     <h3>${escapeHTML(item.name || "Unnamed Product")}</h3>
                     <p>${escapeHTML(item.category || "")}</p>
                     <strong>₱${formatMoney(price)}</strong>
@@ -113,8 +117,10 @@ function changeQuantity(index, amount) {
 
     if (!cart[index]) return;
 
-    cart[index].quantity =
-        Math.max(1, Number(cart[index].quantity || 1) + amount);
+    cart[index].quantity = Math.max(
+        1,
+        Number(cart[index].quantity || 1) + amount
+    );
 
     saveCart(cart);
     renderCart();
@@ -125,8 +131,7 @@ function setQuantity(index, value) {
 
     if (!cart[index]) return;
 
-    cart[index].quantity =
-        Math.max(1, Number(value || 1));
+    cart[index].quantity = Math.max(1, Number(value || 1));
 
     saveCart(cart);
     renderCart();
@@ -153,15 +158,15 @@ function bindCheckoutForm() {
 
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
-        await submitCartOrder();
+        await submitStoreCartOrder();
     });
 }
 
-async function submitCartOrder() {
+async function submitStoreCartOrder() {
     const cart = getCart();
 
     if (!cart.length) {
-        alert("Your cart is empty.");
+        alert("Your wholesale cart is empty.");
         return;
     }
 
@@ -171,7 +176,7 @@ async function submitCartOrder() {
     const customerNotes = document.getElementById("customerNotes")?.value.trim();
 
     if (!customerName || !customerMobile || !customerAddress) {
-        alert("Please complete customer name, mobile, and address.");
+        alert("Please complete contact name, mobile number, and delivery address.");
         return;
     }
 
@@ -180,16 +185,22 @@ async function submitCartOrder() {
     }, 0);
 
     const orderData = {
-        action: "createCartOrder",
+        action: "submitStoreOrder",
+
+        storeId: STORE_ACCOUNT.storeId,
+        storeName: STORE_ACCOUNT.storeName,
+
         customerName,
-        customerMobile,
-        customerAddress,
-        customerNotes,
-        totalAmount: subtotal,
-        orderSource: "Online Store",
-        orderStatus: "Pending",
+        contactNumber: customerMobile,
+        deliveryAddress: customerAddress,
+        orderNotes: customerNotes,
+
+        orderType: "Wholesale Store Order",
         paymentStatus: "Unpaid",
         deliveryStatus: "Pending",
+        orderStatus: "Pending",
+
+        totalAmount: subtotal,
         items: cart
     };
 
@@ -202,7 +213,7 @@ async function submitCartOrder() {
         const result = await response.json();
 
         if (result.success) {
-            alert("Order submitted successfully!");
+            alert("Wholesale store order submitted successfully.");
 
             sendWhatsAppCopy(cart, {
                 customerName,
@@ -216,7 +227,7 @@ async function submitCartOrder() {
 
             window.location.href = "index.html";
         } else {
-            alert(result.message || "Order failed. Please try again.");
+            alert(result.message || "Store order failed. Please try again.");
         }
 
     } catch (error) {
@@ -226,11 +237,14 @@ async function submitCartOrder() {
 }
 
 function sendWhatsAppCopy(cart, customer) {
-    let message = `Hello M&N Consumer Goods! New order inquiry:%0A%0A`;
+    let message = `Hello M&N Consumer Goods! New wholesale store order:%0A%0A`;
 
-    message += `Customer: ${customer.customerName}%0A`;
+    message += `Store ID: ${STORE_ACCOUNT.storeId}%0A`;
+    message += `Store Name: ${STORE_ACCOUNT.storeName}%0A%0A`;
+
+    message += `Contact Person: ${customer.customerName}%0A`;
     message += `Mobile: ${customer.customerMobile}%0A`;
-    message += `Address: ${customer.customerAddress}%0A%0A`;
+    message += `Delivery Address: ${customer.customerAddress}%0A%0A`;
 
     cart.forEach((item, index) => {
         const qty = Number(item.quantity || 1);
@@ -238,7 +252,7 @@ function sendWhatsAppCopy(cart, customer) {
         const subtotal = qty * price;
 
         message += `${index + 1}. ${item.name}%0A`;
-        message += `Type: ${item.mode}%0A`;
+        message += `Type: ${item.mode || "Wholesale"}%0A`;
         message += `Qty: ${qty}%0A`;
         message += `Price: ₱${formatMoney(price)}%0A`;
         message += `Subtotal: ₱${formatMoney(subtotal)}%0A%0A`;

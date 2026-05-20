@@ -2082,3 +2082,101 @@ body:has(.wholesale-header) #productGrid {
 #loadMoreProducts {
     margin: 0 auto;
 }
+
+.product-price strong {
+    font-size: 19px !important;
+    line-height: 1.2 !important;
+}
+
+.product-price small {
+    display: block;
+    font-size: 13px !important;
+    color: #334155 !important;
+    margin-top: 6px;
+}
+
+/* =========================================
+   FINAL PRODUCT CARD CLEAN OVERRIDE
+========================================= */
+
+.product-card {
+    background: #ffffff !important;
+    color: #071426 !important;
+
+    border: 1px solid #dbe2ea !important;
+
+    border-radius: 18px !important;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 18px rgba(15, 23, 42, 0.06) !important;
+
+    transition: 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 24px rgba(15, 23, 42, 0.10) !important;
+}
+
+.product-info {
+    background: #ffffff !important;
+    color: #071426 !important;
+}
+
+.product-category {
+    color: #006b3f !important;
+}
+
+.product-info h3,
+.product-card h3 {
+    color: #071426 !important;
+}
+
+.product-info p,
+.product-card p {
+    color: #475569 !important;
+}
+
+.product-price strong {
+    display: block;
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    color: #dc2626 !important;
+}
+
+.product-price small {
+    display: block;
+    font-size: 13px !important;
+    color: #334155 !important;
+    margin-top: 6px;
+}
+
+.stock-badge {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.in-stock {
+    color: #16a34a !important;
+}
+
+.low-stock {
+    color: #2563eb !important;
+}
+
+.out-stock {
+    color: #dc2626 !important;
+}
+
+.out-stock-btn {
+    background: #9ca3af !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    opacity: 0.85;
+}

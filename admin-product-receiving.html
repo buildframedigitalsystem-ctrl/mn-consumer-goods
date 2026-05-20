@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Receiving | M&N Admin OS</title>
+
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/admin-forms.css">
+    <link rel="stylesheet" href="assets/css/responsive-fixes.css">
+
+    <meta name="theme-color" content="#005f2f">
+</head>
+
+<body>
+
+    <main class="admin-form-page">
+
+        <section class="admin-form-header">
+
+            <div>
+                <h1>📥 Product Receiving</h1>
+                <p>
+                    Record arriving supplier stocks and update the inventory system.
+                </p>
+            </div>
+
+            <div class="admin-form-actions">
+                <a href="admin-dashboard.html" class="secondary-btn">
+                    ← Back to Dashboard
+                </a>
+
+                <a href="admin-products.html" class="secondary-btn">
+                    Products
+                </a>
+
+                <a href="admin-inventory.html" class="secondary-btn">
+                    Inventory
+                </a>
+            </div>
+
+        </section>
+
+        <section class="admin-form-card">
+
+            <form id="productReceivingForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="purchaseOrderID">Purchase Order ID</label>
+                        <input type="text" id="purchaseOrderID" placeholder="PO-0001 or manual reference">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supplierID">Supplier ID</label>
+                        <input type="text" id="supplierID" placeholder="SUP-0001">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supplierName">Supplier Name</label>
+                        <input type="text" id="supplierName" placeholder="Supplier name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productID">Product ID</label>
+                        <input type="text" id="productID" placeholder="PROD-0001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" placeholder="Product name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantityOrdered">Quantity Ordered</label>
+                        <input type="number" id="quantityOrdered" min="0" step="1" placeholder="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantityReceived">Quantity Received</label>
+                        <input type="number" id="quantityReceived" min="1" step="1" placeholder="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="unitCost">Unit Cost</label>
+                        <input type="number" id="unitCost" min="0" step="0.01" placeholder="0.00" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalCost">Total Cost</label>
+                        <input type="number" id="totalCost" min="0" step="0.01" placeholder="0.00" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receivedDate">Received Date</label>
+                        <input type="date" id="receivedDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receivedBy">Received By</label>
+                        <input type="text" id="receivedBy" placeholder="Admin / warehouse staff" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receivingStatus">Receiving Status</label>
+                        <select id="receivingStatus" required>
+                            <option value="Received">Received</option>
+                            <option value="Partial">Partial</option>
+                            <option value="Pending Review">Pending Review</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes"
+                        placeholder="Damage notes, batch details, delivery remarks, or supplier comments"></textarea>
+                </div>
+
+                <div class="form-actions">
+
+                    <button type="submit" class="primary-btn">
+                        Save Received Stocks
+                    </button>
+
+                    <button type="reset" class="secondary-btn">
+                        Clear Form
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <section class="admin-form-card">
+
+            <h2>What happens after saving?</h2>
+
+            <div class="info-grid">
+
+                <div class="info-card">
+                    <strong>1. PRODUCT_RECEIVING</strong>
+                    <p>The receiving record is saved.</p>
+                </div>
+
+                <div class="info-card">
+                    <strong>2. INVENTORY</strong>
+                    <p>Current stock increases automatically.</p>
+                </div>
+
+                <div class="info-card">
+                    <strong>3. INVENTORY_MOVEMENTS</strong>
+                    <p>A STOCK IN movement is logged.</p>
+                </div>
+
+                <div class="info-card">
+                    <strong>4. PRODUCTS</strong>
+                    <p>StockQty and StockStatus update for Store App display.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/product-receiving.js"></script>
+
+</body>
+
+</html>

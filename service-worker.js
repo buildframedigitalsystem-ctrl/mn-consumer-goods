@@ -9,7 +9,6 @@ const urlsToCache = [
     ========================================= */
 
     "./index.html",
-    "./retail.html",
     "./wholesale.html",
     "./promos.html",
 

@@ -1,10 +1,12 @@
 /* ===============================
-   M&N PUBLIC ONLINE STORE
-   BuildFrame Store Rendering Engine
+   M&N STORE PARTNER PRODUCT ENGINE
+   BuildFrame Store Network OS
 ================================ */
 
 let allProducts = [];
 let visibleCount = 20;
+
+const STORE_CART_KEY_PUBLIC = "mn_store_partner_cart";
 
 /* ===============================
    PAGE MODE DETECTION
@@ -14,7 +16,6 @@ function getStoreMode() {
     const page = window.location.pathname.toLowerCase();
 
     if (page.includes("wholesale")) return "wholesale";
-    if (page.includes("retail")) return "retail";
     if (page.includes("promos")) return "promo";
 
     return "home";
@@ -36,16 +37,28 @@ function getCategoryFromURL() {
 document.addEventListener("DOMContentLoaded", async () => {
     initializeCategoryCards();
     bindStoreEvents();
+
     await loadProductsFromAPI();
 
     const categoryFromURL = getCategoryFromURL();
     const categoryFilter = document.getElementById("categoryFilter");
 
     if (categoryFromURL && categoryFilter) {
-        categoryFilter.value = categoryFromURL;
+        const decodedCategory = decodeURIComponent(categoryFromURL);
+
+        const optionExists = [...categoryFilter.options].some(option => {
+            return option.value === decodedCategory;
+        });
+
+        if (optionExists) {
+            categoryFilter.value = decodedCategory;
+        }
+
         visibleCount = 20;
         filterProducts();
     }
+
+    bindHeaderSearch();
 });
 
 /* ===============================
@@ -172,9 +185,17 @@ function filterProducts() {
             productName.includes(searchValue) ||
             description.includes(searchValue);
 
+        const normalizedCategory =
+            category.toLowerCase().trim();
+
+        const normalizedCategoryValue =
+            categoryValue.toLowerCase().trim();
+
         const matchesCategory =
-            categoryValue === "all" ||
-            category === categoryValue;
+            normalizedCategoryValue === "all" ||
+            normalizedCategory === normalizedCategoryValue ||
+            normalizedCategory.includes(normalizedCategoryValue) ||
+            normalizedCategoryValue.includes(normalizedCategory);
 
         const matchesMode =
             productMatchesMode(product, mode);
@@ -192,16 +213,16 @@ function filterProducts() {
 function productMatchesMode(product, mode) {
     if (mode === "home") {
         return (
-            isYes(product.ShowOnHomepage) ||
             isYes(product.Featured) ||
-            isYes(product.ShowInWholesale)
+            isYes(product.ShowInWholesale) ||
+            Number(product.WholesalePrice || product.wholesalePrice || 0) > 0
         );
     }
 
     if (mode === "wholesale") {
         return (
             isYes(product.ShowInWholesale) ||
-            Number(product.WholesalePrice || 0) > 0
+            Number(product.WholesalePrice || product.wholesalePrice || 0) > 0
         );
     }
 
@@ -209,7 +230,7 @@ function productMatchesMode(product, mode) {
         return (
             isYes(product.IsPromo) ||
             isYes(product.OnSale) ||
-            Number(product.PromoPrice || 0) > 0 ||
+            Number(product.PromoPrice || product.promoPrice || 0) > 0 ||
             String(product.DiscountLabel || "").trim() !== "" ||
             String(product.BundleName || "").trim() !== ""
         );
@@ -284,10 +305,61 @@ function createProductCard(product, mode) {
     const promoPrice =
         Number(product.PromoPrice || product.promoPrice || 0);
 
+    const piecesPerBox =
+        Number(product.PiecesPerBox || product.piecesPerBox || 0);
+
+    const boxPrice =
+        Number(product.BoxPrice || product.boxPrice || 0) ||
+        wholesalePrice * piecesPerBox;
+
+    const stockStatus =
+        String(
+            product.StockStatus ||
+            product.stockStatus ||
+            ""
+        )
+            .toLowerCase()
+            .trim();
+
+    const isOutOfStock =
+        stockStatus === "out of stock";
+
+    const stockQty =
+        Number(product.StockQty || product.stockQty || 0);
+
+    const reorderLevel =
+        Number(product.ReorderLevel || product.reorderLevel || 10);
+
+    let stockBadge = `
+    <span class="stock-badge in-stock">
+        🟢 In Stock
+    </span>
+`;
+
+    if (stockQty <= 0) {
+
+        stockBadge = `
+        <span class="stock-badge out-stock">
+            🔴 Out Of Stock
+        </span>
+    `;
+
+    } else if (stockQty <= reorderLevel) {
+
+        stockBadge = `
+        <span class="stock-badge low-stock">
+            🔵 Low Stock
+        </span>
+    `;
+
+    }
+
     const priceHTML = getPriceHTML({
         mode,
         wholesalePrice,
         promoPrice,
+        piecesPerBox,
+        boxPrice,
         discountLabel: product.DiscountLabel || "",
         bundleName: product.BundleName || ""
     });
@@ -313,6 +385,7 @@ function createProductCard(product, mode) {
                 <p>${escapeHTML(description)}</p>
 
                 ${priceHTML}
+                ${stockBadge}
 
                 <div class="product-actions">
 
@@ -324,13 +397,26 @@ function createProductCard(product, mode) {
                         View Details
                     </button>
 
-                    <button
-                        type="button"
-                        class="cart-btn"
-                        onclick="addProductToCartSafe_(${productIndex})"
-                    >
-                        🛒 Add To Cart
-                    </button>
+                    ${isOutOfStock
+            ? `
+            <button
+                type="button"
+                class="cart-btn out-stock-btn"
+                disabled
+            >
+                OUT OF STOCK
+            </button>
+        `
+            : `
+            <button
+                type="button"
+                class="cart-btn"
+                onclick="addProductToCartSafe_(${productIndex})"
+            >
+                🛒 Add To Cart
+            </button>
+        `
+        }
 
                 </div>
 
@@ -344,11 +430,13 @@ function getProductIndex_(product) {
     return allProducts.findIndex(item => {
         const itemKey =
             item.ProductID ||
+            item.productId ||
             item.ProductName ||
             item.Name;
 
         const productKey =
             product.ProductID ||
+            product.productId ||
             product.ProductName ||
             product.Name;
 
@@ -361,9 +449,16 @@ function getProductIndex_(product) {
 ================================ */
 
 function getPriceHTML(data) {
+
+    const hasBoxPrice =
+        data.piecesPerBox > 0 &&
+        data.boxPrice > 0;
+
     if (data.mode === "promo" && data.promoPrice > 0) {
+
         return `
             <div class="product-price">
+
                 ${data.discountLabel
                 ? `<span class="promo-label">${escapeHTML(data.discountLabel)}</span>`
                 : ""
@@ -374,15 +469,47 @@ function getPriceHTML(data) {
                 : ""
             }
 
-                <strong>Promo: ₱${formatMoney(data.promoPrice)}</strong>
-                <small>Wholesale: ₱${formatMoney(data.wholesalePrice)}</small>
+                <strong>
+                    Promo: ₱${formatMoney(data.promoPrice)}
+                </strong>
+
+                <small>
+                    Wholesale per piece:
+                    ₱${formatMoney(data.wholesalePrice)}
+                </small>
+
+                ${hasBoxPrice
+                ? `
+                            <small>
+                                ${data.piecesPerBox} pcs / box:
+                                ₱${formatMoney(data.boxPrice)}
+                            </small>
+                        `
+                : ""
+            }
+
             </div>
         `;
     }
 
     return `
         <div class="product-price">
-            <strong>Wholesale: ₱${formatMoney(data.wholesalePrice)}</strong>
+
+            <strong>
+                Wholesale per piece:
+                ₱${formatMoney(data.wholesalePrice)}
+            </strong>
+
+            ${hasBoxPrice
+            ? `
+                        <small>
+                            ${data.piecesPerBox} pcs / box:
+                            ₱${formatMoney(data.boxPrice)}
+                        </small>
+                    `
+            : ""
+        }
+
         </div>
     `;
 }
@@ -433,7 +560,9 @@ function initializeCategoryCards() {
         card.addEventListener("click", function (event) {
             event.preventDefault();
 
-            const category = this.dataset.category;
+            const category =
+                this.dataset.category ||
+                this.getAttribute("data-category");
 
             if (!category || category === "all") {
                 window.location.href = "wholesale.html";
@@ -490,26 +619,26 @@ function openProductModal(productIndex) {
         document.getElementById("productModal");
 
     if (!modal) {
-        alert(product.ProductName || "Product selected.");
+        alert(product.ProductName || product.productName || "Product selected.");
         return;
     }
 
     const image = getProductImage(product);
 
     setModalImage_("modalProductImage", image);
-    setModalText_("modalProductName", product.ProductName || "Unnamed Product");
-    setModalText_("modalProductCategory", product.Category || "General");
-    setModalText_("modalProductDescription", product.Description || "No description available.");
+    setModalText_("modalProductName", product.ProductName || product.productName || "Unnamed Product");
+    setModalText_("modalProductCategory", product.Category || product.category || "General");
+    setModalText_("modalProductDescription", product.Description || product.description || "No description available.");
 
     const modalPriceBox =
         document.getElementById("modalPriceBox");
 
     if (modalPriceBox) {
         modalPriceBox.innerHTML = `
-            <strong>Wholesale: ₱${formatMoney(product.WholesalePrice || 0)}</strong>
+            <strong>Wholesale: ₱${formatMoney(product.WholesalePrice || product.wholesalePrice || 0)}</strong>
 
-            ${Number(product.PromoPrice || 0) > 0
-                ? `<small>Promo: ₱${formatMoney(product.PromoPrice)}</small>`
+            ${Number(product.PromoPrice || product.promoPrice || 0) > 0
+                ? `<small>Promo: ₱${formatMoney(product.PromoPrice || product.promoPrice)}</small>`
                 : ""
             }
         `;
@@ -574,44 +703,50 @@ window.addEventListener("click", function (event) {
 });
 
 /* ===============================
-   REAL ADD TO CART
+   ADD TO CART
 ================================ */
 
-const STORE_CART_KEY_PUBLIC = "mn_store_cart";
-
 function addProductToCartSafe_(productIndex) {
-    const product =
-        allProducts[productIndex];
+    const product = allProducts[productIndex];
 
     if (!product) return;
 
     const cart =
-        JSON.parse(
-            localStorage.getItem(STORE_CART_KEY_PUBLIC)
-        ) || [];
+        JSON.parse(localStorage.getItem(STORE_CART_KEY_PUBLIC)) || [];
+
+    const productId =
+        product.ProductID ||
+        product.productId ||
+        product.ProductName ||
+        product.productName ||
+        product.Name;
 
     const existingIndex =
         cart.findIndex(item =>
-            String(item.productId) ===
-            String(product.ProductID)
+            String(item.productId) === String(productId)
         );
 
     const price =
         Number(
             product.PromoPrice ||
+            product.promoPrice ||
             product.WholesalePrice ||
+            product.wholesalePrice ||
             0
         );
 
     const cartItem = {
-        productId:
-            product.ProductID,
-
+        productId,
         name:
-            product.ProductName,
+            product.ProductName ||
+            product.productName ||
+            product.Name ||
+            "Unnamed Product",
 
         category:
-            product.Category || "",
+            product.Category ||
+            product.category ||
+            "",
 
         image:
             getProductImage(product),
@@ -635,22 +770,22 @@ function addProductToCartSafe_(productIndex) {
         JSON.stringify(cart)
     );
 
-    showCartSuccess_(product.ProductName);
+    showCartSuccess_();
 }
 
 /* ===============================
    CART SUCCESS
 ================================ */
 
-function showCartSuccess_(productName) {
-    window.location.href = "cart.html";
+function showCartSuccess_() {
+    window.location.href = "store-cart.html";
 }
 
 /* ===============================
    HEADER SEARCH
 ================================ */
 
-document.addEventListener("DOMContentLoaded", () => {
+function bindHeaderSearch() {
     const headerSearchInput =
         document.getElementById("headerSearchInput");
 
@@ -668,7 +803,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-});
+}
 
 function applyHeaderSearch() {
     const headerSearchInput =

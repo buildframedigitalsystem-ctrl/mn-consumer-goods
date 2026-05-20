@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&N Consumer Goods | Online Store</title>
 
-    <link rel="stylesheet" href="assets/css/store.css?v=20">
+    <link rel="stylesheet" href="assets/css/store.css?v=22">
     <link rel="stylesheet" href="assets/css/responsive-fixes.css">
 
     <link rel="manifest" href="manifest-admin.json">
@@ -39,7 +39,7 @@
 
             <div>
                 <h1>M&N</h1>
-                <p>Retail • Wholesale • Distribution</p>
+                <p>Wholesale • Store Network • Distribution</p>
                 <span>Your Trusted Partner in Consumer Goods</span>
             </div>
         </div>
@@ -58,8 +58,8 @@
             <a href="customer-login.html" class="header-account">
                 👤
                 <div>
-                    <strong>Customer</strong>
-                    <span>Login / Register</span>
+                    <strong>Store Partner</strong>
+                    <span>Store Login / Signup</span>
                 </div>
             </a>
 
@@ -76,7 +76,6 @@
         <div class="nav-left">
             <a href="index.html">🏠 Home</a>
             <a href="#products">📦 Products</a>
-            <a href="retail.html">🏪 Retail</a>
             <a href="wholesale.html">📋 Wholesale</a>
             <a href="promos.html">💥 Promos</a>
             <a href="reseller-application.html">🤝 Reseller</a>
@@ -134,41 +133,57 @@
         </div>
     </section>
 
-    <section class="category-section" id="retail">
+    <section class="category-section" id="store-network">
+
         <div class="section-title-row">
             <h2>Shop By Category</h2>
-            <a href="#products" class="view-all-link" data-category="all">View All Categories →</a>
+
+            <a href="wholesale.html?category=all" class="view-all-link">
+                View All Categories →
+            </a>
         </div>
 
         <div class="category-grid">
-            <a href="#products" class="category-card" data-category="Chocolates">
+
+            <!-- CHOCOLATES -->
+            <a href="wholesale.html?category=Chocolates" class="category-card" data-category="Chocolates">
                 <img src="assets/images/category/category-chocolates.png" alt="Chocolates and Confectionery">
             </a>
 
-            <a href="#products" class="category-card" data-category="Biscuits">
+            <!-- BISCUITS -->
+            <a href="wholesale.html?category=Biscuits%20%26%20Wafers" class="category-card"
+                data-category="Biscuits & Wafers">
                 <img src="assets/images/category/category-biscuits-wafers.png" alt="Biscuits and Wafers">
             </a>
 
-            <a href="#products" class="category-card" data-category="Candies">
+            <!-- CANDIES -->
+            <a href="wholesale.html?category=Candies%20%26%20Lollies" class="category-card"
+                data-category="Candies & Lollies">
                 <img src="assets/images/category/category-candies-lollies.png" alt="Candies and Lollies">
             </a>
 
-            <a href="#products" class="category-card" data-category="Dips">
+            <!-- DIPS -->
+            <a href="wholesale.html?category=Dips%20%26%20Sauces" class="category-card" data-category="Dips & Sauces">
                 <img src="assets/images/category/category-dips-sauces.png" alt="Dips and Sauces">
             </a>
 
-            <a href="#products" class="category-card" data-category="Snacks">
+            <!-- SNACKS -->
+            <a href="wholesale.html?category=Snacks%20%26%20Crisps" class="category-card"
+                data-category="Snacks & Crisps">
                 <img src="assets/images/category/category-snacks-crisps.png" alt="Snacks and Crisps">
             </a>
 
-            <a href="#products" class="category-card" data-category="Beverages">
+            <!-- BEVERAGES -->
+            <a href="wholesale.html?category=Beverages%20%26%20Cocoa" class="category-card"
+                data-category="Beverages & Cocoa">
                 <img src="assets/images/category/category-beverages-cocoa.png" alt="Beverages and Cocoa">
             </a>
+
         </div>
+
     </section>
 
     <section class="special-shop-section">
-
         <div class="special-shop-card best-sellers">
             <h3>🔥 Best Sellers</h3>
             <p>Top-moving products loved by customers and resellers.</p>
@@ -182,9 +197,18 @@
         </div>
 
         <div class="special-shop-card promo-bundles">
+
             <h3>💥 Promo Bundles</h3>
-            <p>Special bundle offers for retail buyers and small stores.</p>
-            <a href="promos.html">See Promos →</a>
+
+            <p>
+                Special bundle offers for wholesale buyers,
+                partner stores, and resellers.
+            </p>
+
+            <a href="promos.html">
+                See Promos →
+            </a>
+
         </div>
 
         <div class="special-shop-card wholesale-packs">
@@ -200,7 +224,7 @@
     <section class="wholesale-strip" id="wholesale">
         <div>
             <h2>Wholesale Solutions For Your Business</h2>
-            <p>Bulk orders, competitive prices, and reliable supply for retailers, resellers, and institutions.</p>
+            <p>Bulk orders, competitive prices, and reliable supply for store partners, and institutions.</p>
         </div>
 
         <div class="wholesale-features">
@@ -224,7 +248,7 @@
         <div class="section-title-row">
             <div>
                 <h2>Featured Products</h2>
-                <p>Browse retail and wholesale items uploaded by M&N.</p>
+                <p>Browse wholesale and store network products uploaded by M&N.</p>
             </div>
 
             <a href="#products" class="view-all-link" data-category="all">View All Products →</a>
@@ -258,7 +282,7 @@
         <div class="footer-content">
             <div class="client-footer-section">
                 <h3>M&N Consumer Goods</h3>
-                <p>Retail • Wholesale • Consumer Goods Distribution</p>
+                <p>Wholesale • Store Network • Consumer Goods Distribution</p>
 
                 <div class="footer-contact-list">
                     <a href="tel:+639052273431">📱 +639052273431</a>
@@ -302,7 +326,7 @@
 
     <script src="assets/js/api-config.js"></script>
     <script src="assets/js/cart.js"></script>
-    <script src="assets/js/store.js?v=12"></script>
+    <script src="assets/js/store.js?v=13"></script>
     <script src="assets/js/universal-search.js"></script>
 
 

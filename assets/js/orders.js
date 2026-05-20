@@ -377,14 +377,38 @@ function initializeOrderSubmit() {
 async function saveOrderLive() {
 
     const payload = {
-        action: "addOrder",
-        customerName: document.getElementById("customerName").value,
-        contactNumber: document.getElementById("contactNumber").value,
-        orderType: document.getElementById("orderType").value,
-        paymentStatus: document.getElementById("paymentStatus").value,
-        orderNotes: document.getElementById("orderNotes").value,
-        totalAmount: Number(document.getElementById("totalAmount").value || 0),
-        signatureImage: signatureCanvas ? signatureCanvas.toDataURL("image/png") : "",
+
+        action: "submitStoreOrder",
+
+        storeId: "STORE001",
+
+        storeName: "M&N Partner Store",
+
+        customerName:
+            document.getElementById("customerName").value,
+
+        contactNumber:
+            document.getElementById("contactNumber").value,
+
+        orderType:
+            document.getElementById("orderType").value,
+
+        paymentStatus:
+            document.getElementById("paymentStatus").value,
+
+        orderNotes:
+            document.getElementById("orderNotes").value,
+
+        totalAmount:
+            Number(
+                document.getElementById("totalAmount").value || 0
+            ),
+
+        signatureImage:
+            signatureCanvas
+                ? signatureCanvas.toDataURL("image/png")
+                : "",
+
         items: cartItems
     };
 
@@ -444,7 +468,7 @@ async function loadOrders() {
         const response = await fetch(API.BASE_URL, {
             method: "POST",
             body: JSON.stringify({
-                action: "getOrders"
+                action: "getStoreOrders"
             })
         });
 

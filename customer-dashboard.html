@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M&N Customer Dashboard</title>
+    <title>M&N Store Partner Dashboard</title>
 
     <link rel="stylesheet" href="assets/css/customer-dashboard.css">
     <link rel="stylesheet" href="assets/css/responsive-fixes.css">
-
 </head>
 
 <body>
@@ -17,17 +16,18 @@
 
         <div class="sidebar-logo">
             <h2>M&N</h2>
-            <p>Customer Portal</p>
+            <p>Store Partner Portal</p>
         </div>
 
         <nav class="sidebar-menu">
 
             <a href="#" class="active" data-page="dashboard">Dashboard</a>
-            <a href="#" data-page="myOrders">My Orders</a>
-            <a href="#" data-page="tracking">Order Tracking</a>
+            <a href="#" data-page="myOrders">My Store Orders</a>
+            <a href="#" data-page="tracking">Delivery Tracking</a>
             <a href="#" data-page="history">Order History</a>
             <a href="#" data-page="pricing">Wholesale Pricing</a>
-            <a href="#" data-page="settings">Account Settings</a>
+            <a href="#" data-page="balance">Payments & Balance</a>
+            <a href="#" data-page="settings">Store Account Settings</a>
             <a href="#" id="customerLogoutBtn">Logout</a>
 
         </nav>
@@ -35,15 +35,14 @@
     </aside>
 
     <main class="dashboard-main">
-        <!-- JS loads dashboard content here -->
+        <!-- JS loads store partner dashboard content here -->
     </main>
 
     <script src="assets/js/api-config.js"></script>
-
     <script src="assets/js/permission.js"></script>
 
     <script>
-        requireRole_(["CUSTOMER"], "customer-login.html");
+        requireRole_(["CUSTOMER", "STORE_PARTNER", "WHOLESALE_BUYER", "RESELLER"], "customer-login.html");
     </script>
 
     <script src="assets/js/customer-dashboard.js"></script>
