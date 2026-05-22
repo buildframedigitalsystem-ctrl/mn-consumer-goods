@@ -5,9 +5,15 @@
 
 const CART_KEY = "mn_store_partner_cart";
 
+const STORE_SESSION =
+    JSON.parse(localStorage.getItem("mnStoreSession") || "{}");
+
 const STORE_ACCOUNT = {
-    storeId: localStorage.getItem("mn_store_id") || "STORE001",
-    storeName: localStorage.getItem("mn_store_name") || "M&N Partner Store"
+    storeId:
+        STORE_SESSION.CustomerID || "STORE001",
+
+    storeName:
+        STORE_SESSION.StoreName || "M&N Partner Store"
 };
 
 document.addEventListener("DOMContentLoaded", () => {
