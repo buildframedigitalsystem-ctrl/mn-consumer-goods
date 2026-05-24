@@ -8,14 +8,16 @@ const loginForm = document.getElementById("customerLoginForm");
    APPS SCRIPT WEBAPP URL
 ================================= */
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzbUww2SKIl6uqQvPqLtO6L35A0Xw5Ny0N5hjq16JOguAiLUAovKMdUagJ9SgK1fOSJ/exec";
+const API_URL =
+    typeof API !== "undefined" && API.BASE_URL
+        ? API.BASE_URL
+        : "https://script.google.com/macros/s/AKfycbzbUww2SKIl6uqQvPqLtO6L35A0Xw5Ny0N5hjq16JOguAiLUAovKMdUagJ9SgK1fOSJ/exec";
 
 /* =================================
    LOGIN SUBMIT
 ================================= */
 
 loginForm.addEventListener("submit", async function (e) {
-
     e.preventDefault();
 
     const loginData = {
@@ -26,7 +28,6 @@ loginForm.addEventListener("submit", async function (e) {
     };
 
     try {
-
         const response = await fetch(API_URL, {
             method: "POST",
             body: JSON.stringify(loginData)
@@ -35,10 +36,10 @@ loginForm.addEventListener("submit", async function (e) {
         const result = await response.json();
 
         if (result.success) {
-
-            /* =========================
-               SAVE SESSION
-            ========================= */
+            localStorage.setItem(
+                "mnUser",
+                JSON.stringify(result.customer)
+            );
 
             localStorage.setItem(
                 "mnCustomerSession",
@@ -47,20 +48,14 @@ loginForm.addEventListener("submit", async function (e) {
 
             alert("Login successful!");
 
-            window.location.href = "customer-dashboard.html";
+            window.location.href = "index.html";
 
         } else {
-
             alert(result.message || "Login failed.");
-
         }
 
     } catch (error) {
-
         console.error(error);
-
         alert("Connection error.");
-
     }
-
 });

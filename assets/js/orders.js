@@ -14,9 +14,7 @@ let isDrawing = false;
 ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
     initializeOrders();
-
 });
 
 /* =========================================
@@ -24,15 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================================= */
 
 function initializeOrders() {
-
     initializeSignaturePad();
-
     initializeAddToCart();
-
     initializeOrderSubmit();
-
     loadProducts();
-
     loadOrders();
 }
 
@@ -41,60 +34,46 @@ function initializeOrders() {
 ========================================= */
 
 async function loadProducts() {
-
-    const productSelect =
-        document.getElementById("productSelect");
+    const productSelect = document.getElementById("productSelect");
 
     if (!productSelect) return;
 
     try {
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "getProducts"
+            })
+        });
+
+        const data = await response.json();
+
+        const products =
+            data.products ||
+            data.rows ||
+            [];
 
         productSelect.innerHTML = `
-            <option value="">
-                Select Product
-            </option>
+            <option value="">Select product</option>
         `;
 
-        const sampleProducts = [
+        products.forEach(product => {
+            const option = document.createElement("option");
 
-            {
-                ProductID: "P001",
-                ProductName: "Lucky Me Pancit Canton",
-                RetailPrice: 18
-            },
+            option.value = JSON.stringify(product);
 
-            {
-                ProductID: "P002",
-                ProductName: "Coca Cola 1.5L",
-                RetailPrice: 75
-            },
-
-            {
-                ProductID: "P003",
-                ProductName: "Piattos Cheese",
-                RetailPrice: 22
-            }
-
-        ];
-
-        sampleProducts.forEach(product => {
-
-            const option =
-                document.createElement("option");
-
-            option.value =
-                JSON.stringify(product);
+            const price = Number(
+                product.WholesalePrice || 0
+            );
 
             option.textContent =
-                `${product.ProductName} - ₱${product.RetailPrice}`;
+                `${product.ProductName} - ₱${price}`;
 
             productSelect.appendChild(option);
-
         });
 
     } catch (error) {
-
-        console.error(error);
+        console.error("LOAD PRODUCTS ERROR:", error);
     }
 }
 
@@ -103,53 +82,37 @@ async function loadProducts() {
 ========================================= */
 
 function initializeAddToCart() {
-
-    const addBtn =
-        document.getElementById("addToCartBtn");
+    const addBtn = document.getElementById("addToCartBtn");
 
     if (!addBtn) return;
 
     addBtn.addEventListener("click", () => {
-
-        const productRaw =
-            document.getElementById("productSelect").value;
-
-        const qty =
-            Number(
-                document.getElementById("productQuantity").value
-            );
+        const productRaw = document.getElementById("productSelect").value;
+        const qty = Number(document.getElementById("productQuantity").value);
 
         if (!productRaw) {
-
             alert("Please select product.");
             return;
         }
 
-        const product =
-            JSON.parse(productRaw);
+        if (!qty || qty <= 0) {
+            alert("Please enter quantity.");
+            return;
+        }
+
+        const product = JSON.parse(productRaw);
 
         const item = {
-
-            ProductID:
-                product.ProductID,
-
-            ProductName:
-                product.ProductName,
-
-            Qty:
-                qty,
-
-            Price:
-                Number(product.RetailPrice),
-
-            Total:
-                Number(product.RetailPrice) * qty
+            ProductID: product.ProductID,
+            ProductName: product.ProductName,
+            Qty: qty,
+            Price: Number(product.WholesalePrice || 0),
+            Total: Number(product.WholesalePrice || 0) * qty
         };
 
         cartItems.push(item);
 
         renderCartItems();
-
         computeTotalAmount();
     });
 }
@@ -159,14 +122,11 @@ function initializeAddToCart() {
 ========================================= */
 
 function renderCartItems() {
-
-    const tbody =
-        document.getElementById("cartTableBody");
+    const tbody = document.getElementById("cartTableBody");
 
     if (!tbody) return;
 
     if (cartItems.length === 0) {
-
         tbody.innerHTML = `
             <tr>
                 <td colspan="5">
@@ -181,22 +141,12 @@ function renderCartItems() {
     tbody.innerHTML = "";
 
     cartItems.forEach((item, index) => {
-
         tbody.innerHTML += `
             <tr>
-
                 <td>${item.ProductName}</td>
-
                 <td>${item.Qty}</td>
-
-                <td>
-                    ₱${item.Price.toLocaleString()}
-                </td>
-
-                <td>
-                    ₱${item.Total.toLocaleString()}
-                </td>
-
+                <td>₱${item.Price.toLocaleString()}</td>
+                <td>₱${item.Total.toLocaleString()}</td>
                 <td>
                     <button
                         type="button"
@@ -214,7 +164,6 @@ function renderCartItems() {
                         Remove
                     </button>
                 </td>
-
             </tr>
         `;
     });
@@ -225,38 +174,26 @@ function renderCartItems() {
 ========================================= */
 
 function removeCartItem(index) {
-
     cartItems.splice(index, 1);
 
     renderCartItems();
-
     computeTotalAmount();
 }
 
-window.removeCartItem =
-    removeCartItem;
-
-window.openInvoiceByIndex =
-    openInvoiceByIndex;
+window.removeCartItem = removeCartItem;
 
 /* =========================================
    TOTAL
 ========================================= */
 
 function computeTotalAmount() {
+    const total = cartItems.reduce((sum, item) => {
+        return sum + item.Total;
+    }, 0);
 
-    const total =
-        cartItems.reduce((sum, item) => {
-
-            return sum + item.Total;
-
-        }, 0);
-
-    const totalInput =
-        document.getElementById("totalAmount");
+    const totalInput = document.getElementById("totalAmount");
 
     if (totalInput) {
-
         totalInput.value = total;
     }
 }
@@ -266,82 +203,47 @@ function computeTotalAmount() {
 ========================================= */
 
 function initializeSignaturePad() {
-
-    signatureCanvas =
-        document.getElementById("signatureCanvas");
+    signatureCanvas = document.getElementById("signatureCanvas");
 
     if (!signatureCanvas) return;
 
-    signatureCtx =
-        signatureCanvas.getContext("2d");
+    signatureCtx = signatureCanvas.getContext("2d");
 
-    signatureCtx.strokeStyle =
-        "#0f172a";
-
+    signatureCtx.strokeStyle = "#0f172a";
     signatureCtx.lineWidth = 2;
 
-    signatureCanvas.addEventListener(
-        "mousedown",
-        startDrawing
-    );
+    signatureCanvas.addEventListener("mousedown", startDrawing);
+    signatureCanvas.addEventListener("mousemove", draw);
+    signatureCanvas.addEventListener("mouseup", stopDrawing);
+    signatureCanvas.addEventListener("mouseleave", stopDrawing);
 
-    signatureCanvas.addEventListener(
-        "mousemove",
-        draw
-    );
-
-    signatureCanvas.addEventListener(
-        "mouseup",
-        stopDrawing
-    );
-
-    signatureCanvas.addEventListener(
-        "mouseleave",
-        stopDrawing
-    );
-
-    const clearBtn =
-        document.getElementById("clearSignatureBtn");
+    const clearBtn = document.getElementById("clearSignatureBtn");
 
     if (clearBtn) {
-
-        clearBtn.addEventListener(
-            "click",
-            clearSignature
-        );
+        clearBtn.addEventListener("click", clearSignature);
     }
 }
 
 function startDrawing(e) {
-
     isDrawing = true;
 
     signatureCtx.beginPath();
-
-    signatureCtx.moveTo(
-        e.offsetX,
-        e.offsetY
-    );
+    signatureCtx.moveTo(e.offsetX, e.offsetY);
 }
 
 function draw(e) {
-
     if (!isDrawing) return;
 
-    signatureCtx.lineTo(
-        e.offsetX,
-        e.offsetY
-    );
-
+    signatureCtx.lineTo(e.offsetX, e.offsetY);
     signatureCtx.stroke();
 }
 
 function stopDrawing() {
-
     isDrawing = false;
 }
 
 function clearSignature() {
+    if (!signatureCtx || !signatureCanvas) return;
 
     signatureCtx.clearRect(
         0,
@@ -356,16 +258,12 @@ function clearSignature() {
 ========================================= */
 
 function initializeOrderSubmit() {
-
-    const form =
-        document.getElementById("orderForm");
+    const form = document.getElementById("orderForm");
 
     if (!form) return;
 
     form.addEventListener("submit", (e) => {
-
         e.preventDefault();
-
         saveOrderLive();
     });
 }
@@ -375,39 +273,56 @@ function initializeOrderSubmit() {
 ========================================= */
 
 async function saveOrderLive() {
+    const user = JSON.parse(localStorage.getItem("mnUser") || "{}");
+
+    const storeId =
+        user.CustomerID ||
+        user.StoreID ||
+        user.customerId ||
+        "";
+
+    const storeName =
+        user.StoreName ||
+        user.CustomerName ||
+        user.storeName ||
+        "M&N Partner Store";
+
+    if (!storeId) {
+        alert("Store session not found. Please log in again.");
+        window.location.href = "login.html";
+        return;
+    }
 
     const payload = {
-
         action: "submitStoreOrder",
 
-        storeId: "STORE001",
+        storeId: storeId,
+        customerId: storeId,
 
-        storeName: "M&N Partner Store",
-
+        storeName: storeName,
         customerName:
-            document.getElementById("customerName").value,
+            document.getElementById("customerName").value ||
+            storeName,
 
         contactNumber:
-            document.getElementById("contactNumber").value,
+            document.getElementById("contactNumber").value ||
+            user.ContactNumber ||
+            "",
 
-        orderType:
-            document.getElementById("orderType").value,
+        orderType: document.getElementById("orderType").value,
+        paymentStatus: document.getElementById("paymentStatus").value,
+        orderNotes: document.getElementById("orderNotes").value,
 
-        paymentStatus:
-            document.getElementById("paymentStatus").value,
+        orderStatus: "NEW",
+        deliveryStatus: "PENDING",
 
-        orderNotes:
-            document.getElementById("orderNotes").value,
+        totalAmount: Number(
+            document.getElementById("totalAmount").value || 0
+        ),
 
-        totalAmount:
-            Number(
-                document.getElementById("totalAmount").value || 0
-            ),
-
-        signatureImage:
-            signatureCanvas
-                ? signatureCanvas.toDataURL("image/png")
-                : "",
+        signatureImage: signatureCanvas
+            ? signatureCanvas.toDataURL("image/png")
+            : "",
 
         items: cartItems
     };
@@ -422,7 +337,7 @@ async function saveOrderLive() {
     console.log("SAVE ORDER:", data);
 
     if (data.success) {
-        alert("Order saved to Google Sheets.");
+        alert("Order submitted successfully.");
         resetOrderForm();
         loadOrders();
     } else {
@@ -435,15 +350,16 @@ async function saveOrderLive() {
 ========================================= */
 
 function resetOrderForm() {
+    const form = document.getElementById("orderForm");
 
-    document.getElementById("orderForm").reset();
+    if (form) {
+        form.reset();
+    }
 
     cartItems = [];
 
     renderCartItems();
-
     computeTotalAmount();
-
     clearSignature();
 }
 
@@ -452,7 +368,6 @@ function resetOrderForm() {
 ========================================= */
 
 async function loadOrders() {
-
     const tbody = document.getElementById("ordersTableBody");
 
     if (!tbody) return;
@@ -464,11 +379,10 @@ async function loadOrders() {
     `;
 
     try {
-
         const response = await fetch(API.BASE_URL, {
             method: "POST",
             body: JSON.stringify({
-                action: "getStoreOrders"
+                action: "getOrders"
             })
         });
 
@@ -481,7 +395,6 @@ async function loadOrders() {
         renderOrders();
 
     } catch (error) {
-
         console.error("LOAD ORDERS ERROR:", error);
 
         tbody.innerHTML = `
@@ -495,70 +408,137 @@ async function loadOrders() {
 /* =========================================
    RENDER ORDERS
 ========================================= */
-
 function renderOrders() {
-
-    const tbody =
-        document.getElementById("ordersTableBody");
+    const tbody = document.getElementById("ordersTableBody");
 
     if (!tbody) return;
 
     if (loadedOrders.length === 0) {
-
         tbody.innerHTML = `
             <tr>
-                <td colspan="7">
-                    No orders found.
-                </td>
+                <td colspan="7">No orders found.</td>
             </tr>
         `;
-
         return;
     }
 
     tbody.innerHTML = "";
 
     loadedOrders.forEach((order, index) => {
+        const paymentStatus = normalizePaymentStatus_(order.PaymentStatus);
+        const deliveryStatus = normalizeDeliveryStatus_(order.DeliveryStatus);
 
         tbody.innerHTML += `
             <tr>
-
-                <td>${order.InvoiceID}</td>
-
-                <td>${order.CustomerName}</td>
-
-                <td>${order.OrderType}</td>
-
                 <td>
-                    ₱${Number(order.TotalAmount).toLocaleString()}
+                    <strong>${order.InvoiceID || order.OrderID || "-"}</strong>
+                    <br>
+                    <small>${order.OrderDate || order.CreatedAt || ""}</small>
                 </td>
 
-                <td>${order.PaymentStatus}</td>
-
-                <td>${order.DeliveryStatus}</td>
-
                 <td>
-                    <button
-                        type="button"
-                        onclick="openInvoiceByIndex(${index})"
-                        style="
-                            background:#005f2f;
-                            color:white;
-                            border:none;
-                            padding:10px 14px;
-                            border-radius:12px;
-                            font-weight:800;
-                            cursor:pointer;
-                            box-shadow:0 6px 14px rgba(0,95,47,0.18);
-                        "
-                    >
-                        View Invoice
-                    </button>
+                    <strong>${order.CustomerName || order.StoreName || "-"}</strong>
+                    <br>
+                    <small>${order.ContactNumber || ""}</small>
                 </td>
 
+                <td>${order.OrderType || "Wholesale"}</td>
+
+                <td>
+                    <strong>₱${Number(order.TotalAmount || 0).toLocaleString()}</strong>
+                </td>
+
+                <td>
+                    <select class="status-select payment-select">
+                        <option value="Unpaid" ${paymentStatus === "Unpaid" ? "selected" : ""}>Unpaid</option>
+                        <option value="Partial" ${paymentStatus === "Partial" ? "selected" : ""}>Partial</option>
+                        <option value="Paid" ${paymentStatus === "Paid" ? "selected" : ""}>Paid</option>
+                        <option value="Overdue" ${paymentStatus === "Overdue" ? "selected" : ""}>Overdue</option>
+                        <option value="Cancelled" ${paymentStatus === "Cancelled" ? "selected" : ""}>Cancelled</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select class="status-select delivery-select">
+                        <option value="Pending" ${deliveryStatus === "Pending" ? "selected" : ""}>Pending</option>
+                        <option value="Preparing" ${deliveryStatus === "Preparing" ? "selected" : ""}>Preparing</option>
+                        <option value="Ready For Delivery" ${deliveryStatus === "Ready For Delivery" ? "selected" : ""}>Ready For Delivery</option>
+                        <option value="Out For Delivery" ${deliveryStatus === "Out For Delivery" ? "selected" : ""}>Out For Delivery</option>
+                        <option value="Delivered" ${deliveryStatus === "Delivered" ? "selected" : ""}>Delivered</option>
+                        <option value="Failed Delivery" ${deliveryStatus === "Failed Delivery" ? "selected" : ""}>Failed Delivery</option>
+                        <option value="Returned" ${deliveryStatus === "Returned" ? "selected" : ""}>Returned</option>
+                        <option value="Cancelled" ${deliveryStatus === "Cancelled" ? "selected" : ""}>Cancelled</option>
+                    </select>
+                </td>
+
+                <td>
+                    <button type="button" onclick="approveOrder(${index})" style="background:#16a34a;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:8px;">Approve</button>
+
+                    <button type="button" onclick="rejectOrder(${index})" style="background:#dc2626;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:8px;">Reject</button>
+
+                    <button type="button" onclick="updateOrderStatuses(${index})" style="background:#2563eb;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:8px;">Update</button>
+
+                    <button type="button" onclick="moveOrderToNextStage(${index})" style="background:#16a34a;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:8px;">Next Step</button>
+
+                    <button type="button" onclick="openInvoiceByIndex(${index})" style="background:#005f2f;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;">View Invoice</button>
+                </td>
             </tr>
         `;
     });
+}
+
+
+/* =========================================
+   UPDATE ORDER STATUSES
+========================================= */
+async function updateOrderStatuses(index) {
+    const rows = document.querySelectorAll("#ordersTableBody tr");
+    const row = rows[index];
+
+    if (!row) return;
+
+    const order = loadedOrders[index];
+
+    if (!order) return;
+
+    const paymentStatus = row.querySelector(".payment-select").value;
+    const deliveryStatus = row.querySelector(".delivery-select").value;
+
+    const payload = {
+        action: "updateOrderStatuses",
+
+        orderId: order.OrderID || "",
+        invoiceId: order.InvoiceID || "",
+
+        orderStatus: order.OrderStatus || "PROCESSING",
+
+        paymentStatus: paymentStatus,
+        deliveryStatus: deliveryStatus
+    };
+
+    try {
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Order status updated.");
+
+            order.PaymentStatus = paymentStatus;
+            order.DeliveryStatus = deliveryStatus;
+
+            loadOrders();
+        } else {
+            alert(data.message || "Status update failed.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Server error while updating order status.");
+    }
 }
 
 /* =========================================
@@ -566,7 +546,6 @@ function renderOrders() {
 ========================================= */
 
 function openInvoiceByIndex(index) {
-
     const order = loadedOrders[index];
 
     if (!order) {
@@ -575,7 +554,7 @@ function openInvoiceByIndex(index) {
     }
 
     setInvoiceText_("invoiceIdText", order.InvoiceID || order.OrderID);
-    setInvoiceText_("invoiceCustomerText", order.CustomerName);
+    setInvoiceText_("invoiceCustomerText", order.CustomerName || order.StoreName);
     setInvoiceText_("invoiceContactText", order.ContactNumber);
     setInvoiceText_("invoiceOrderTypeText", order.OrderType);
     setInvoiceText_("invoicePaymentStatusText", order.PaymentStatus);
@@ -602,12 +581,11 @@ function openInvoiceByIndex(index) {
         modal.style.visibility = "visible";
         modal.style.opacity = "1";
     } else {
-        alert("Invoice modal not found in store-order-form.html.");
+        alert("Invoice modal not found.");
     }
 }
 
 function setInvoiceText_(id, value) {
-
     const element = document.getElementById(id);
 
     if (element) {
@@ -619,16 +597,219 @@ function setInvoiceText_(id, value) {
    CLOSE INVOICE
 ========================================= */
 
-function closeSimpleInvoice_() {
-
-    const modal =
-        document.getElementById("invoiceModal");
+function closeInvoiceModal() {
+    const modal = document.getElementById("invoiceModal");
 
     if (modal) {
-
         modal.style.display = "none";
     }
 }
 
-window.closeSimpleInvoice_ =
-    closeSimpleInvoice_;
+function closeSimpleInvoice_() {
+    closeInvoiceModal();
+}
+
+function normalizePaymentStatus_(status) {
+    const value = String(status || "").trim().toLowerCase();
+
+    if (value === "paid") return "Paid";
+    if (value === "partial") return "Partial";
+    if (value === "overdue") return "Overdue";
+    if (value === "cancelled" || value === "canceled") return "Cancelled";
+
+    return "Unpaid";
+}
+
+function normalizeDeliveryStatus_(status) {
+    const value = String(status || "").trim().toLowerCase();
+
+    if (value === "delivered") return "Delivered";
+    if (value === "on the way") return "Out For Delivery";
+    if (value === "out for delivery") return "Out For Delivery";
+    if (value === "accepted") return "Preparing";
+    if (value === "preparing") return "Preparing";
+    if (value === "ready for delivery") return "Ready For Delivery";
+    if (value === "failed delivery") return "Failed Delivery";
+    if (value === "returned") return "Returned";
+    if (value === "cancelled" || value === "canceled") return "Cancelled";
+
+    return "Pending";
+}
+
+/* =========================================
+   MOVE ORDER TO NEXT STAGE
+========================================= */
+
+async function moveOrderToNextStage(index) {
+
+    const order =
+        loadedOrders[index];
+
+    if (!order) return;
+
+    const current =
+        normalizeDeliveryStatus_(
+            order.DeliveryStatus
+        );
+
+    let next = current;
+
+    if (current === "Pending") {
+        next = "Preparing";
+    }
+
+    else if (current === "Preparing") {
+        next = "Ready For Delivery";
+    }
+
+    else if (current === "Ready For Delivery") {
+        next = "Out For Delivery";
+    }
+
+    else if (current === "Out For Delivery") {
+        next = "Delivered";
+    }
+
+    else if (current === "Delivered") {
+
+        alert(
+            "Order already delivered."
+        );
+
+        return;
+    }
+
+    const payload = {
+        action: "updateOrderStatuses",
+
+        orderId: order.OrderID || "",
+        invoiceId: order.InvoiceID || "",
+
+        orderStatus: "PROCESSING",
+
+        paymentStatus: order.PaymentStatus || "Unpaid",
+        deliveryStatus: next
+    };
+
+    try {
+
+        const response =
+            await fetch(API.BASE_URL, {
+
+                method: "POST",
+                body: JSON.stringify(payload)
+
+            });
+
+        const data =
+            await response.json();
+
+        if (data.success) {
+
+            alert(
+                `Order moved to:\n\n${next}`
+            );
+
+            order.DeliveryStatus = next;
+
+            loadOrders();
+
+        } else {
+
+            alert(
+                data.message ||
+                "Failed to move order."
+            );
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Server error."
+        );
+    }
+}
+
+/* =========================================
+   GLOBAL FUNCTIONS
+========================================= */
+
+window.loadOrders = loadOrders;
+window.openInvoiceByIndex = openInvoiceByIndex;
+window.updateOrderStatuses = updateOrderStatuses;
+window.moveOrderToNextStage = moveOrderToNextStage;
+window.closeInvoiceModal = closeInvoiceModal;
+window.closeSimpleInvoice_ = closeSimpleInvoice_;
+
+async function approveOrder(index) {
+    const order = loadedOrders[index];
+
+    if (!order) return;
+
+    const payload = {
+        action: "updateOrderStatuses",
+        orderId: order.OrderID || "",
+        invoiceId: order.InvoiceID || "",
+        orderStatus: "APPROVED",
+        paymentStatus: order.PaymentStatus || "Unpaid",
+        deliveryStatus: order.DeliveryStatus || "Pending"
+    };
+
+    try {
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Order approved successfully.");
+            loadOrders();
+        } else {
+            alert(data.message || "Approval failed.");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Server error.");
+    }
+}
+
+async function rejectOrder(index) {
+    const order = loadedOrders[index];
+
+    if (!order) return;
+
+    const payload = {
+        action: "updateOrderStatuses",
+        orderId: order.OrderID || "",
+        invoiceId: order.InvoiceID || "",
+        orderStatus: "REJECTED",
+        paymentStatus: "Cancelled",
+        deliveryStatus: "Cancelled"
+    };
+
+    try {
+        const response = await fetch(API.BASE_URL, {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Order rejected.");
+            loadOrders();
+        } else {
+            alert(data.message || "Reject failed.");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Server error.");
+    }
+}
+
+window.approveOrder = approveOrder;
+window.rejectOrder = rejectOrder;

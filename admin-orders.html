@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders | M&N Admin OS</title>
+
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/admin-layout.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="assets/css/admin-forms.css">
+    <link rel="stylesheet" href="assets/css/responsive-fixes.css">
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <div id="adminSidebar" class="admin-sidebar">
+            <h2>M&N Admin OS</h2>
+            <p>Loading sidebar...</p>
+        </div>
+
+        <div class="admin-main">
+
+            <button type="button" class="admin-mobile-menu-btn" id="adminMobileMenuBtn">
+                ☰
+            </button>
+
+            <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
+            <div class="admin-header admin-command-header">
+                <div>
+                    <span class="admin-app-label">ORDER OPERATIONS CENTER</span>
+                    <h1>Orders, Payment & Delivery</h1>
+                    <p>
+                        Review store orders, update payment status,
+                        manage delivery progress, and open invoices.
+                    </p>
+                </div>
+
+                <a href="admin-dashboard.html" class="admin-store-switch-btn">
+                    Back to Dashboard
+                </a>
+            </div>
+
+            <main class="admin-content">
+
+                <section class="admin-section-card">
+                    <div class="section-title-row">
+                        <div>
+                            <h2>Store Orders</h2>
+                            <p>
+                                Update payment and delivery status for each submitted store order.
+                            </p>
+                        </div>
+
+                        <button type="button" class="save-btn" onclick="loadOrders()">
+                            Refresh Orders
+                        </button>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>Customer / Store</th>
+                                    <th>Total</th>
+                                    <th>Payment</th>
+                                    <th>Delivery</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="ordersTableBody">
+                                <tr>
+                                    <td colspan="6">Loading orders...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </main>
+
+            <footer class="admin-footer">
+                <div class="admin-footer-inner">
+                    <div class="admin-footer-left">
+                        <strong>Powered by BuildFrame Digital System</strong>
+                        <span>Website, Funnel & Platform Builder</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <!-- INVOICE MODAL -->
+    <div id="invoiceModal" class="invoice-modal">
+
+        <div class="invoice-box">
+
+            <button type="button" class="invoice-close-btn" onclick="closeInvoiceModal()">
+                ✕
+            </button>
+
+            <div class="invoice-header">
+                <div>
+                    <h2>M&N Consumer Goods</h2>
+                    <p>Wholesale • Store Network • Distribution</p>
+                </div>
+
+                <strong id="invoiceIdText">-</strong>
+            </div>
+
+            <div class="invoice-details-grid">
+                <div>
+                    <small>Customer</small>
+                    <strong id="invoiceCustomerText">-</strong>
+                </div>
+
+                <div>
+                    <small>Contact Number</small>
+                    <strong id="invoiceContactText">-</strong>
+                </div>
+
+                <div>
+                    <small>Order Type</small>
+                    <strong id="invoiceOrderTypeText">-</strong>
+                </div>
+
+                <div>
+                    <small>Payment Status</small>
+                    <strong id="invoicePaymentStatusText">-</strong>
+                </div>
+
+                <div>
+                    <small>Delivery Status</small>
+                    <strong id="invoiceDeliveryStatusText">-</strong>
+                </div>
+
+                <div>
+                    <small>Order Date</small>
+                    <strong id="invoiceDateText">-</strong>
+                </div>
+            </div>
+
+            <div class="invoice-total-box">
+                <span>Total Amount</span>
+                <strong id="invoiceTotalText">₱0</strong>
+            </div>
+
+            <div class="invoice-notes-box">
+                <small>Notes</small>
+                <p id="invoiceNotesText">-</p>
+            </div>
+
+            <div class="invoice-signature-box">
+                <small>Customer Signature</small>
+                <img id="invoiceSignatureImage" alt="Customer Signature">
+            </div>
+
+            <div class="invoice-actions">
+                <button type="button" class="save-btn" onclick="window.print()">
+                    Print Invoice
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/admin-main.js"></script>
+    <script src="assets/js/invoice.js"></script>
+    <script src="assets/js/orders.js"></script>
+
+</body>
+
+</html>
