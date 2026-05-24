@@ -1,92 +1,84 @@
-async function initializeCustomers() {
+/* =========================================
+   M&N CUSTOMERS / STORE PARTNERS MODULE
+========================================= */
 
-    const customerForm =
-        document.getElementById("customerForm");
+document.addEventListener("DOMContentLoaded", () => {
+    initializeCustomers();
+});
+
+async function initializeCustomers() {
+    const customerForm = document.getElementById("customerForm");
 
     if (!customerForm) return;
 
     customerForm.addEventListener("submit", async (e) => {
-
         e.preventDefault();
 
         const payload = {
-
             action: "addCustomer",
 
-            customerName:
-                document.getElementById("customerName").value,
+            customerName: getValue_("customerName"),
+            customerType: getValue_("customerType") || "WHOLESALE",
+            contactNumber: getValue_("contactNumber"),
+            email: getValue_("email"),
+            address: getValue_("address"),
+            notes: getValue_("notes"),
 
-            customerType:
-                document.getElementById("customerType").value,
-
-            contactNumber:
-                document.getElementById("contactNumber").value,
-
-            email:
-                document.getElementById("email").value,
-
-            address:
-                document.getElementById("address").value,
-
-            notes:
-                document.getElementById("notes").value
-
+            customerStatus: "ACTIVE"
         };
 
+        if (!payload.customerName) {
+            alert("Please enter store/customer name.");
+            return;
+        }
+
+        if (!payload.contactNumber) {
+            alert("Please enter contact number.");
+            return;
+        }
+
         try {
-
             const response = await fetch(API.BASE_URL, {
-
                 method: "POST",
                 body: JSON.stringify(payload)
-
             });
 
             const data = await response.json();
 
             if (data.success) {
-
-                alert("Customer saved.");
-
+                alert("Store partner saved.");
                 customerForm.reset();
-
                 loadCustomers();
-
             } else {
-
-                alert(
-                    data.message ||
-                    "Customer save failed."
-                );
-
+                alert(data.message || "Store partner save failed.");
             }
 
         } catch (error) {
-
             console.error(error);
-
             alert("Server error.");
-
         }
-
     });
 
     loadCustomers();
-
 }
 
 async function loadCustomers() {
+    const tbody = document.getElementById("customersTableBody");
+
+    if (!tbody) return;
+
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="6">Loading store partners...</td>
+        </tr>
+    `;
 
     try {
-
         const response = await fetch(API.BASE_URL, {
-
             method: "POST",
-
             body: JSON.stringify({
                 action: "getCustomers"
             })
-
         });
 
         const data = await response.json();
@@ -96,53 +88,71 @@ async function loadCustomers() {
             data.customers ||
             [];
 
-        const tbody =
-            document.getElementById("customersTableBody");
-
-        if (!tbody) return;
+        if (!rows.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6">No store partners found.</td>
+                </tr>
+            `;
+            return;
+        }
 
         tbody.innerHTML = "";
 
         rows.forEach(customer => {
+            const type =
+                customer.CustomerType ||
+                customer.customerType ||
+                "WHOLESALE";
+
+            const status =
+                customer.CustomerStatus ||
+                customer.Status ||
+                "ACTIVE";
 
             tbody.innerHTML += `
-
                 <tr>
-
                     <td>
-                        ${customer.CustomerID || ""}
+                        <strong>${customer.CustomerID || "-"}</strong>
                     </td>
 
                     <td>
-                        ${customer.CustomerName || ""}
+                        <strong>${customer.CustomerName || "-"}</strong>
+                        <br>
+                        <small>${customer.Address || ""}</small>
                     </td>
 
                     <td>
-                        ${customer.CustomerType || ""}
+                        <span class="status-pill">${type}</span>
                     </td>
 
                     <td>
-                        ${customer.ContactNumber || ""}
+                        ${customer.ContactNumber || "-"}
                     </td>
 
                     <td>
-                        ${customer.Email || ""}
+                        ${customer.Email || "-"}
                     </td>
 
                     <td>
-                        ${customer.CustomerStatus || customer.Status || ""}
+                        <span class="status-pill active">${status}</span>
                     </td>
-
                 </tr>
-
             `;
-
         });
 
     } catch (error) {
-
         console.error(error);
 
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6">Failed to load store partners.</td>
+            </tr>
+        `;
     }
+}
 
+function getValue_(id) {
+    const element = document.getElementById(id);
+    return element ? element.value.trim() : "";
 }

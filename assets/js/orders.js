@@ -472,6 +472,9 @@ function renderOrders() {
                 </td>
 
                 <td>
+
+                     <button type="button" onclick="openInvoiceByIndex(${index})" style="background:#005f2f;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;">View Invoice</button>
+
                     <button type="button" onclick="approveOrder(${index})" style="background:#16a34a;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:8px;">Approve</button>
 
                     <button type="button" onclick="rejectOrder(${index})" style="background:#dc2626;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:8px;">Reject</button>
@@ -480,7 +483,7 @@ function renderOrders() {
 
                     <button type="button" onclick="moveOrderToNextStage(${index})" style="background:#16a34a;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;margin-right:8px;">Next Step</button>
 
-                    <button type="button" onclick="openInvoiceByIndex(${index})" style="background:#005f2f;color:white;border:none;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer;">View Invoice</button>
+                    
                 </td>
             </tr>
         `;
@@ -545,6 +548,10 @@ async function updateOrderStatuses(index) {
    OPEN INVOICE
 ========================================= */
 
+/* =========================================
+   OPEN INVOICE
+========================================= */
+
 function openInvoiceByIndex(index) {
     const order = loadedOrders[index];
 
@@ -553,19 +560,33 @@ function openInvoiceByIndex(index) {
         return;
     }
 
-    setInvoiceText_("invoiceIdText", order.InvoiceID || order.OrderID);
-    setInvoiceText_("invoiceCustomerText", order.CustomerName || order.StoreName);
-    setInvoiceText_("invoiceContactText", order.ContactNumber);
-    setInvoiceText_("invoiceOrderTypeText", order.OrderType);
-    setInvoiceText_("invoicePaymentStatusText", order.PaymentStatus);
-    setInvoiceText_("invoiceDeliveryStatusText", order.DeliveryStatus);
-    setInvoiceText_("invoiceDateText", order.OrderDate || order.CreatedAt);
-    setInvoiceText_("invoiceNotesText", order.Notes || order.OrderNotes);
+    setInvoiceText_("invoiceIdText", order.InvoiceID || order.OrderID || "-");
+    setInvoiceText_("invoiceCustomerText", order.CustomerName || order.StoreName || "-");
+    setInvoiceText_("invoiceContactText", order.ContactNumber || "-");
+    setInvoiceText_("invoiceOrderTypeText", order.OrderType || "Wholesale");
+    setInvoiceText_("invoicePaymentStatusText", order.PaymentStatus || "Unpaid");
+    setInvoiceText_("invoiceDeliveryStatusText", order.DeliveryStatus || "Pending");
+    setInvoiceText_("invoiceDateText", order.OrderDate || order.CreatedAt || "-");
+    setInvoiceText_("invoiceNotesText", order.Notes || order.OrderNotes || "-");
 
     setInvoiceText_(
         "invoiceTotalText",
         "₱" + Number(order.TotalAmount || 0).toLocaleString()
     );
+
+    let items = [];
+
+    if (Array.isArray(order.Items)) {
+        items = order.Items;
+    } else if (typeof order.Items === "string" && order.Items.trim()) {
+        try {
+            items = JSON.parse(order.Items);
+        } catch (error) {
+            console.warn("Could not parse order items:", order.Items);
+        }
+    }
+
+    renderInvoiceItems_(items);
 
     const signatureImage = document.getElementById("invoiceSignatureImage");
 
@@ -813,3 +834,35 @@ async function rejectOrder(index) {
 
 window.approveOrder = approveOrder;
 window.rejectOrder = rejectOrder;
+
+function renderInvoiceItems_(items) {
+    const tbody = document.getElementById("invoiceItemsBody");
+
+    if (!tbody) return;
+
+    if (!items || !items.length) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4">No items found.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = "";
+
+    items.forEach(item => {
+        const qty = Number(item.Quantity || item.Qty || 0);
+        const price = Number(item.UnitPrice || item.Price || 0);
+        const subtotal = Number(item.Subtotal || item.Total || qty * price);
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${item.ProductName || "-"}</td>
+                <td>${qty}</td>
+                <td>₱${price.toLocaleString()}</td>
+                <td>₱${subtotal.toLocaleString()}</td>
+            </tr>
+        `;
+    });
+}
