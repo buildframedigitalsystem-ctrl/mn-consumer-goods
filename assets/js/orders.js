@@ -67,7 +67,7 @@ async function loadProducts() {
             );
 
             option.textContent =
-                `${product.ProductName} - ₱${price}`;
+           `${product.ProductName} - ₱${formatMoney_(price)}`;
 
             productSelect.appendChild(option);
         });
@@ -445,7 +445,7 @@ function renderOrders() {
                 <td>${order.OrderType || "Wholesale"}</td>
 
                 <td>
-                    <strong>₱${Number(order.TotalAmount || 0).toLocaleString()}</strong>
+                    <strong>₱${formatMoney_(order.TotalAmount || 0)}</strong>
                 </td>
 
                 <td>
@@ -571,7 +571,7 @@ function openInvoiceByIndex(index) {
 
     setInvoiceText_(
         "invoiceTotalText",
-        "₱" + Number(order.TotalAmount || 0).toLocaleString()
+        "₱" + formatMoney_(order.TotalAmount || 0)
     );
 
     let items = [];
@@ -835,6 +835,13 @@ async function rejectOrder(index) {
 window.approveOrder = approveOrder;
 window.rejectOrder = rejectOrder;
 
+function formatMoney_(value) {
+    return Number(value || 0).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
 function renderInvoiceItems_(items) {
     const tbody = document.getElementById("invoiceItemsBody");
 
@@ -860,8 +867,8 @@ function renderInvoiceItems_(items) {
             <tr>
                 <td>${item.ProductName || "-"}</td>
                 <td>${qty}</td>
-                <td>₱${price.toLocaleString()}</td>
-                <td>₱${subtotal.toLocaleString()}</td>
+               <td>₱${formatMoney_(price)}</td>
+                <td>₱${formatMoney_(subtotal)}</td>
             </tr>
         `;
     });

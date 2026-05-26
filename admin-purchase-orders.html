@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Orders | M&N Admin OS</title>
+
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/admin-layout.css">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="assets/css/admin-forms.css">
+    <link rel="stylesheet" href="assets/css/responsive-fixes.css">
+
+    <link rel="manifest" href="manifest-admin.json?v=2">
+    <link rel="icon" href="assets/images/branding/mn-logo.png">
+    <link rel="apple-touch-icon" href="assets/images/branding/mn-logo.png">
+
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="M&N Admin OS">
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <div id="adminSidebar" class="admin-sidebar">
+            <h2>M&N Admin OS</h2>
+            <p>Loading sidebar...</p>
+        </div>
+
+        <div class="admin-main">
+
+            <button type="button" class="admin-mobile-menu-btn" id="adminMobileMenuBtn">
+                ☰
+            </button>
+
+            <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
+            <header class="admin-header admin-command-header">
+                <div>
+                    <span class="admin-app-label">SUPPLIER PROCUREMENT</span>
+
+                    <h1>Purchase Orders</h1>
+
+                    <p>
+                        Create, save, view, print, and email purchase orders
+                        for supplier restocking and inventory replenishment.
+                    </p>
+                </div>
+
+                <a href="admin-dashboard.html" class="admin-store-switch-btn">
+                    Back to Admin
+                </a>
+            </header>
+
+            <main class="admin-content">
+
+                <section class="admin-form-card">
+
+                    <div class="section-heading">
+                        <h2>Create Purchase Order</h2>
+                        <p>
+                            Fill in supplier details, requested products, quantity,
+                            unit price, delivery date, and notes.
+                        </p>
+                    </div>
+
+                    <form id="purchaseOrderForm" class="admin-form-grid">
+
+                        <div class="form-group">
+                            <label for="supplierName">Supplier Name</label>
+                            <input type="text" id="supplierName" placeholder="Supplier / Company Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supplierContactPerson">Contact Person</label>
+                            <input type="text" id="supplierContactPerson" placeholder="Contact person">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supplierContactNumber">Supplier Contact Number</label>
+                            <input type="text" id="supplierContactNumber" placeholder="Phone / mobile">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supplierEmail">Supplier Email</label>
+                            <input type="email" id="supplierEmail" placeholder="supplier@email.com">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="supplierAddress">Supplier Address</label>
+                            <textarea id="supplierAddress" rows="2" placeholder="Supplier address"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderDate">Purchase Order Date</label>
+                            <input type="date" id="orderDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expectedDeliveryDate">Expected Delivery Date</label>
+                            <input type="date" id="expectedDeliveryDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="preparedBy">Prepared By</label>
+                            <input type="text" id="preparedBy" placeholder="Admin name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="poStatus">Status</label>
+                            <select id="poStatus">
+                                <option value="PENDING">Pending</option>
+                                <option value="APPROVED">Approved</option>
+                                <option value="SENT TO SUPPLIER">Sent to Supplier</option>
+                                <option value="PARTIALLY RECEIVED">Partially Received</option>
+                                <option value="COMPLETED">Completed</option>
+                                <option value="CANCELLED">Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="supplierMessage">Dear Supplier Message</label>
+                            <textarea id="supplierMessage"
+                                rows="4">Dear Supplier,
+
+Please prepare and deliver the following requested items for our inventory replenishment and operational needs. Kindly review the purchase order details below.</textarea>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Purchase Order Items</label>
+
+                            <div class="table-wrapper">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Product / Item</th>
+                                            <th>Quantity</th>
+                                            <th>Unit Price</th>
+                                            <th>Subtotal</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="poItemsBody">
+                                        <tr>
+                                            <td colspan="5">No items added yet.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button type="button" class="save-btn" onclick="addPOItemRow()">
+                                + Add Product Line
+                            </button>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="notes">Notes / Delivery Instructions</label>
+                            <textarea id="notes" rows="3"
+                                placeholder="Special delivery instructions, payment terms, or supplier notes"></textarea>
+                        </div>
+
+                        <div class="form-actions full-width">
+                            <button type="submit" class="save-btn">
+                                Save Purchase Order
+                            </button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section class="admin-table-card">
+
+                    <div class="section-heading">
+                        <h2>Purchase Order Records</h2>
+                        <p>
+                            View, print, email, and track purchase orders sent to suppliers.
+                        </p>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>PO ID</th>
+                                    <th>Supplier</th>
+                                    <th>Date</th>
+                                    <th>Expected Delivery</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="purchaseOrdersTableBody">
+                                <tr>
+                                    <td colspan="7">Loading purchase orders...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+            </main>
+
+            <footer class="admin-footer">
+                <div class="admin-footer-inner">
+
+                    <div class="admin-footer-left">
+                        <strong>Powered by BuildFrame Digital System</strong>
+                        <span>Website, Funnel & Platform Builder</span>
+                    </div>
+
+                    <div class="admin-footer-right">
+                        <a href="mailto:buildframe.digitalsystem@gmail.com">Email</a>
+                        <a href="https://www.facebook.com/profile.php?id=61573627290922" target="_blank">Facebook</a>
+                        <a href="https://wa.me/639760110243" target="_blank">WhatsApp</a>
+                    </div>
+
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <!-- PURCHASE ORDER MODAL -->
+    <div id="poModal" class="invoice-modal">
+
+        <div class="invoice-box">
+
+            <button type="button" class="invoice-close-btn" onclick="closePOModal()">
+                ✕
+            </button>
+
+            <div class="invoice-header">
+
+                <div>
+                    <img src="assets/images/branding/mn-logo.png" alt="M&N Logo" style="width:80px;margin-bottom:10px;">
+
+                    <h2>M&N Consumer Goods</h2>
+
+                    <p>Wholesale • Distribution • Procurement</p>
+
+                    <p>
+                        Contact: M&N Admin Office<br>
+                        Email: mnconsumergoods@gmail.com
+                    </p>
+                </div>
+
+                <div>
+                    <strong>PURCHASE ORDER</strong><br>
+                    <strong id="poIdText">-</strong>
+                </div>
+
+            </div>
+
+            <div class="invoice-details-grid">
+
+                <div>
+                    <small>Supplier</small>
+                    <strong id="poSupplierText">-</strong>
+                </div>
+
+                <div>
+                    <small>Contact Person</small>
+                    <strong id="poContactPersonText">-</strong>
+                </div>
+
+                <div>
+                    <small>Contact Number</small>
+                    <strong id="poContactNumberText">-</strong>
+                </div>
+
+                <div>
+                    <small>Email</small>
+                    <strong id="poSupplierEmailText">-</strong>
+                </div>
+
+                <div>
+                    <small>Order Date</small>
+                    <strong id="poDateText">-</strong>
+                </div>
+
+                <div>
+                    <small>Expected Delivery</small>
+                    <strong id="poExpectedDateText">-</strong>
+                </div>
+
+            </div>
+
+            <div class="invoice-notes-box">
+                <p id="poMessageText">Dear Supplier...</p>
+            </div>
+
+            <div class="invoice-items-box">
+
+                <h3>Requested Items</h3>
+
+                <table class="invoice-items-table">
+                    <thead>
+                        <tr>
+                            <th>Product / Item</th>
+                            <th>Qty</th>
+                            <th>Unit Price</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="poModalItemsBody">
+                        <tr>
+                            <td colspan="4">No items found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="invoice-total-box">
+                <span>Total Amount</span>
+                <strong id="poTotalText">₱0.00</strong>
+            </div>
+
+            <div class="invoice-notes-box">
+                <small>Notes / Instructions</small>
+                <p id="poNotesText">-</p>
+            </div>
+
+            <div class="invoice-signature-box">
+
+                <small>Prepared / Approved By</small>
+
+                <div style="margin-top:50px;border-top:1px solid #111;width:260px;padding-top:8px;">
+                    <strong id="poPreparedByText">Admin Signature</strong>
+                </div>
+
+            </div>
+
+            <div class="invoice-actions">
+                <button type="button" class="save-btn" onclick="window.print()">
+                    Print P.O
+                </button>
+
+                <button type="button" class="save-btn" onclick="preparePOEmail()">
+                    Prepare Email
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="assets/js/api-config.js"></script>
+    <script src="assets/js/permission.js"></script>
+    <script src="assets/js/admin-main.js"></script>
+    <script src="assets/js/purchase-orders.js"></script>
+
+</body>
+
+</html>
