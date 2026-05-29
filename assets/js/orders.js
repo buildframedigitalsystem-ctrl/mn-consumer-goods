@@ -67,7 +67,7 @@ async function loadProducts() {
             );
 
             option.textContent =
-           `${product.ProductName} - ₱${formatMoney_(price)}`;
+                `${product.ProductName} - ₱${formatMoney_(price)}`;
 
             productSelect.appendChild(option);
         });
@@ -562,6 +562,7 @@ function openInvoiceByIndex(index) {
 
     setInvoiceText_("invoiceIdText", order.InvoiceID || order.OrderID || "-");
     setInvoiceText_("invoiceCustomerText", order.CustomerName || order.StoreName || "-");
+    setInvoiceText_("invoiceAddressText", order.Address || order.StoreAddress || "-");
     setInvoiceText_("invoiceContactText", order.ContactNumber || "-");
     setInvoiceText_("invoiceOrderTypeText", order.OrderType || "Wholesale");
     setInvoiceText_("invoicePaymentStatusText", order.PaymentStatus || "Unpaid");
@@ -569,9 +570,62 @@ function openInvoiceByIndex(index) {
     setInvoiceText_("invoiceDateText", order.OrderDate || order.CreatedAt || "-");
     setInvoiceText_("invoiceNotesText", order.Notes || order.OrderNotes || "-");
 
+    const itemsTotal =
+        Number(order.TotalAmount || 0);
+
+    const discount =
+        Number(order.DiscountAmount || 0);
+
+    const deliveryFee =
+        Number(order.DeliveryFee || 0);
+
+    const partialPayments =
+        Number(order.PartialPayments || 0);
+
+    const returnsAmount =
+        Number(order.ReturnsAmount || 0);
+
+    const subtotal =
+        itemsTotal - discount + deliveryFee;
+
+    const balanceDue =
+        subtotal -
+        partialPayments -
+        returnsAmount;
+
     setInvoiceText_(
-        "invoiceTotalText",
-        "₱" + formatMoney_(order.TotalAmount || 0)
+        "invoiceItemsTotalText",
+        "₱" + formatMoney_(itemsTotal)
+    );
+
+    setInvoiceText_(
+        "invoiceDiscountText",
+        "₱" + formatMoney_(discount)
+    );
+
+    setInvoiceText_(
+        "invoiceDeliveryFeeText",
+        "₱" + formatMoney_(deliveryFee)
+    );
+
+    setInvoiceText_(
+        "invoiceSubtotalText",
+        "₱" + formatMoney_(subtotal)
+    );
+
+    setInvoiceText_(
+        "invoicePartialPaymentsText",
+        "₱" + formatMoney_(partialPayments)
+    );
+
+    setInvoiceText_(
+        "invoiceReturnsText",
+        "₱" + formatMoney_(returnsAmount)
+    );
+
+    setInvoiceText_(
+        "invoiceBalanceDueText",
+        "₱" + formatMoney_(balanceDue)
     );
 
     let items = [];
@@ -873,3 +927,244 @@ function renderInvoiceItems_(items) {
         `;
     });
 }
+
+function printInvoiceModal() {
+    const invoiceBox = document.querySelector(".invoice-box");
+
+    if (!invoiceBox) {
+        alert("Invoice content not found.");
+        return;
+    }
+
+    const printWindow = window.open("", "_blank", "width=900,height=700");
+
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>M&N Invoice</title>
+
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 30px;
+                    color: #0f172a;
+                }
+
+                .invoice-close-btn,
+                .invoice-actions {
+                    display: none !important;
+                }
+
+               <div class="invoice-header">
+
+                      <h2>M&N Consumer Goods</h2>
+
+                 <p>
+                     Wholesale • Store Network • Distribution
+                 </p>
+
+                  <br>
+
+                     <strong id="invoiceIdText">
+                           MN-INV-000001
+                     </strong>
+
+                </div>
+
+                .invoice-details-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 14px;
+                    margin-bottom: 20px;
+                }
+
+                small {
+                    display: block;
+                    color: #64748b;
+                    font-size: 12px;
+                    margin-bottom: 4px;
+                }
+
+                strong {
+                    font-weight: 800;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 12px;
+                }
+
+                th, td {
+                    padding: 10px;
+                    border-bottom: 1px solid #e2e8f0;
+                    text-align: left;
+                }
+
+                th {
+                    background: #f1f5f9;
+                }
+
+                .invoice-summary-block {
+                    background: #f8fafc;
+                    padding: 16px;
+                    border-radius: 12px;
+                    margin-top: 20px;
+                }
+
+                .invoice-summary-row {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 6px 0;
+                }
+
+                .total-row {
+                    font-size: 20px;
+                    font-weight: 900;
+                }
+
+                .invoice-signature-box img {
+                    max-width: 260px;
+                    margin-top: 10px;
+                }
+            </style>
+        </head>
+
+        <body>
+            ${invoiceBox.innerHTML}
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+
+    printWindow.onload = function () {
+        printWindow.focus();
+        printWindow.print();
+    };
+}
+
+window.printInvoiceModal = printInvoiceModal;
+
+function printInvoiceModal() {
+    const invoiceBox = document.querySelector(".invoice-box");
+
+    if (!invoiceBox) {
+        alert("Invoice content not found.");
+        return;
+    }
+
+    const printWindow = window.open("", "PRINT", "width=900,height=700");
+
+    if (!printWindow) {
+        alert("Please allow popups to print invoice.");
+        return;
+    }
+
+    printWindow.document.open();
+
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>M&N Invoice</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 24px;
+                    color: #111827;
+                    background: white;
+                }
+
+                .invoice-close-btn,
+                .invoice-actions {
+                    display: none !important;
+                }
+
+                .invoice-header {
+                    text-align: center;
+                    border-bottom: 2px solid #111827;
+                    padding-bottom: 18px;
+                    margin-bottom: 22px;
+                }
+
+                .invoice-header h2 {
+                    margin: 0;
+                    font-size: 30px;
+                    font-weight: 900;
+                }
+
+                .invoice-header p {
+                    margin: 8px 0;
+                    color: #475569;
+                }
+
+                .invoice-details-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    margin-bottom: 20px;
+                }
+
+                small {
+                    display: block;
+                    color: #64748b;
+                    margin-bottom: 4px;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 10px;
+                }
+
+                th, td {
+                    padding: 10px;
+                    border-bottom: 1px solid #e5e7eb;
+                    text-align: left;
+                }
+
+                th {
+                    background: #f1f5f9;
+                }
+
+                .invoice-summary-block {
+                    margin-top: 20px;
+                    padding: 16px;
+                    background: #f8fafc;
+                    border-radius: 12px;
+                }
+
+                .invoice-summary-row {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 6px 0;
+                }
+
+                .total-row {
+                    font-size: 20px;
+                    font-weight: 900;
+                }
+
+                .invoice-signature-box img {
+                    max-width: 260px;
+                    margin-top: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            ${invoiceBox.innerHTML}
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+
+    setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+    }, 500);
+}
+
+window.printInvoiceModal = printInvoiceModal;

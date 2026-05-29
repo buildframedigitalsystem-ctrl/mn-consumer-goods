@@ -1,4 +1,4 @@
 window.API = {
     BASE_URL:
-        "https://script.google.com/macros/s/AKfycbxVDhIAQceRvhmF0XXTG0GNiecaOlkUv3UBBd0SC-Hyu-AA51Xfg5v02gaUNIAXyiII/exec"
+        "https://script.google.com/macros/s/AKfycbzbUww2SKIl6uqQvPqLtO6L35A0Xw5Ny0N5hjq16JOguAiLUAovKMdUagJ9SgK1fOSJ/exec"
 };

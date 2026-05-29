@@ -1,176 +1,111 @@
-/* =========================================
-   M&N PRODUCT RECEIVING
-   Admin Inventory Stock-In Engine
-========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
     initializeProductReceiving();
 });
 
-async function initializeProductReceiving() {
+function initializeProductReceiving() {
     const form = document.getElementById("productReceivingForm");
-
     if (!form) return;
 
-    setTodayDate_();
-    bindReceivingCalculator_();
+    setReceivingDefaultDate_();
+    bindReceivingCalculations_();
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const quantityReceived =
-            Number(document.getElementById("quantityReceived").value || 0);
-
-        const unitCost =
-            Number(document.getElementById("unitCost").value || 0);
-
-        const payload = {
-            action: "addProductReceiving",
-
-            purchaseOrderId:
-                document.getElementById("purchaseOrderID").value.trim(),
-
-            supplierId:
-                document.getElementById("supplierID").value.trim(),
-
-            supplierName:
-                document.getElementById("supplierName").value.trim(),
-
-            productId:
-                document.getElementById("productID").value.trim(),
-
-            productName:
-                document.getElementById("productName").value.trim(),
-
-            quantityOrdered:
-                Number(document.getElementById("quantityOrdered").value || 0),
-
-            quantityReceived,
-
-            unitCost,
-
-            totalCost:
-                quantityReceived * unitCost,
-
-            receivedDate:
-                document.getElementById("receivedDate").value,
-
-            receivedBy:
-                document.getElementById("receivedBy").value.trim(),
-
-            receivingStatus:
-                document.getElementById("receivingStatus").value,
-
-            notes:
-                document.getElementById("notes").value.trim()
-        };
-
-        if (!payload.productId || !payload.productName || !payload.quantityReceived) {
-            alert("Please complete Product ID, Product Name, and Quantity Received.");
-            return;
-        }
-
-        try {
-            const response = await fetch(API.BASE_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                alert("Stocks received and inventory updated.");
-
-                form.reset();
-                setTodayDate_();
-
-                loadReceivingRecords();
-            } else {
-                alert(data.message || "Receiving failed.");
-            }
-
-        } catch (error) {
-            console.error(error);
-            alert("Server error.");
-        }
+        saveProductReceiving_();
     });
-
-    loadReceivingRecords();
 }
 
-function bindReceivingCalculator_() {
-    const quantityInput = document.getElementById("quantityReceived");
-    const unitCostInput = document.getElementById("unitCost");
-    const totalCostInput = document.getElementById("totalCost");
-
-    if (!quantityInput || !unitCostInput || !totalCostInput) return;
-
-    const calculateTotal = () => {
-        const quantity = Number(quantityInput.value || 0);
-        const unitCost = Number(unitCostInput.value || 0);
-
-        totalCostInput.value = (quantity * unitCost).toFixed(2);
-    };
-
-    quantityInput.addEventListener("input", calculateTotal);
-    unitCostInput.addEventListener("input", calculateTotal);
-}
-
-function setTodayDate_() {
+function setReceivingDefaultDate_() {
     const receivedDate = document.getElementById("receivedDate");
-
-    if (!receivedDate) return;
-
-    if (!receivedDate.value) {
-        receivedDate.value = new Date().toISOString().slice(0, 10);
+    if (receivedDate && !receivedDate.value) {
+        receivedDate.value = new Date().toISOString().split("T")[0];
     }
 }
 
-async function loadReceivingRecords() {
+function bindReceivingCalculations_() {
+    const qty = document.getElementById("quantityReceived");
+    const cost = document.getElementById("unitCost");
+
+    if (qty) qty.addEventListener("input", updateReceivingTotal_);
+    if (cost) cost.addEventListener("input", updateReceivingTotal_);
+}
+
+function updateReceivingTotal_() {
+    const qty = Number(getValue_("quantityReceived") || 0);
+    const cost = Number(getValue_("unitCost") || 0);
+    const total = qty * cost;
+
+    const totalCost = document.getElementById("totalCost");
+    if (totalCost) totalCost.value = total.toFixed(2);
+}
+
+async function saveProductReceiving_() {
+    updateReceivingTotal_();
+
+    const payload = {
+        action: "addProductReceiving",
+
+        purchaseOrderId: getValue_("purchaseOrderID"),
+        supplierId: getValue_("supplierID"),
+        supplierName: getValue_("supplierName"),
+
+        productId: getValue_("productID"),
+        productName: getValue_("productName"),
+
+        quantityOrdered: Number(getValue_("quantityOrdered") || 0),
+        quantityReceived: Number(getValue_("quantityReceived") || 0),
+        unitCost: Number(getValue_("unitCost") || 0),
+        totalCost: Number(getValue_("totalCost") || 0),
+
+        receivedDate: getValue_("receivedDate"),
+        receivedBy: getValue_("receivedBy"),
+        receivingStatus: getValue_("receivingStatus"),
+        notes: getValue_("notes")
+    };
+
+    if (!payload.supplierName) {
+        alert("Please enter supplier name.");
+        return;
+    }
+
+    if (!payload.productId || !payload.productName) {
+        alert("Please enter product ID and product name.");
+        return;
+    }
+
+    if (payload.quantityReceived <= 0) {
+        alert("Quantity received must be greater than zero.");
+        return;
+    }
+
     try {
         const response = await fetch(API.BASE_URL, {
             method: "POST",
-            body: JSON.stringify({
-                action: "getProductReceiving"
-            })
+            body: JSON.stringify(payload)
         });
 
         const data = await response.json();
-        const rows = data.rows || [];
 
-        const tbody =
-            document.getElementById("receivingTableBody");
+        if (data.success) {
+            alert("Received stocks saved. Inventory updated automatically.");
 
-        if (!tbody) return;
+            document.getElementById("productReceivingForm").reset();
+            setReceivingDefaultDate_();
+            updateReceivingTotal_();
 
-        tbody.innerHTML = "";
-
-        rows.forEach(item => {
-            tbody.innerHTML += `
-                <tr>
-                    <td>${escapeHTML_(item.ReceivingID || "")}</td>
-                    <td>${escapeHTML_(item.PurchaseOrderID || "")}</td>
-                    <td>${escapeHTML_(item.SupplierName || "")}</td>
-                    <td>${escapeHTML_(item.ProductName || "")}</td>
-                    <td>${escapeHTML_(item.QuantityReceived || "")}</td>
-                    <td>${escapeHTML_(item.UnitCost || "")}</td>
-                    <td>${escapeHTML_(item.TotalCost || "")}</td>
-                    <td>${escapeHTML_(item.ReceivedDate || "")}</td>
-                    <td>${escapeHTML_(item.ReceivingStatus || "")}</td>
-                </tr>
-            `;
-        });
+        } else {
+            alert(data.message || "Failed to save received stocks.");
+        }
 
     } catch (error) {
         console.error(error);
+        alert("Server error while saving received stocks.");
     }
 }
 
-function escapeHTML_(value) {
-    return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+function getValue_(id) {
+    const element = document.getElementById(id);
+    return element ? element.value.trim() : "";
 }
+
+window.initializeProductReceiving = initializeProductReceiving;

@@ -116,10 +116,25 @@
                         <span>Operating expenses and wholesale distribution cost tracking.</span>
                     </a>
 
-                    <a href="admin-agents.html" class="admin-control-card">
-                        <strong>🤝 Agents / Resellers</strong>
-                        <span>Agent pricing, commissions, and reseller levels.</span>
-                    </a>
+                    <div class="admin-control-card-group">
+
+                        <a href="admin-agents.html" class="admin-control-card">
+                            <strong>🤝 Agents / Resellers</strong>
+                            <span>
+                                Agent profiles, assigned areas,
+                                login access, and reseller management.
+                            </span>
+                        </a>
+
+                        <a href="admin-agent-transactions.html" class="admin-control-card">
+                            <strong>🚚 Field Transactions</strong>
+                            <span>
+                                Loadouts, collections, returns,
+                                field deliveries, and operations tracking.
+                            </span>
+                        </a>
+
+                    </div>
 
                     <a href="admin-reports.html" class="admin-control-card">
                         <strong>📈 Reports</strong>
@@ -169,21 +184,19 @@
             </button>
 
             <div class="invoice-header">
-
                 <div>
                     <h2>M&N Consumer Goods</h2>
                     <p>Wholesale • Store Network • Distribution</p>
                 </div>
 
                 <strong id="invoiceIdText">-</strong>
-
             </div>
 
             <div class="invoice-details-grid">
-
                 <div>
                     <small>Customer</small>
                     <strong id="invoiceCustomerText">-</strong>
+                    <p id="invoiceAddressText">-</p>
                 </div>
 
                 <div>
@@ -210,72 +223,88 @@
                     <small>Order Date</small>
                     <strong id="invoiceDateText">-</strong>
                 </div>
-
             </div>
 
-            <div class="invoice-total-box">
-
-                <span>Total Amount</span>
-
-                <strong id="invoiceTotalText">
-                    ₱0
-                </strong>
-
-            </div>
-
-            <div class="invoice-items-box">
-
+            <div class="invoice-items-section">
                 <h3>Ordered Items</h3>
 
-                <table class="invoice-items-table">
+                <div class="table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
 
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
+                        <tbody id="invoiceItemsBody">
+                            <tr>
+                                <td colspan="4">No items found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <tbody id="invoiceItemsBody">
+            <div class="invoice-summary-block">
 
-                        <tr>
-                            <td colspan="4">
-                                No items found.
-                            </td>
-                        </tr>
+                <div class="invoice-summary-row">
+                    <span>Items Total</span>
+                    <strong id="invoiceItemsTotalText">₱0.00</strong>
+                </div>
 
-                    </tbody>
+                <div class="invoice-summary-row">
+                    <span>Discount</span>
+                    <strong id="invoiceDiscountText">₱0.00</strong>
+                </div>
 
-                </table>
+                <div class="invoice-summary-row">
+                    <span>Delivery Fee</span>
+                    <strong id="invoiceDeliveryFeeText">₱0.00</strong>
+                </div>
+
+                <div class="invoice-summary-row">
+                    <span>Subtotal</span>
+                    <strong id="invoiceSubtotalText">₱0.00</strong>
+                </div>
+
+                <hr>
+
+                <div class="invoice-summary-row">
+                    <span>Less Partial Payments</span>
+                    <strong id="invoicePartialPaymentsText">₱0.00</strong>
+                </div>
+
+                <div class="invoice-summary-row">
+                    <span>Less Returns</span>
+                    <strong id="invoiceReturnsText">₱0.00</strong>
+                </div>
+
+                <hr>
+
+                <div class="invoice-summary-row total-row">
+                    <span>BALANCE DUE</span>
+                    <strong id="invoiceBalanceDueText">₱0.00</strong>
+                </div>
 
             </div>
 
             <div class="invoice-notes-box">
-
                 <small>Notes</small>
-
                 <p id="invoiceNotesText">-</p>
-
             </div>
 
             <div class="invoice-signature-box">
-
                 <small>Customer Signature</small>
-
                 <img id="invoiceSignatureImage" alt="Customer Signature">
-
             </div>
 
             <div class="invoice-actions">
-
-                <button type="button" class="save-btn" onclick="window.print()">
-
+                <button type="button" class="save-btn" onclick="printInvoiceModal()">
                     Print Invoice
-
                 </button>
-
             </div>
 
         </div>

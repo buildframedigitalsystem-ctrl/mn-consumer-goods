@@ -315,7 +315,7 @@ async function loadAdminProducts_() {
         if (!products.length) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="6">No products found yet.</td>
+                    <td colspan="5">No products found yet.</td>
                 </tr>
             `;
             return;
@@ -355,15 +355,15 @@ async function loadAdminProducts_() {
                 "-";
 
             return `
-                <tr>
-                    <td>${escapeHTML_(name)}</td>
-                    <td>${escapeHTML_(category)}</td>
-                    <td>₱${formatMoney_(retailPrice)}</td>
-                    <td>₱${formatMoney_(wholesalePrice)}</td>
-                    <td>${promoPrice && promoPrice !== "-" ? "₱" + formatMoney_(promoPrice) : "-"}</td>
-                    <td>${escapeHTML_(display)}</td>
-                </tr>
-            `;
+          <tr>
+             <td>${escapeHTML_(name)}</td>
+             <td>${escapeHTML_(category)}</td>
+             <td>₱${formatMoney_(wholesalePrice)}</td>
+             <td>${promoPrice && promoPrice !== "-" ? "₱" + formatMoney_(promoPrice) : "-"}</td>
+             <td>${escapeHTML_(display)}</td>
+           </tr>
+        `;
+
         }).join("");
 
     } catch (error) {
@@ -371,7 +371,7 @@ async function loadAdminProducts_() {
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="6">Failed to load products.</td>
+                <td colspan="5">Failed to load products.</td>
             </tr>
         `;
     }

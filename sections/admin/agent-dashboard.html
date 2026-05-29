@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard | M&N OS</title>
+
+    <link rel="stylesheet" href="assets/css/base.css?v=2">
+    <link rel="stylesheet" href="assets/css/admin-dashboard.css?v=2">
+</head>
+
+<body>
+
+    <main class="admin-standalone-page">
+
+        <section class="admin-page-hero">
+            <span>AGENT PORTAL</span>
+            <h1>Agent Dashboard</h1>
+            <p>Welcome to your M&N agent workspace.</p>
+        </section>
+
+        <section class="admin-module-card">
+            <h2 id="agentWelcomeText">Welcome, Agent</h2>
+
+            <p>
+                This portal is for agent-only access.
+                You can later view assigned stores, transactions,
+                orders, and collections here.
+            </p>
+
+            <button onclick="logoutAgent_()" class="save-btn">
+                Logout
+            </button>
+        </section>
+
+    </main>
+
+    <script src="assets/js/agent-auth.js"></script>
+
+</body>
+
+</html>

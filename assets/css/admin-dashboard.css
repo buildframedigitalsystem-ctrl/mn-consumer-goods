@@ -499,3 +499,7 @@
     padding: 40px;
     color: #64748b;
 }
+
+.admin-control-card-group {
+    display: contents;
+}
