@@ -77,8 +77,7 @@ async function loadAdminPage(page) {
     const routes = {
 
         home: {
-            file: "sections/admin/admin-home.html",
-            init: null
+            external: "admin-dashboard.html"
         },
 
         products: {

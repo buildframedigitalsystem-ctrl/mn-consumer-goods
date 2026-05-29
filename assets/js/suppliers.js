@@ -31,7 +31,7 @@ async function initializeSuppliers() {
             contactPerson:
                 document.getElementById("contactPerson").value,
 
-            contactNumber:
+            phone:
                 document.getElementById("phone").value,
 
             email:
@@ -123,6 +123,7 @@ async function loadSuppliers() {
             await response.json();
 
         const rows =
+            data.suppliers ||
             data.rows ||
             data.data ||
             [];
