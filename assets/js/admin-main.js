@@ -43,7 +43,6 @@ async function initializeAdminDashboard() {
 
     await loadSection("adminSidebar", "sections/admin/admin-sidebar.html");
     await loadSection("adminHeader", "sections/admin/admin-header.html");
-    await loadAdminPage("home");
 
     bindSidebarMenu();
     bindAdminKeyboardShortcuts();
@@ -160,7 +159,9 @@ async function loadAdminPage(page) {
     const route = routes[page] || routes.home;
 
     if (route.external) {
-        window.location.href = route.external;
+        if (!window.location.pathname.endsWith(route.external)) {
+            window.location.href = route.external;
+        }
         return;
     }
 
