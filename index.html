@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="assets/css/store.css?v=24">
     <link rel="stylesheet" href="assets/css/responsive-fixes.css">
 
-    <link rel="manifest" href="manifest-admin.json">
+    <link rel="manifest" href="manifest-store.json">
+    <link rel="apple-touch-icon" href="assets/images/branding/mn-logo.png">
 
     <meta name="theme-color" content="#005f2f">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="M&N Admin">
+    <meta name="apple-mobile-web-app-title" content="M&N Store">
 </head>
 
 <body>
@@ -248,7 +249,7 @@
         <div class="store-tools">
             <input type="text" id="storeSearch" placeholder="Search products...">
 
-            <select id="categoryFilter">
+            <select id="categoryFilter" aria-label="Filter products by category">
                 <option value="all">All Categories</option>
             </select>
         </div>
@@ -303,16 +304,17 @@
             </div>
 
             <div class="map-actions">
-                <a href="https://www.google.com/maps/@11.2331325,124.9881434,21z" target="_blank">
+                <a href="https://www.google.com/maps/@11.2331325,124.9881434,21z" target="_blank"
+                    rel="noopener noreferrer">
                     Open in Google Maps →
                 </a>
             </div>
         </div>
 
         <div class="store-map-frame">
-            <iframe
+            <iframe title="M&N Consumer Goods location map"
                 src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d244.58650368469293!2d124.98814340000001!3d11.233132499999996!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sph!4v1779287544456!5m2!1sen!2sph"
-                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                allowfullscreen="" loading="lazy">
             </iframe>
         </div>
     </section>
@@ -325,8 +327,12 @@
 
                 <div class="footer-contact-list">
                     <a href="tel:+639052273431">📱 +639052273431</a>
-                    <a href="https://wa.me/639052273431" target="_blank">💬 WhatsApp / Viber</a>
-                    <a href="https://www.facebook.com/nico.torrevillas" target="_blank">📘 Nico Torrevillas</a>
+                    <a href="https://wa.me/639052273431" target="_blank" rel="noopener noreferrer">
+                        💬 WhatsApp / Viber
+                    </a>
+                    <a href="https://www.facebook.com/nico.torrevillas" target="_blank" rel="noopener noreferrer">
+                        📘 Nico Torrevillas
+                    </a>
                     <a href="mailto:kokiks@mail.com">✉️ kokiks@mail.com</a>
                 </div>
             </div>
@@ -338,7 +344,8 @@
                 <span>Website, Funnel & Platform Builder</span>
 
                 <div class="buildframe-links">
-                    <a href="https://www.facebook.com/profile.php?id=61573627290922" target="_blank">
+                    <a href="https://www.facebook.com/profile.php?id=61573627290922" target="_blank"
+                        rel="noopener noreferrer">
                         BuildFrame Facebook Page
                     </a>
 
@@ -346,11 +353,12 @@
                         buildframe.digitalsystem@gmail.com
                     </a>
 
-                    <a href="https://github.com/buildframedigitalsystem-ctrl/myportfolio" target="_blank">
+                    <a href="https://github.com/buildframedigitalsystem-ctrl/myportfolio" target="_blank"
+                        rel="noopener noreferrer">
                         🌐 View BuildFrame Portfolio
                     </a>
 
-                    <a href="https://wa.me/639760110243" target="_blank">
+                    <a href="https://wa.me/639760110243" target="_blank" rel="noopener noreferrer">
                         WhatsApp Support
                     </a>
                 </div>
@@ -358,7 +366,8 @@
         </div>
     </footer>
 
-    <a href="https://www.facebook.com/nico.torrevillas" class="floating-chat-bubble" target="_blank">
+    <a href="https://www.facebook.com/nico.torrevillas" class="floating-chat-bubble" target="_blank"
+        rel="noopener noreferrer">
         <img src="assets/images/branding/mn-logo.png" alt="M&N Logo" class="chat-logo">
         <div class="chat-text">Message M&N</div>
     </a>
